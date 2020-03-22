@@ -12,9 +12,10 @@ export class UserLeftPanelComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  showHideOptions(target: EventTarget) {
-    const itemContainer = target.closest('.f_item');
-    itemContainer.querySelector('.f_festival-list').classList.toggle('is-hidden');
-    itemContainer.querySelector('.f_rotate-icon').classList.toggle('rotate');
+  showHideOptions(currentTarget: EventTarget) {
+    console.log(currentTarget);
+    // const itemContainer = currentTarget.closest('.f_item');
+    // itemContainer.querySelector('.f_festival-list').classList.toggle('is-hidden');
+    // itemContainer.querySelector('.f_rotate-icon').classList.toggle('rotate');
   }
 }
