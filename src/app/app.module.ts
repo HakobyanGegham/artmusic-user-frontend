@@ -3,6 +3,8 @@ import {NgModule, LOCALE_ID} from '@angular/core';
 import {registerLocaleData} from '@angular/common';
 import {HttpClientModule} from '@angular/common/http';
 import {MatIconModule} from '@angular/material/icon';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {FormsModule} from '@angular/forms';
@@ -46,6 +48,8 @@ registerLocaleData(localeRu);
     BrowserModule,
     HttpClientModule,
     MatIconModule,
+    MatInputModule,
+    MatFormFieldModule,
     MatSelectModule,
     MatCheckboxModule,
     AppRoutingModule,

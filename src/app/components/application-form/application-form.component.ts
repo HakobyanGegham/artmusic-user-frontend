@@ -3,6 +3,11 @@ import {FormBuilder, Validators} from '@angular/forms';
 import FormHelper from '../../helpers/form-helper';
 import {ApplicationService} from '../../services/application.service';
 import {Country} from '../../models/country';
+import {City} from '../../models/city';
+import {Region} from '../../models/region';
+import {EducationalInstitution} from '../../models/educational-institution';
+import {Nomination} from '../../models/nomination';
+import {Specialization} from '../../models/specialization';
 
 @Component({
   selector: 'app-application-form',
@@ -12,6 +17,11 @@ import {Country} from '../../models/country';
 export class ApplicationFormComponent extends FormHelper implements OnInit {
 
   public countries: Country[];
+  public regions: Region[];
+  public cities: City[];
+  public educationalInstitutions: EducationalInstitution[];
+  public nominations: Nomination[];
+  public specializations: Specialization[];
 
   constructor(private formBuilder: FormBuilder,
               private applicationService: ApplicationService) {
