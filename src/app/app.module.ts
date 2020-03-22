@@ -1,5 +1,4 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {Routes, RouterModule} from '@angular/router';
 import {NgModule, LOCALE_ID} from '@angular/core';
 import {registerLocaleData} from '@angular/common';
 import {HttpClientModule} from '@angular/common/http';
@@ -17,20 +16,31 @@ import localHy from '@angular/common/locales/hy';
 import localeRu from '@angular/common/locales/ru';
 import {RegisterComponent} from './components/register/register.component';
 import {LoginComponent} from './components/login/login.component';
+import {UserComponent} from './users/user/user.component';
+import {UserLeftPanelComponent} from './users/user-left-panel/user-left-panel.component';
+import {HeaderComponent} from './components/header/header.component';
+import {AddApplicationComponent} from './components/add-application/add-application.component';
+import {UsersModule} from './users/users.module';
+import {ApplicantFormComponent} from './components/applicant-form/applicant-form.component';
+import {ApplicationProgramFormComponent} from './components/application-program-form/application-program-form.component';
+import {ApplicationFormComponent} from './components/application-form/application-form.component';
 
 registerLocaleData(localHy);
 registerLocaleData(localeRu);
 
-const appRoutes: Routes = [
-  {path: 'register', component: RegisterComponent},
-  {path: 'login', component: LoginComponent},
-];
 
 @NgModule({
   declarations: [
     AppComponent,
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    UserComponent,
+    UserLeftPanelComponent,
+    HeaderComponent,
+    AddApplicationComponent,
+    ApplicantFormComponent,
+    ApplicationProgramFormComponent,
+    ApplicationFormComponent
   ],
   imports: [
     BrowserModule,
@@ -42,10 +52,7 @@ const appRoutes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    RouterModule.forRoot(
-      appRoutes,
-      {enableTracing: true}
-    ),
+    UsersModule,
   ],
   providers: [
     CookieService,

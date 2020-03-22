@@ -1,21 +1,25 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../../services/auth.service';
 import {CookieService} from 'ngx-cookie-service';
+import {DOCUMENT} from '@angular/common';
+import FormHelper from '../../helpers/form-helper';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.less']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent extends FormHelper implements OnInit {
 
-  registerForm: FormGroup;
-  private formSubmitAttempt: boolean;
+  public form: FormGroup;
+  protected formSubmitAttempt: boolean;
 
   constructor(private formBuilder: FormBuilder,
               private authService: AuthService,
-              private cookieService: CookieService) {
+              private cookieService: CookieService,
+              @Inject(DOCUMENT) private document: Document) {
+    super();
   }
 
   public ngOnInit(): void {
@@ -23,7 +27,7 @@ export class RegisterComponent implements OnInit {
   }
 
   private initForm(): void {
-    this.registerForm = this.formBuilder.group({
+    this.form = this.formBuilder.group({
       firstName: ['', [Validators.required, Validators.minLength(4)]],
       lastName: ['', [Validators.required, Validators.minLength(4)]],
       email: ['', [Validators.required, Validators.email]],
@@ -32,36 +36,15 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  public getFormControl(name) {
-    return this.registerForm.get(name);
-  }
-
   public submit(value: any) {
     this.formSubmitAttempt = true;
-    if (this.registerForm.valid) {
+    if (this.form.valid) {
       this.authService.register(value).subscribe(token => {
         this.cookieService.set('token', token.token);
+        this.document.location.href = `/user`;
       });
     } else {
-      this.validateAllFormFields(this.registerForm);
+      this.validateAllFormFields(this.form);
     }
-  }
-
-  public isFieldValid(field: string) {
-    return (!this.registerForm.get(field).valid && this.registerForm.get(field).touched) ||
-      (this.registerForm.get(field).untouched && this.formSubmitAttempt);
-  }
-
-  private validateAllFormFields(formGroup: FormGroup) {
-    Object.keys(formGroup.controls).forEach(field => {
-      const control = formGroup.get(field);
-      control.markAsTouched({onlySelf: true});
-    });
-  }
-
-  public displayFieldCss(field: string) {
-    return {
-      'has-error': this.isFieldValid(field)
-    };
   }
 }

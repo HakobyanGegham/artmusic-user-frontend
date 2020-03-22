@@ -2,8 +2,8 @@
   <h1 class="register-title" i18n="@@registerFormTitle">
     Register Form
   </h1>
-  <form [formGroup]="registerForm" class="register-form"
-        (ngSubmit)="submit(registerForm.value)">
+  <form [formGroup]="form" class="register-form"
+        (ngSubmit)="submit(form.value)">
     <div class="input-container">
       <label for="firstName" class="input-label"></label>
       <input id="firstName" class="text-input"
