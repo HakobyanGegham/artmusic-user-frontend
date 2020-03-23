@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule, LOCALE_ID} from '@angular/core';
+import {NgModule, LOCALE_ID, NO_ERRORS_SCHEMA} from '@angular/core';
 import {registerLocaleData} from '@angular/common';
 import {HttpClientModule} from '@angular/common/http';
 import {MatIconModule} from '@angular/material/icon';
@@ -10,6 +10,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {FormsModule} from '@angular/forms';
 import {ReactiveFormsModule} from '@angular/forms';
 import {CookieService} from 'ngx-cookie-service';
+import {MDBBootstrapModule} from 'angular-bootstrap-md';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -26,6 +27,7 @@ import {UsersModule} from './users/users.module';
 import {ApplicantFormComponent} from './components/applicant-form/applicant-form.component';
 import {ApplicationProgramFormComponent} from './components/application-program-form/application-program-form.component';
 import {ApplicationFormComponent} from './components/application-form/application-form.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 registerLocaleData(localHy);
 registerLocaleData(localeRu);
@@ -57,12 +59,15 @@ registerLocaleData(localeRu);
     ReactiveFormsModule,
     BrowserAnimationsModule,
     UsersModule,
+    MDBBootstrapModule.forRoot(),
+    FontAwesomeModule
   ],
   providers: [
     CookieService,
     {provide: LOCALE_ID, useValue: 'ru'},
     {provide: LOCALE_ID, useValue: 'hy'}
   ],
+  schemas: [NO_ERRORS_SCHEMA],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -42,23 +42,23 @@ export class ApplicationService {
     );
   }
 
-  public getRegions(): Observable<Region[]> {
+  public getRegions(countryId: number): Observable<Region[]> {
     const headers = this.getHeadersWithToken();
-    return this.httpClient.get<Region[]>(`${this.getRegionsUrl}/${this.locale}`, {headers}).pipe(
+    return this.httpClient.get<Region[]>(`${this.getRegionsUrl}/${this.locale}/${countryId}`, {headers}).pipe(
       map(res => res.map(data => new Region().deserialize(data)))
     );
   }
 
-  public getCities(): Observable<City[]> {
+  public getCities(regionId: number): Observable<City[]> {
     const headers = this.getHeadersWithToken();
-    return this.httpClient.get<City[]>(`${this.getCitiesUrl}/${this.locale}`, {headers}).pipe(
+    return this.httpClient.get<City[]>(`${this.getCitiesUrl}/${this.locale}/${regionId}`, {headers}).pipe(
       map(res => res.map(data => new City().deserialize(data)))
     );
   }
 
-  public getEducationalInstitutions(): Observable<EducationalInstitution[]> {
+  public getEducationalInstitutions(cityId: number): Observable<EducationalInstitution[]> {
     const headers = this.getHeadersWithToken();
-    return this.httpClient.get<EducationalInstitution[]>(`${this.getEducationInstitutionsUrl}/${this.locale}`, {headers}).pipe(
+    return this.httpClient.get<EducationalInstitution[]>(`${this.getEducationInstitutionsUrl}/${this.locale}/${cityId}`, {headers}).pipe(
       map(res => res.map(data => new EducationalInstitution().deserialize(data)))
     );
   }
@@ -70,9 +70,9 @@ export class ApplicationService {
     );
   }
 
-  public getSpecializations(): Observable<Specialization[]> {
+  public getSpecializations(nominationId: number): Observable<Specialization[]> {
     const headers = this.getHeadersWithToken();
-    return this.httpClient.get<Specialization[]>(`${this.getSpecializationsUrl}/${this.locale}`, {headers}).pipe(
+    return this.httpClient.get<Specialization[]>(`${this.getSpecializationsUrl}/${this.locale}/${nominationId}`, {headers}).pipe(
       map(res => res.map(data => new Specialization().deserialize(data)))
     );
   }

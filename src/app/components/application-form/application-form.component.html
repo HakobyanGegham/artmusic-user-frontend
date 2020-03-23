@@ -1,133 +1,121 @@
 <section class="application-container">
-  <h1 class="application-title">
-    Application Form
-  </h1>
   <form [formGroup]="form" class="application-form"
         (ngSubmit)="submit(form.value)">
-    <div class="row first-row">
-
-      <mat-form-field>
-        <mat-label class="md-body-2">Country</mat-label>
-        <mat-select formControlName="country">
-          <mat-option *ngFor="let country of countries" value="{{country.id}}">{{country.name}}</mat-option>
-        </mat-select>
-        <ng-container *ngIf="isFieldValid('country')">
-          <div *ngIf="getFormControl('country').errors.required"
-               class="error-message"
-               i18n="@@countryErrorRequired">
-            Country is required.
-          </div>
-        </ng-container>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Region</mat-label>
-        <mat-select formControlName="region">
-          <mat-option *ngFor="let region of regions" value="{{region.id}}">{{region.name}}</mat-option>
-        </mat-select>
-        <ng-container *ngIf="isFieldValid('region')">
-          <div *ngIf="getFormControl('region').errors.required"
-               class="error-message"
-               i18n="@@regionErrorRequired">
-            Region is required.
-          </div>
-        </ng-container>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>City</mat-label>
-        <mat-select formControlName="city">
-          <mat-option *ngFor="let city of cities" value="{{city.id}}">{{city.name}}</mat-option>
-        </mat-select>
-        <ng-container *ngIf="isFieldValid('city')">
-          <div *ngIf="getFormControl('city').errors.required"
-               class="error-message"
-               i18n="@@cityErrorRequired">
-            City is required.
-          </div>
-        </ng-container>
-      </mat-form-field>
-    </div>
-    <div class="row second-row">
-      <mat-form-field>
-        <mat-label>Educational Institution</mat-label>
-        <mat-select id="educationalInstitution" formControlName="educationalInstitution">
-          <mat-option *ngFor="let educationalInstitution of educationalInstitutions"
-                      value="{{educationalInstitution.id}}">{{educationalInstitution.name}}</mat-option>
-        </mat-select>
-        <ng-container *ngIf="isFieldValid('educationalInstitution')">
-          <div *ngIf="getFormControl('educationalInstitution').errors.required"
-               class="error-message"
-               i18n="@@educationalInstitutionErrorRequired">
-            Educational Institution is required.
-          </div>
-        </ng-container>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Nomination</mat-label>
-        <mat-select id="nominationSelect" formControlName="nomination">
-          <mat-option *ngFor="let nomination of nominations"
-                      value="{{nomination.id}}">{{nomination.name}}</mat-option>
-        </mat-select>
-        <ng-container *ngIf="isFieldValid('nomination')">
-          <div *ngIf="getFormControl('nomination').errors.required"
-               class="error-message"
-               i18n="@@nominationErrorRequired">
-            Nomination Institution is required.
-          </div>
-        </ng-container>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Specialization</mat-label>
-        <mat-select id="specializationSelect" formControlName="nomination">
-          <mat-option *ngFor="let specialization of specializations"
-                      value="{{specialization.id}}">{{specialization.name}}</mat-option>
-        </mat-select>
-        <ng-container *ngIf="isFieldValid('specialization')">
-          <div *ngIf="getFormControl('specialization').errors.required"
-               class="error-message"
-               i18n="@@specializationErrorRequired">
-            Specialization Institution is required.
-          </div>
-        </ng-container>
-      </mat-form-field>
-    </div>
-    <div class="row third-row">
-
-      <mat-form-field>
-        <mat-label i18n>Director first name</mat-label>
-        <input class="text-input" matInput
-               [ngClass]="displayFieldCss('directorFirstName')"
-               formControlName="directorFirstName">
-        <ng-container *ngIf="isFieldValid('directorFirstName')">
-          <div *ngIf="getFormControl('directorFirstName').errors.required"
-               class="error-message" i18n>
-            Director first name is required.
-          </div>
-          <div *ngIf="getFormControl('directorFirstName').errors.minlength"
-               class="error-message" i18n>
-            Director first name 4 characters long.
-          </div>
-        </ng-container>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label i18n>Director last name</mat-label>
-        <input class="text-input" matInput
-               [ngClass]="displayFieldCss('directorLastName')"
-               formControlName="directorLastName">
-        <ng-container *ngIf="isFieldValid('directorLastName')">
-          <div *ngIf="getFormControl('directorLastName').errors.required"
-               class="error-message" i18n>
-            Director last name is required.
-          </div>
-          <div *ngIf="getFormControl('directorLastName').errors.minlength"
-               class="error-message" i18n>
-            Director last name 4 characters long.
-          </div>
-        </ng-container>
-      </mat-form-field>
-    </div>
-    <div class="button-container">
-      <button type="submit" class="submit">Register</button>
-    </div>
+    <mat-form-field>
+      <mat-label class="md-body-4">Country</mat-label>
+      <mat-select formControlName="country"
+                  class="form-control" (selectionChange)="countryChange($event.value)">
+        <mat-option *ngFor="let country of countries" value="{{country.id}}">{{country.name}}</mat-option>
+      </mat-select>
+      <ng-container *ngIf="isFieldValid('country')">
+        <div *ngIf="getFormControl('country').errors.required"
+             class="error-message"
+             i18n="@@countryErrorRequired">
+          Country is required.
+        </div>
+      </ng-container>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Region</mat-label>
+      <mat-select formControlName="region" (selectionChange)="regionChange($event.value)">
+        <mat-option *ngFor="let region of regions" value="{{region.id}}">{{region.name}}</mat-option>
+      </mat-select>
+      <ng-container *ngIf="isFieldValid('region')">
+        <div *ngIf="getFormControl('region').errors.required"
+             class="error-message"
+             i18n="@@regionErrorRequired">
+          Region is required.
+        </div>
+      </ng-container>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>City</mat-label>
+      <mat-select formControlName="city" (selectionChange)="cityChange($event.value)">
+        <mat-option *ngFor="let city of cities" value="{{city.id}}">{{city.name}}</mat-option>
+      </mat-select>
+      <ng-container *ngIf="isFieldValid('city')">
+        <div *ngIf="getFormControl('city').errors.required"
+             class="error-message"
+             i18n="@@cityErrorRequired">
+          City is required.
+        </div>
+      </ng-container>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Educational Institution</mat-label>
+      <mat-select id="educationalInstitution" formControlName="educationalInstitution">
+        <mat-option *ngFor="let educationalInstitution of educationalInstitutions"
+                    value="{{educationalInstitution.id}}">{{educationalInstitution.name}}</mat-option>
+      </mat-select>
+      <ng-container *ngIf="isFieldValid('educationalInstitution')">
+        <div *ngIf="getFormControl('educationalInstitution').errors.required"
+             class="error-message"
+             i18n="@@educationalInstitutionErrorRequired">
+          Educational Institution is required.
+        </div>
+      </ng-container>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Nomination</mat-label>
+      <mat-select id="nominationSelect" formControlName="nomination"
+                  (selectionChange)="nominationChange($event.value)">
+        <mat-option *ngFor="let nomination of nominations"
+                    value="{{nomination.id}}">{{nomination.name}}</mat-option>
+      </mat-select>
+      <ng-container *ngIf="isFieldValid('nomination')">
+        <div *ngIf="getFormControl('nomination').errors.required"
+             class="error-message"
+             i18n="@@nominationErrorRequired">
+          Nomination Institution is required.
+        </div>
+      </ng-container>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Specialization</mat-label>
+      <mat-select id="specializationSelect" formControlName="nomination">
+        <mat-option *ngFor="let specialization of specializations"
+                    value="{{specialization.id}}">{{specialization.name}}</mat-option>
+      </mat-select>
+      <ng-container *ngIf="isFieldValid('specialization')">
+        <div *ngIf="getFormControl('specialization').errors.required"
+             class="error-message"
+             i18n="@@specializationErrorRequired">
+          Specialization Institution is required.
+        </div>
+      </ng-container>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label i18n>Director first name</mat-label>
+      <input class="form-control" matInput
+             [ngClass]="displayFieldCss('directorFirstName')"
+             formControlName="directorFirstName">
+      <ng-container *ngIf="isFieldValid('directorFirstName')">
+        <div *ngIf="getFormControl('directorFirstName').errors.required"
+             class="error-message" i18n>
+          Director first name is required.
+        </div>
+        <div *ngIf="getFormControl('directorFirstName').errors.minlength"
+             class="error-message" i18n>
+          Director first name 4 characters long.
+        </div>
+      </ng-container>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label i18n>Director last name</mat-label>
+      <input class="form-control" matInput
+             [ngClass]="displayFieldCss('directorLastName')"
+             formControlName="directorLastName">
+      <ng-container *ngIf="isFieldValid('directorLastName')">
+        <div *ngIf="getFormControl('directorLastName').errors.required"
+             class="error-message" i18n>
+          Director last name is required.
+        </div>
+        <div *ngIf="getFormControl('directorLastName').errors.minlength"
+             class="error-message" i18n>
+          Director last name 4 characters long.
+        </div>
+      </ng-container>
+    </mat-form-field>
   </form>
 </section>
 

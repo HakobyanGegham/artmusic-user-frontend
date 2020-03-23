@@ -1,5 +1,11 @@
 .application-form {
   display: grid;
-  grid-template-rows: 33% 33% 33%;
+  grid-template-columns: repeat(4, 1fr);
+  grid-column-gap: 20px;
+  grid-auto-rows: 100px;
 
+  input, mat-select, mat-label {
+    font-size: 18px;
+    padding: 5px;
+  }
 }

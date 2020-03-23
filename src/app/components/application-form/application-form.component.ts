@@ -32,6 +32,9 @@ export class ApplicationFormComponent extends FormHelper implements OnInit {
     this.applicationService.getCountries().subscribe(countries => {
       this.countries = countries;
     });
+    this.applicationService.getNominations().subscribe(nominations => {
+      this.nominations = nominations;
+    });
     this.initForm();
   }
 
@@ -57,4 +60,27 @@ export class ApplicationFormComponent extends FormHelper implements OnInit {
     }
   }
 
+  public countryChange(value: any) {
+    this.applicationService.getRegions(+value).subscribe(regions => {
+      this.regions = regions;
+    });
+  }
+
+  public regionChange(value: any) {
+    this.applicationService.getCities(+value).subscribe(cities => {
+      this.cities = cities;
+    });
+  }
+
+  public cityChange(value: any) {
+    this.applicationService.getEducationalInstitutions(+value).subscribe(educationalInstitutions => {
+      this.educationalInstitutions = educationalInstitutions;
+    });
+  }
+
+  public nominationChange(value: any) {
+    this.applicationService.getSpecializations(+value).subscribe(specializations => {
+      this.specializations = specializations;
+    });
+  }
 }

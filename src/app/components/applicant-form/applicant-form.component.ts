@@ -23,8 +23,11 @@ export class ApplicantFormComponent extends FormHelper implements OnInit {
       lastName: ['', [Validators.required, Validators.minLength(4)]],
       patriotic: ['', [Validators.required, Validators.minLength(4)]],
       email: ['', [Validators.required, Validators.email]],
-      birthDate: ['', [Validators.required, Validators.minLength(6)]],
-      phoneNumber: ['', [Validators.required]]
+      birthDate: ['', [Validators.required]],
+      phoneNumber: ['', [Validators.required]],
+      passportCopy: ['', [Validators.required]],
+      image: [''],
+      upload: ['']
     });
   }
 

@@ -1,1 +1,63 @@
-<p>application-program-form works!</p>
+<div class="application-program-container">
+  <form [formGroup]="form" class="application-program-form"
+        (ngSubmit)="submit(form.value)">
+    <mat-form-field class="md-form md-outline">
+      <mat-label i18n>Composition name</mat-label>
+      <input class="form-control" matInput mdbInput
+             [ngClass]="displayFieldCss('compositionName')"
+             formControlName="compositionName">
+      <ng-container *ngIf="isFieldValid('compositionName')">
+        <div *ngIf="getFormControl('compositionName').errors.required"
+             class="error-message" i18n>
+          Composition name is required.
+        </div>
+        <div *ngIf="getFormControl('compositionName').errors.minlength"
+             class="error-message" i18n>
+          Composition name must be more than 4 characters long.
+        </div>
+      </ng-container>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label i18n>Composition Author</mat-label>
+      <input class="form-control" matInput
+             [ngClass]="displayFieldCss('compositionAuthor')"
+             formControlName="compositionAuthor">
+      <ng-container *ngIf="isFieldValid('compositionAuthor')">
+        <div *ngIf="getFormControl('compositionAuthor').errors.required"
+             class="error-message" i18n>
+          Composition Author is required.
+        </div>
+        <div *ngIf="getFormControl('compositionAuthor').errors.minlength"
+             class="error-message" i18n>
+          Composition Author must be more than 4 characters long.
+        </div>
+      </ng-container>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label i18n>Minutes</mat-label>
+      <input class="form-control" matInput type="number"
+             min="0" max="11" step="1"
+             [ngClass]="displayFieldCss('compositionDurationMinutes')"
+             formControlName="compositionDurationMinutes">
+      <ng-container *ngIf="isFieldValid('compositionDurationMinutes')">
+        <div *ngIf="getFormControl('compositionDurationMinutes').errors.required"
+             class="error-message" i18n>
+          Composition Duration Minutes are required.
+        </div>
+      </ng-container>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label i18n>Seconds</mat-label>
+      <input class="form-control" matInput type="number"
+             min="0" max="59" step="5"
+             [ngClass]="displayFieldCss('compositionDurationSeconds')"
+             formControlName="compositionDurationSeconds">
+      <ng-container *ngIf="isFieldValid('compositionDurationSeconds')">
+        <div *ngIf="getFormControl('compositionDurationSeconds').errors.required"
+             class="error-message" i18n>
+          Composition Duration Seconds are required.
+        </div>
+      </ng-container>
+    </mat-form-field>
+  </form>
+</div>

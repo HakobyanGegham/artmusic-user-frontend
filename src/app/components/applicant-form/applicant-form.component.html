@@ -1,1 +1,127 @@
-<p>applicant-form works!</p>
+<div class="applicant-container">
+  <form [formGroup]="form" class="applicant-form"
+        (ngSubmit)="submit(form.value)">
+    <div class="row first-row">
+      <mat-form-field>
+        <mat-label i18n>First name</mat-label>
+        <input class="form-control" matInput
+               [ngClass]="displayFieldCss('firstName')"
+               formControlName="firstName">
+        <ng-container *ngIf="isFieldValid('firstName')">
+          <div *ngIf="getFormControl('firstName').errors.required"
+               class="error-message" i18n>
+            First name is required.
+          </div>
+          <div *ngIf="getFormControl('firstName').errors.minlength"
+               class="error-message" i18n>
+            First name must be more than 4 characters long.
+          </div>
+        </ng-container>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label i18n>Last name</mat-label>
+        <input class="form-control" matInput
+               [ngClass]="displayFieldCss('lastName')"
+               formControlName="lastName">
+        <ng-container *ngIf="isFieldValid('lastName')">
+          <div *ngIf="getFormControl('lastName').errors.required"
+               class="error-message" i18n>
+            Last name is required.
+          </div>
+          <div *ngIf="getFormControl('lastName').errors.minlength"
+               class="error-message" i18n>
+            Last name must be more than 4 characters long.
+          </div>
+        </ng-container>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label i18n>Patriotic</mat-label>
+        <input class="form-control" matInput
+               [ngClass]="displayFieldCss('patriotic')"
+               formControlName="patriotic">
+        <ng-container *ngIf="isFieldValid('patriotic')">
+          <div *ngIf="getFormControl('patriotic').errors.required"
+               class="error-message" i18n>
+            Patriotic last name is required.
+          </div>
+          <div *ngIf="getFormControl('patriotic').errors.minlength"
+               class="error-message" i18n>
+            Patriotic must be more than 4 characters long.
+          </div>
+        </ng-container>
+      </mat-form-field>
+    </div>
+    <div class="row second-row">
+      <div class="file-container">
+        <input class="form-control is-hidden" type="file"
+               [ngClass]="displayFieldCss('passportCopy')"
+               formControlName="passportCopy">
+        <div class="upload-btn passport">Passport Copy</div>
+        <ng-container *ngIf="isFieldValid('passportCopy')">
+          <div *ngIf="getFormControl('passportCopy').errors.required"
+               class="error-message" i18n>
+            Passport Copy is required.
+          </div>
+        </ng-container>
+      </div>
+      <div class="file-container">
+        <input class="form-control is-hidden" type="file"
+               [ngClass]="displayFieldCss('image')"
+               formControlName="image">
+        <div class="upload-btn image">Image</div>
+      </div>
+      <div class="file-container">
+        <input class="form-control is-hidden" type="file"
+               [ngClass]="displayFieldCss('upload')"
+               formControlName="upload">
+        <div class="upload-btn audio">Upload</div>
+      </div>
+    </div>
+    <div class="row third-row">
+      <mat-form-field>
+        <mat-label i18n>Email</mat-label>
+        <input class="form-control" matInput
+               [ngClass]="displayFieldCss('email')"
+               formControlName="email">
+        <ng-container *ngIf="isFieldValid('email')">
+          <div *ngIf="getFormControl('email').errors.required"
+               class="error-message" i18n>
+            Email is required.
+          </div>
+          <div *ngIf="getFormControl('email').errors.email"
+               class="error-message" i18n>
+            Please input valid email
+          </div>
+        </ng-container>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label i18n>Birth Date</mat-label>
+        <input class="form-control" matInput type="date"
+               [ngClass]="displayFieldCss('birthDate')"
+               formControlName="birthDate">
+        <ng-container *ngIf="isFieldValid('birthDate')">
+          <div *ngIf="getFormControl('birthDate').errors.required"
+               class="error-message" i18n>
+            Birth Date is required.
+          </div>
+        </ng-container>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label i18n>Phone Number</mat-label>
+        <input class="form-control" matInput
+               [ngClass]="displayFieldCss('phoneNumber')"
+               formControlName="phoneNumber">
+        <ng-container *ngIf="isFieldValid('phoneNumber')">
+          <div *ngIf="getFormControl('phoneNumber').errors.required"
+               class="error-message" i18n>
+            Phone number is required.
+          </div>
+          <div *ngIf="getFormControl('phoneNumber').errors.minlength"
+               class="error-message" i18n>
+            Phone number must be more than 4 characters long.
+          </div>
+        </ng-container>
+      </mat-form-field>
+    </div>
+  </form>
+</div>
