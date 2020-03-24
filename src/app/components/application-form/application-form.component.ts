@@ -8,6 +8,8 @@ import {Region} from '../../models/region';
 import {EducationalInstitution} from '../../models/educational-institution';
 import {Nomination} from '../../models/nomination';
 import {Specialization} from '../../models/specialization';
+import {Router} from '@angular/router';
+import {CookieService} from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-application-form',
@@ -24,7 +26,9 @@ export class ApplicationFormComponent extends FormHelper implements OnInit {
   public specializations: Specialization[];
 
   constructor(private formBuilder: FormBuilder,
-              private applicationService: ApplicationService) {
+              private applicationService: ApplicationService,
+              private router: Router,
+              private cookieService: CookieService) {
     super();
   }
 

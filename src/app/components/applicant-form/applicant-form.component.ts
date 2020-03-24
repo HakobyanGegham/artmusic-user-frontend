@@ -40,4 +40,15 @@ export class ApplicantFormComponent extends FormHelper implements OnInit {
     }
   }
 
+  public passportBtnClick(passportCopyInput: HTMLInputElement) {
+    passportCopyInput.click();
+  }
+
+  public imageBtnClick(imageInput: HTMLInputElement) {
+    imageInput.click();
+  }
+
+  public audioBtnClick(audioInput: HTMLInputElement) {
+    audioInput.click();
+  }
 }

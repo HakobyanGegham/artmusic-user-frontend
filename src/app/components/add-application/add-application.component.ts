@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {CookieService} from 'ngx-cookie-service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-add-application',
@@ -7,9 +9,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddApplicationComponent implements OnInit {
 
-  constructor() { }
+  constructor(private cookieService: CookieService,
+              private router: Router) {
+  }
 
   ngOnInit(): void {
+    this.redirect();
+  }
+
+  private redirect() {
+    const token = this.cookieService.get('token');
+
+    if (!token) {
+      this.router.navigateByUrl('login');
+    }
   }
 
 }
