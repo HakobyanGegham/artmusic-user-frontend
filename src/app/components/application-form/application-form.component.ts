@@ -26,9 +26,7 @@ export class ApplicationFormComponent extends FormHelper implements OnInit {
   public specializations: Specialization[];
 
   constructor(private formBuilder: FormBuilder,
-              private applicationService: ApplicationService,
-              private router: Router,
-              private cookieService: CookieService) {
+              private applicationService: ApplicationService) {
     super();
   }
 
@@ -55,10 +53,10 @@ export class ApplicationFormComponent extends FormHelper implements OnInit {
     });
   }
 
-  public submit(value: any) {
+  public submit() {
     this.formSubmitAttempt = true;
     if (this.form.valid) {
-
+      return this.form.value;
     } else {
       this.validateAllFormFields(this.form);
     }

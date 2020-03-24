@@ -31,10 +31,10 @@ export class ApplicantFormComponent extends FormHelper implements OnInit {
     });
   }
 
-  public submit(value: any) {
+  public submit() {
     this.formSubmitAttempt = true;
     if (this.form.valid) {
-
+      return this.form.value;
     } else {
       this.validateAllFormFields(this.form);
     }

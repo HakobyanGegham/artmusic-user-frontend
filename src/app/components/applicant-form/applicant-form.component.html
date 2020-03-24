@@ -1,6 +1,5 @@
 <div class="applicant-container">
-  <form [formGroup]="form" class="applicant-form"
-        (ngSubmit)="submit(form.value)">
+  <form [formGroup]="form" class="applicant-form">
     <div class="row first-row">
       <mat-form-field>
         <mat-label i18n>First name</mat-label>
@@ -57,12 +56,6 @@
                [ngClass]="displayFieldCss('passportCopy')"
                formControlName="passportCopy">
         <div class="upload-btn passport" (click)="passportBtnClick(passportCopyInput)">Passport Copy</div>
-        <ng-container *ngIf="isFieldValid('passportCopy')">
-          <div *ngIf="getFormControl('passportCopy').errors.required"
-               class="error-message" i18n>
-            Passport Copy is required.
-          </div>
-        </ng-container>
       </div>
       <div class="file-container">
         <input class="form-control is-hidden" type="file" #imageInput

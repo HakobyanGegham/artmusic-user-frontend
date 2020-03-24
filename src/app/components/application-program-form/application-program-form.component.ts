@@ -26,10 +26,11 @@ export class ApplicationProgramFormComponent extends FormHelper implements OnIni
     });
   }
 
-  public submit(value: any) {
+
+  public submit() {
     this.formSubmitAttempt = true;
     if (this.form.valid) {
-
+      return this.form.value;
     } else {
       this.validateAllFormFields(this.form);
     }
