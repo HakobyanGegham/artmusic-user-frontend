@@ -10,6 +10,9 @@ import {Nomination} from '../../models/nomination';
 import {Specialization} from '../../models/specialization';
 import {Router} from '@angular/router';
 import {CookieService} from 'ngx-cookie-service';
+import {MatAutocomplete, MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
+import {CountryService} from '../../services/country.service';
+import {RegionService} from '../../services/region.service';
 
 @Component({
   selector: 'app-application-form',
@@ -26,12 +29,14 @@ export class ApplicationFormComponent extends FormHelper implements OnInit {
   public specializations: Specialization[];
 
   constructor(private formBuilder: FormBuilder,
-              private applicationService: ApplicationService) {
+              private applicationService: ApplicationService,
+              private countryService: CountryService,
+              private regionService: RegionService) {
     super();
   }
 
   ngOnInit(): void {
-    this.applicationService.getCountries().subscribe(countries => {
+    this.countryService.getCountries().subscribe(countries => {
       this.countries = countries;
     });
     this.applicationService.getNominations().subscribe(nominations => {
@@ -62,11 +67,6 @@ export class ApplicationFormComponent extends FormHelper implements OnInit {
     }
   }
 
-  public countryChange(value: any) {
-    this.applicationService.getRegions(+value).subscribe(regions => {
-      this.regions = regions;
-    });
-  }
 
   public regionChange(value: any) {
     this.applicationService.getCities(+value).subscribe(cities => {
@@ -84,5 +84,32 @@ export class ApplicationFormComponent extends FormHelper implements OnInit {
     this.applicationService.getSpecializations(+value).subscribe(specializations => {
       this.specializations = specializations;
     });
+  }
+
+  public countryChange(event: MatAutocompleteSelectedEvent) {
+    const id = event.option._getHostElement().getAttribute('data-id');
+    this.regionService.getRegions(+id).subscribe(regions => {
+      this.regions = regions;
+    });
+  }
+
+  public addCountry(event: MouseEvent, countryInput: HTMLInputElement) {
+    event.stopPropagation();
+    event.preventDefault();
+    if (countryInput.value.trim() !== '') {
+      this.countryService.addCountry(countryInput.value).subscribe(country => {
+        this.countries.push(country);
+      });
+    }
+  }
+
+  public addRegion(event: MouseEvent, regionInput: HTMLInputElement, value: any) {
+    event.stopPropagation();
+    event.preventDefault();
+    if (regionInput.value.trim() !== '') {
+      this.regionService.addRegions(regionInput.value, +value).subscribe(region => {
+        this.regions.push(region);
+      });
+    }
   }
 }

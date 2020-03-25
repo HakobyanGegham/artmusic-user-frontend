@@ -28,6 +28,7 @@ import {ApplicantFormComponent} from './components/applicant-form/applicant-form
 import {ApplicationProgramFormComponent} from './components/application-program-form/application-program-form.component';
 import {ApplicationFormComponent} from './components/application-form/application-form.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 registerLocaleData(localHy);
 registerLocaleData(localeRu);
@@ -46,22 +47,23 @@ registerLocaleData(localeRu);
     ApplicationProgramFormComponent,
     ApplicationFormComponent
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    MatIconModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatCheckboxModule,
-    AppRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
-    BrowserAnimationsModule,
-    UsersModule,
-    MDBBootstrapModule.forRoot(),
-    FontAwesomeModule
-  ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        MatIconModule,
+        MatInputModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        MatCheckboxModule,
+        AppRoutingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        BrowserAnimationsModule,
+        UsersModule,
+        MDBBootstrapModule.forRoot(),
+        FontAwesomeModule,
+        MatAutocompleteModule
+    ],
   providers: [
     CookieService,
     {provide: LOCALE_ID, useValue: 'ru'},
