@@ -8,11 +8,11 @@ import {Region} from '../../models/region';
 import {EducationalInstitution} from '../../models/educational-institution';
 import {Nomination} from '../../models/nomination';
 import {Specialization} from '../../models/specialization';
-import {Router} from '@angular/router';
-import {CookieService} from 'ngx-cookie-service';
-import {MatAutocomplete, MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
+import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
 import {CountryService} from '../../services/country.service';
 import {RegionService} from '../../services/region.service';
+import {CityService} from '../../services/city.service';
+import {EducationalInstitutionService} from '../../services/educational-institution.service';
 
 @Component({
   selector: 'app-application-form',
@@ -31,7 +31,9 @@ export class ApplicationFormComponent extends FormHelper implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private applicationService: ApplicationService,
               private countryService: CountryService,
-              private regionService: RegionService) {
+              private regionService: RegionService,
+              private cityService: CityService,
+              private educationalInstitutionService: EducationalInstitutionService) {
     super();
   }
 
@@ -64,18 +66,20 @@ export class ApplicationFormComponent extends FormHelper implements OnInit {
       return this.form.value;
     } else {
       this.validateAllFormFields(this.form);
+      return false;
     }
   }
 
-
-  public regionChange(value: any) {
-    this.applicationService.getCities(+value).subscribe(cities => {
+  public regionChange(event: MatAutocompleteSelectedEvent) {
+    const id = event.option._getHostElement().getAttribute('data-id');
+    this.cityService.getCities(+id).subscribe(cities => {
       this.cities = cities;
     });
   }
 
-  public cityChange(value: any) {
-    this.applicationService.getEducationalInstitutions(+value).subscribe(educationalInstitutions => {
+  public cityChange(event: MatAutocompleteSelectedEvent) {
+    const id = event.option._getHostElement().getAttribute('data-id');
+    this.educationalInstitutionService.getEducationalInstitutions(+id).subscribe(educationalInstitutions => {
       this.educationalInstitutions = educationalInstitutions;
     });
   }
@@ -103,13 +107,46 @@ export class ApplicationFormComponent extends FormHelper implements OnInit {
     }
   }
 
-  public addRegion(event: MouseEvent, regionInput: HTMLInputElement, value: any) {
+  addRegion(event: MouseEvent, regionInput: HTMLInputElement, value: string) {
     event.stopPropagation();
     event.preventDefault();
     if (regionInput.value.trim() !== '') {
-      this.regionService.addRegions(regionInput.value, +value).subscribe(region => {
+      const selectedCountry = this.countries.find(country => {
+        return country.name === value;
+      });
+
+      this.regionService.addRegions(regionInput.value, selectedCountry.id).subscribe(region => {
         this.regions.push(region);
       });
+    }
+  }
+
+  addCity(event: MouseEvent, cityInput: HTMLInputElement, value: string) {
+    event.stopPropagation();
+    event.preventDefault();
+    if (cityInput.value.trim() !== '') {
+      const selectedRegion = this.regions.find(region => {
+        return region.name === value;
+      });
+
+      this.cityService.addCity(cityInput.value, selectedRegion.id).subscribe(city => {
+        this.cities.push(city);
+      });
+    }
+  }
+
+  addEducationalInstitution(event: MouseEvent, educationalInstitutionInput: HTMLInputElement, value: string) {
+    event.stopPropagation();
+    event.preventDefault();
+    if (educationalInstitutionInput.value.trim() !== '') {
+      const selectedCity = this.cities.find(city => {
+        return city.name === value;
+      });
+
+      this.educationalInstitutionService.addEducationalInstitution(educationalInstitutionInput.value, selectedCity.id)
+        .subscribe(educationalInstitution => {
+          this.educationalInstitutions.push(educationalInstitution);
+        });
     }
   }
 }

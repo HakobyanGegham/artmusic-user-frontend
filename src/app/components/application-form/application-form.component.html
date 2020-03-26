@@ -2,7 +2,7 @@
   <form [formGroup]="form" class="application-form">
     <mat-form-field>
       <mat-label class="md-body-4">Country</mat-label>
-      <input matInput [matAutocomplete]="country" #countryInput
+      <input matInput [matAutocomplete]="country" #countryInput autocomplete="none"
              formControlName="country" class="autocomplete-input">
       <button class="add-btn" (click)="addCountry($event, countryInput)">
         <mat-icon>add</mat-icon>
@@ -25,12 +25,11 @@
       <mat-label>Region</mat-label>
       <input matInput [matAutocomplete]="region" #regionInput
              formControlName="region" class="autocomplete-input">
-      <button class="add-btn" (click)="addRegion($event, regionInput, country)">
+      <button class="add-btn" (click)="addRegion($event, regionInput, countryInput.value)">
         <mat-icon>add</mat-icon>
       </button>
       <mat-autocomplete (optionSelected)="regionChange($event)"
-                        #region="matAutocomplete"
-                        class="form-control">
+                        #region="matAutocomplete">
         <mat-option *ngFor="let region of regions" [attr.data-id]="region.id"
                     [value]="region.name">{{region.name}}</mat-option>
       </mat-autocomplete>
@@ -44,9 +43,16 @@
     </mat-form-field>
     <mat-form-field>
       <mat-label>City</mat-label>
-      <mat-select formControlName="city" (selectionChange)="cityChange($event.value)">
-        <mat-option *ngFor="let city of cities" value="{{city.id}}">{{city.name}}</mat-option>
-      </mat-select>
+      <input matInput [matAutocomplete]="city" #cityInput autocomplete="none"
+             formControlName="city" class="autocomplete-input">
+      <button class="add-btn" (click)="addCity($event, cityInput, regionInput.value)">
+        <mat-icon>add</mat-icon>
+      </button>
+      <mat-autocomplete (optionSelected)="cityChange($event)"
+                        #city="matAutocomplete">
+        <mat-option *ngFor="let city of cities" [attr.data-id]="city.id"
+                    value="{{city.name}}">{{city.name}}</mat-option>
+      </mat-autocomplete>
       <ng-container *ngIf="isFieldValid('city')">
         <div *ngIf="getFormControl('city').errors.required"
              class="error-message"
@@ -57,10 +63,16 @@
     </mat-form-field>
     <mat-form-field>
       <mat-label>Educational Institution</mat-label>
-      <mat-select id="educationalInstitution" formControlName="educationalInstitution">
-        <mat-option *ngFor="let educationalInstitution of educationalInstitutions"
-                    value="{{educationalInstitution.id}}">{{educationalInstitution.name}}</mat-option>
-      </mat-select>
+      <input matInput [matAutocomplete]="educationalInstitution"
+             #educationalInstitutionInput autocomplete="none"
+             formControlName="educationalInstitution" class="autocomplete-input">
+      <button class="add-btn" (click)="addEducationalInstitution($event, educationalInstitutionInput, cityInput.value)">
+        <mat-icon>add</mat-icon>
+      </button>
+      <mat-autocomplete #educationalInstitution="matAutocomplete">
+        <mat-option *ngFor="let educationalInstitution of educationalInstitutions" [attr.data-id]="educationalInstitution.id"
+                    value="{{educationalInstitution.name}}">{{educationalInstitution.name}}</mat-option>
+      </mat-autocomplete>
       <ng-container *ngIf="isFieldValid('educationalInstitution')">
         <div *ngIf="getFormControl('educationalInstitution').errors.required"
              class="error-message"
@@ -86,7 +98,7 @@
     </mat-form-field>
     <mat-form-field>
       <mat-label>Specialization</mat-label>
-      <mat-select id="specializationSelect" formControlName="nomination">
+      <mat-select id="specializationSelect" formControlName="specialization">
         <mat-option *ngFor="let specialization of specializations"
                     value="{{specialization.id}}">{{specialization.name}}</mat-option>
       </mat-select>

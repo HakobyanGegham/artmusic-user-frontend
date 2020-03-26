@@ -56,6 +56,12 @@
                [ngClass]="displayFieldCss('passportCopy')"
                formControlName="passportCopy">
         <div class="upload-btn passport" (click)="passportBtnClick(passportCopyInput)">Passport Copy</div>
+        <ng-container *ngIf="isFieldValid('passportCopy')">
+          <div *ngIf="getFormControl('passportCopy').errors.required"
+               class="error-message" i18n>
+            Patriotic last name is required.
+          </div>
+        </ng-container>
       </div>
       <div class="file-container">
         <input class="form-control is-hidden" type="file" #imageInput

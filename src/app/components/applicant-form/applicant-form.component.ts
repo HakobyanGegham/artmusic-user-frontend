@@ -37,6 +37,7 @@ export class ApplicantFormComponent extends FormHelper implements OnInit {
       return this.form.value;
     } else {
       this.validateAllFormFields(this.form);
+      return false;
     }
   }
 

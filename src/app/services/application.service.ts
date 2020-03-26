@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import { LOCALE_ID, Inject } from '@angular/core';
+import {LOCALE_ID, Inject} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
@@ -10,16 +10,16 @@ import {City} from '../models/city';
 import {EducationalInstitution} from '../models/educational-institution';
 import {Nomination} from '../models/nomination';
 import {Specialization} from '../models/specialization';
+import {ApplicationForm} from '../models/application-form';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApplicationService {
 
-  private getCitiesUrl = '/api/cities';
-  private getEducationInstitutionsUrl = '/api/educational-institutions';
   private getNominationsUrl = '/api/nominations';
   private getSpecializationsUrl = '/api/specializations';
+  private addApplicationUrl = '/api/application';
 
   constructor(private httpClient: HttpClient,
               private cookieService: CookieService,
@@ -30,20 +30,6 @@ export class ApplicationService {
     return new HttpHeaders({
       Authorization: 'Bearer ' + this.cookieService.get('token')
     });
-  }
-
-  public getCities(regionId: number): Observable<City[]> {
-    const headers = this.getHeadersWithToken();
-    return this.httpClient.get<City[]>(`${this.getCitiesUrl}/${this.locale}/${regionId}`, {headers}).pipe(
-      map(res => res.map(data => new City().deserialize(data)))
-    );
-  }
-
-  public getEducationalInstitutions(cityId: number): Observable<EducationalInstitution[]> {
-    const headers = this.getHeadersWithToken();
-    return this.httpClient.get<EducationalInstitution[]>(`${this.getEducationInstitutionsUrl}/${this.locale}/${cityId}`, {headers}).pipe(
-      map(res => res.map(data => new EducationalInstitution().deserialize(data)))
-    );
   }
 
   public getNominations(): Observable<Nomination[]> {
@@ -57,6 +43,13 @@ export class ApplicationService {
     const headers = this.getHeadersWithToken();
     return this.httpClient.get<Specialization[]>(`${this.getSpecializationsUrl}/${this.locale}/${nominationId}`, {headers}).pipe(
       map(res => res.map(data => new Specialization().deserialize(data)))
+    );
+  }
+
+  public addApplication(formValues: object): Observable<ApplicationForm> {
+    const headers = this.getHeadersWithToken();
+    return this.httpClient.post<ApplicationForm>(`${this.addApplicationUrl}`, {...formValues}, {headers}).pipe(
+      map(res => new ApplicationForm().deserialize(res))
     );
   }
 }

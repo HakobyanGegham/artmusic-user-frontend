@@ -23,7 +23,6 @@ export class CountryService extends ApiService {
 
   public getCountries(): Observable<Country[]> {
     const headers = this.getHeadersWithToken();
-
     return this.httpClient.get<Country[]>(`${this.getCountriesUrl}${this.locale}`, {headers}).pipe(
       map(res => res.map(data => new Country().deserialize(data)))
     );
@@ -31,7 +30,6 @@ export class CountryService extends ApiService {
 
   public addCountry(country: string): Observable<Country> {
     const headers = this.getHeadersWithToken();
-
     return this.httpClient.post<Country>(`${this.addCountriesUrl}${this.locale}`, {country}, {headers}).pipe(
       map(res => new Country().deserialize(res))
     );

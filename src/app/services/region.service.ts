@@ -29,8 +29,7 @@ export class RegionService extends ApiService {
 
   public addRegions(region: string, countryId: number): Observable<Region> {
     const headers = this.getHeadersWithToken();
-
-    return this.httpClient.post<Region>(`${this.addRegionsUrl}${this.locale}`, {region, countryId}, {headers}).pipe(
+    return this.httpClient.post<Region>(`${this.addRegionsUrl}${this.locale}`, {countryId, region}, {headers}).pipe(
       map(res => new Region().deserialize(res))
     );
   }

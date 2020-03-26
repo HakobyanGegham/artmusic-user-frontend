@@ -1,10 +1,10 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewChildren} from '@angular/core';
 import {CookieService} from 'ngx-cookie-service';
 import {Router} from '@angular/router';
 import {ApplicantFormComponent} from '../applicant-form/applicant-form.component';
 import {ApplicationFormComponent} from '../application-form/application-form.component';
-import {ApplicationForm} from '../../models/application-form';
 import {ApplicationProgramFormComponent} from '../application-program-form/application-program-form.component';
+import {ApplicationService} from '../../services/application.service';
 
 @Component({
   selector: 'app-add-application',
@@ -15,10 +15,11 @@ export class AddApplicationComponent implements OnInit {
 
   @ViewChild(ApplicantFormComponent) applicantFormComponent: ApplicantFormComponent;
   @ViewChild(ApplicationFormComponent) applicationFormComponent: ApplicationFormComponent;
-  @ViewChild(ApplicationProgramFormComponent) applicationProgramFormComponent: ApplicationProgramFormComponent;
+  @ViewChildren(ApplicationProgramFormComponent) applicationProgramFormComponents: ApplicationProgramFormComponent[];
 
   constructor(private cookieService: CookieService,
-              private router: Router) {
+              private router: Router,
+              private applicationService: ApplicationService) {
   }
 
   ngOnInit(): void {
@@ -34,12 +35,32 @@ export class AddApplicationComponent implements OnInit {
   }
 
   public submitBtnClicked() {
-    const formValues = [];
+    const applicant = this.applicantFormComponent.submit();
+    const application = this.applicationFormComponent.submit();
+    const applicationPrograms = [];
+    this.applicationProgramFormComponents.forEach(applicationProgram => {
+      applicationPrograms.push(applicationProgram.submit());
+    });
 
-    formValues.push(this.applicantFormComponent.submit());
-    formValues.push(this.applicationFormComponent.submit());
-    formValues.push(this.applicationProgramFormComponent.submit());
+    this.checkFormValues(applicationPrograms, applicant, application).then(() => {
+      this.applicationService.addApplication({applicant, application, applicationPrograms}).subscribe(applicationForm => {
+        console.log(applicationForm);
+      });
+    }).catch(error => {
+      console.log(error);
+    });
+  }
 
-    console.log(formValues);
+  private checkFormValues(applicationPrograms: any[], applicant: any, application: any) {
+    return new Promise((resolve, reject) => {
+      const falseValue = applicationPrograms.find(value => {
+        return value === false;
+      });
+      if (falseValue !== undefined || applicant === false || application === false) {
+        reject();
+      } else {
+        resolve();
+      }
+    });
   }
 }
