@@ -12,8 +12,8 @@ import {ApiService} from './api.service';
 })
 export class CountryService extends ApiService {
 
-  private getCountriesUrl = '/api/countries/';
-  private addCountriesUrl = '/api/country/';
+  private getCountriesUrl = '/api/countries';
+  private addCountriesUrl = '/api/country';
 
   constructor(private httpClient: HttpClient,
               protected cookieService: CookieService,
@@ -23,14 +23,15 @@ export class CountryService extends ApiService {
 
   public getCountries(): Observable<Country[]> {
     const headers = this.getHeadersWithToken();
-    return this.httpClient.get<Country[]>(`${this.getCountriesUrl}${this.locale}`, {headers}).pipe(
+    return this.httpClient.get<Country[]>(`${this.getCountriesUrl}?lang=${this.locale}`, {headers}).pipe(
       map(res => res.map(data => new Country().deserialize(data)))
     );
   }
 
   public addCountry(country: string): Observable<Country> {
     const headers = this.getHeadersWithToken();
-    return this.httpClient.post<Country>(`${this.addCountriesUrl}${this.locale}`, {country}, {headers}).pipe(
+    const lang = this.locale;
+    return this.httpClient.post<Country>(`${this.addCountriesUrl}`, {country, lang}, {headers}).pipe(
       map(res => new Country().deserialize(res))
     );
   }

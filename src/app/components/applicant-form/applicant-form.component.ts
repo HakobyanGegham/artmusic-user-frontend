@@ -25,7 +25,7 @@ export class ApplicantFormComponent extends FormHelper implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       birthDate: ['', [Validators.required]],
       phoneNumber: ['', [Validators.required]],
-      passportCopy: ['', [Validators.required]],
+      passportCopy: [''],
       image: [''],
       upload: ['']
     });

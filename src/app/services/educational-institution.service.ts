@@ -11,8 +11,8 @@ import {map} from 'rxjs/operators';
 })
 export class EducationalInstitutionService extends ApiService {
 
-  private getEducationInstitutionsUrl = '/api/educational-institutions/';
-  private addEducationInstitutionsUrl = '/api/educational-institution/';
+  private getEducationInstitutionsUrl = '/api/educational-institutions';
+  private addEducationInstitutionsUrl = '/api/educational-institution';
 
   constructor(private httpClient: HttpClient,
               protected cookieService: CookieService,
@@ -22,7 +22,8 @@ export class EducationalInstitutionService extends ApiService {
 
   public getEducationalInstitutions(cityId: number): Observable<EducationalInstitution[]> {
     const headers = this.getHeadersWithToken();
-    return this.httpClient.get<EducationalInstitution[]>(`${this.getEducationInstitutionsUrl}${this.locale}/${cityId}`,
+    return this.httpClient.get<EducationalInstitution[]>
+    (`${this.getEducationInstitutionsUrl}?lang=${this.locale}&cityId=${cityId}`,
       {headers}).pipe(
       map(res => res.map(data => new EducationalInstitution().deserialize(data)))
     );
@@ -30,10 +31,9 @@ export class EducationalInstitutionService extends ApiService {
 
   public addEducationalInstitution(educationalInstitution: string, cityId: number): Observable<EducationalInstitution> {
     const headers = this.getHeadersWithToken();
-    return this.httpClient.post<EducationalInstitution>(`${this.addEducationInstitutionsUrl}${this.locale}`, {
-      cityId,
-      educationalInstitution
-    }, {headers}).pipe(
+    const lang = this.locale;
+    return this.httpClient.post<EducationalInstitution>
+    (`${this.addEducationInstitutionsUrl}`, {cityId, educationalInstitution, lang}, {headers}).pipe(
       map(res => new EducationalInstitution().deserialize(res))
     );
   }

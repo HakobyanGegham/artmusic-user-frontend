@@ -34,21 +34,24 @@ export class ApplicationService {
 
   public getNominations(): Observable<Nomination[]> {
     const headers = this.getHeadersWithToken();
-    return this.httpClient.get<Nomination[]>(`${this.getNominationsUrl}/${this.locale}`, {headers}).pipe(
+    return this.httpClient.get<Nomination[]>
+    (`${this.getNominationsUrl}?lang=${this.locale}`, {headers}).pipe(
       map(res => res.map(data => new Nomination().deserialize(data)))
     );
   }
 
   public getSpecializations(nominationId: number): Observable<Specialization[]> {
     const headers = this.getHeadersWithToken();
-    return this.httpClient.get<Specialization[]>(`${this.getSpecializationsUrl}/${this.locale}/${nominationId}`, {headers}).pipe(
+    return this.httpClient.get<Specialization[]>
+    (`${this.getSpecializationsUrl}?lang=${this.locale}&nominationId=${nominationId}`, {headers}).pipe(
       map(res => res.map(data => new Specialization().deserialize(data)))
     );
   }
 
   public addApplication(formValues: object): Observable<ApplicationForm> {
     const headers = this.getHeadersWithToken();
-    return this.httpClient.post<ApplicationForm>(`${this.addApplicationUrl}`, {...formValues}, {headers}).pipe(
+    const lang = this.locale;
+    return this.httpClient.post<ApplicationForm>(`${this.addApplicationUrl}`, {...formValues, lang}, {headers}).pipe(
       map(res => new ApplicationForm().deserialize(res))
     );
   }

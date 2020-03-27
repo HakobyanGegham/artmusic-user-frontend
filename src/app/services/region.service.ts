@@ -12,7 +12,7 @@ import {map} from 'rxjs/operators';
 export class RegionService extends ApiService {
 
   private getRegionsUrl = '/api/regions';
-  private addRegionsUrl = '/api/region/';
+  private addRegionsUrl = '/api/region';
 
   constructor(private httpClient: HttpClient,
               protected cookieService: CookieService,
@@ -22,14 +22,16 @@ export class RegionService extends ApiService {
 
   public getRegions(countryId: number): Observable<Region[]> {
     const headers = this.getHeadersWithToken();
-    return this.httpClient.get<Region[]>(`${this.getRegionsUrl}/${this.locale}/${countryId}`, {headers}).pipe(
+    return this.httpClient.get<Region[]>
+    (`${this.getRegionsUrl}?lang=${this.locale}&countryId=${countryId}`, {headers}).pipe(
       map(res => res.map(data => new Region().deserialize(data)))
     );
   }
 
   public addRegions(region: string, countryId: number): Observable<Region> {
     const headers = this.getHeadersWithToken();
-    return this.httpClient.post<Region>(`${this.addRegionsUrl}${this.locale}`, {countryId, region}, {headers}).pipe(
+    const lang = this.locale;
+    return this.httpClient.post<Region>(`${this.addRegionsUrl}`, {countryId, region, lang}, {headers}).pipe(
       map(res => new Region().deserialize(res))
     );
   }
