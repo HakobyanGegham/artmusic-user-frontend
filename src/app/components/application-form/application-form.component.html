@@ -2,17 +2,14 @@
   <form [formGroup]="form" class="application-form">
     <mat-form-field>
       <mat-label class="md-body-4">Country</mat-label>
-      <input matInput [matAutocomplete]="country" #countryInput autocomplete="none"
-             formControlName="country" class="autocomplete-input">
-      <button class="add-btn" (click)="addCountry($event, countryInput)">
-        <mat-icon>add</mat-icon>
-      </button>
-      <mat-autocomplete (optionSelected)="countryChange($event)"
-        #country="matAutocomplete"
-        class="form-control">
-        <mat-option *ngFor="let country of countries" [attr.data-id]="country.id"
+      <ng-mat-autocomplete [source]="countries" formControlName="country"
+                           (optionSelected)="countryChange($event)"
+                           [showAddNew] = "true"
+                           [addNewText] = "'Add new country'"
+                           (createNew)="addCountry($event)">
+      <mat-option *ngFor="let country of countries" [attr.data-id]="country.id"
                     [value]="country.name">{{country.name}}</mat-option>
-      </mat-autocomplete>
+      </ng-mat-autocomplete>
       <ng-container *ngIf="isFieldValid('country')">
         <div *ngIf="getFormControl('country').errors.required"
              class="error-message"
@@ -25,9 +22,6 @@
       <mat-label>Region</mat-label>
       <input matInput [matAutocomplete]="region" #regionInput
              formControlName="region" class="autocomplete-input">
-      <button class="add-btn" (click)="addRegion($event, regionInput, countryInput.value)">
-        <mat-icon>add</mat-icon>
-      </button>
       <mat-autocomplete (optionSelected)="regionChange($event)"
                         #region="matAutocomplete">
         <mat-option *ngFor="let region of regions" [attr.data-id]="region.id"
@@ -63,20 +57,20 @@
     </mat-form-field>
     <mat-form-field>
       <mat-label>Educational Institution</mat-label>
-      <input matInput [matAutocomplete]="educationalInstitution"
-             #educationalInstitutionInput autocomplete="none"
-             formControlName="educationalInstitution" class="autocomplete-input">
-      <button class="add-btn" (click)="addEducationalInstitution($event, educationalInstitutionInput, cityInput.value)">
+      <input matInput [matAutocomplete]="institution"
+             #institutionInput autocomplete="none"
+             formControlName="institution" class="autocomplete-input">
+      <button class="add-btn" (click)="addEducationalInstitution($event, institutionInput, cityInput.value)">
         <mat-icon>add</mat-icon>
       </button>
-      <mat-autocomplete #educationalInstitution="matAutocomplete">
-        <mat-option *ngFor="let educationalInstitution of educationalInstitutions" [attr.data-id]="educationalInstitution.id"
-                    value="{{educationalInstitution.name}}">{{educationalInstitution.name}}</mat-option>
+      <mat-autocomplete #institution="matAutocomplete">
+        <mat-option *ngFor="let institution of institutions" [attr.data-id]="institution.id"
+                    value="{{institution.name}}">{{institution.name}}</mat-option>
       </mat-autocomplete>
-      <ng-container *ngIf="isFieldValid('educationalInstitution')">
-        <div *ngIf="getFormControl('educationalInstitution').errors.required"
+      <ng-container *ngIf="isFieldValid('institution')">
+        <div *ngIf="getFormControl('institution').errors.required"
              class="error-message"
-             i18n="@@educationalInstitutionErrorRequired">
+             i18n="@@institutionErrorRequired">
           Educational Institution is required.
         </div>
       </ng-container>

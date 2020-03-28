@@ -21,8 +21,8 @@ export class ApplicationProgramFormComponent extends FormHelper implements OnIni
     this.form = this.formBuilder.group({
       compositionName: ['', [Validators.required, Validators.minLength(4)]],
       compositionAuthor: ['', [Validators.required, Validators.minLength(4)]],
-      compositionDurationMinutes: ['', [Validators.required]],
-      compositionDurationSeconds: ['', [Validators.required]]
+      durationMinutes: ['', [Validators.required]],
+      durationSeconds: ['', [Validators.required]]
     });
   }
 

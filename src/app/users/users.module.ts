@@ -8,10 +8,11 @@ import {FormsModule} from '@angular/forms';
 import {ReactiveFormsModule} from '@angular/forms';
 
 import { UsersRoutingModule } from './users-routing.module';
+import { FestivalContentComponent } from './festival-content/festival-content.component';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [FestivalContentComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,

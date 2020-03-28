@@ -35,11 +35,11 @@
     <mat-form-field>
       <mat-label i18n>Minutes</mat-label>
       <input class="form-control" matInput type="number"
-             min="0" max="11" step="1"
-             [ngClass]="displayFieldCss('compositionDurationMinutes')"
-             formControlName="compositionDurationMinutes">
-      <ng-container *ngIf="isFieldValid('compositionDurationMinutes')">
-        <div *ngIf="getFormControl('compositionDurationMinutes').errors.required"
+             min="0" max="11" step="1" value="1"
+             [ngClass]="displayFieldCss('durationMinutes')"
+             formControlName="durationMinutes">
+      <ng-container *ngIf="isFieldValid('durationMinutes')">
+        <div *ngIf="getFormControl('durationMinutes').errors.required"
              class="error-message" i18n>
           Composition Duration Minutes are required.
         </div>
@@ -48,11 +48,11 @@
     <mat-form-field>
       <mat-label i18n>Seconds</mat-label>
       <input class="form-control" matInput type="number"
-             min="0" max="59" step="5"
-             [ngClass]="displayFieldCss('compositionDurationSeconds')"
-             formControlName="compositionDurationSeconds">
-      <ng-container *ngIf="isFieldValid('compositionDurationSeconds')">
-        <div *ngIf="getFormControl('compositionDurationSeconds').errors.required"
+             min="0" max="59" step="5" value="0"
+             [ngClass]="displayFieldCss('durationSeconds')"
+             formControlName="durationSeconds">
+      <ng-container *ngIf="isFieldValid('durationSeconds')">
+        <div *ngIf="getFormControl('durationSeconds').errors.required"
              class="error-message" i18n>
           Composition Duration Seconds are required.
         </div>

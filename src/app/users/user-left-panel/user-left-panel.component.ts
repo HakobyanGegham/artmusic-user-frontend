@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {ApplicationForm} from '../../models/application-form';
+import {ApplicationService} from '../../services/application.service';
+import {Festival} from '../../models/festival';
+import {FestivalService} from '../../services/festival.service';
 
 @Component({
   selector: 'app-user-left-panel',
@@ -7,15 +11,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserLeftPanelComponent implements OnInit {
 
-  constructor() { }
-
-  ngOnInit(): void {
+  public festivalList = ['Applications', 'Applicants', 'Results'];
+  public festivals: Festival[];
+  constructor(private festivalService: FestivalService) {
   }
 
-  showHideOptions(currentTarget: EventTarget) {
-    console.log(currentTarget);
-    // const itemContainer = currentTarget.closest('.f_item');
-    // itemContainer.querySelector('.f_festival-list').classList.toggle('is-hidden');
-    // itemContainer.querySelector('.f_rotate-icon').classList.toggle('rotate');
+  ngOnInit(): void {
+    this.festivalService.getFestivals().subscribe(festivals => {
+      this.festivals = festivals;
+    });
+  }
+
+  showHideOptions(currentTarget: any) {
+    const itemContainer = currentTarget.closest('.f_item');
+    itemContainer.querySelector('.f_festival-list').classList.toggle('is-hidden');
+    itemContainer.querySelector('.f_rotate-icon').classList.toggle('rotate');
   }
 }

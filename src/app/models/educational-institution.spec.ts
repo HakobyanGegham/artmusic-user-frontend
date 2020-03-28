@@ -1,7 +1,7 @@
-import { EducationalInstitution } from './educational-institution';
+import { Institution } from './institution';
 
 describe('EducationalInstitution', () => {
   it('should create an instance', () => {
-    expect(new EducationalInstitution()).toBeTruthy();
+    expect(new Institution()).toBeTruthy();
   });
 });

@@ -1,7 +1,7 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule, LOCALE_ID, NO_ERRORS_SCHEMA} from '@angular/core';
 import {registerLocaleData} from '@angular/common';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -29,6 +29,11 @@ import {ApplicationProgramFormComponent} from './components/application-program-
 import {ApplicationFormComponent} from './components/application-form/application-form.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatButtonModule} from '@angular/material/button';
+import {ApplicationAddConfirmDialogComponent} from './components/modals/application-add-confirm-dialog/application-add-confirm-dialog.component';
+import {TokenInterceptor} from './interceptors/token-interceptor';
+import { NgMatAutocompleteModule } from '../../node_modules/@vguleaev/angular-material-autocomplete';
 
 registerLocaleData(localHy);
 registerLocaleData(localeRu);
@@ -45,29 +50,34 @@ registerLocaleData(localeRu);
     AddApplicationComponent,
     ApplicantFormComponent,
     ApplicationProgramFormComponent,
-    ApplicationFormComponent
+    ApplicationFormComponent,
+    ApplicationAddConfirmDialogComponent
   ],
-    imports: [
-        BrowserModule,
-        HttpClientModule,
-        MatIconModule,
-        MatInputModule,
-        MatFormFieldModule,
-        MatSelectModule,
-        MatCheckboxModule,
-        AppRoutingModule,
-        FormsModule,
-        ReactiveFormsModule,
-        BrowserAnimationsModule,
-        UsersModule,
-        MDBBootstrapModule.forRoot(),
-        FontAwesomeModule,
-        MatAutocompleteModule
-    ],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    MatIconModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    UsersModule,
+    MDBBootstrapModule.forRoot(),
+    FontAwesomeModule,
+    MatAutocompleteModule,
+    MatDialogModule,
+    MatButtonModule,
+    NgMatAutocompleteModule
+  ],
   providers: [
     CookieService,
     {provide: LOCALE_ID, useValue: 'ru'},
-    {provide: LOCALE_ID, useValue: 'hy'}
+    {provide: LOCALE_ID, useValue: 'hy'},
+    {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}
   ],
   schemas: [NO_ERRORS_SCHEMA],
   bootstrap: [AppComponent]

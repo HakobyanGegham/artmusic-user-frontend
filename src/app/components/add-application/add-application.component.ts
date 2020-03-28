@@ -5,6 +5,8 @@ import {ApplicantFormComponent} from '../applicant-form/applicant-form.component
 import {ApplicationFormComponent} from '../application-form/application-form.component';
 import {ApplicationProgramFormComponent} from '../application-program-form/application-program-form.component';
 import {ApplicationService} from '../../services/application.service';
+import {ApplicationAddConfirmDialogComponent} from '../modals/application-add-confirm-dialog/application-add-confirm-dialog.component';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-add-application',
@@ -19,7 +21,8 @@ export class AddApplicationComponent implements OnInit {
 
   constructor(private cookieService: CookieService,
               private router: Router,
-              private applicationService: ApplicationService) {
+              private applicationService: ApplicationService,
+              private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -44,10 +47,9 @@ export class AddApplicationComponent implements OnInit {
 
     this.checkFormValues(applicationPrograms, applicant, application).then(() => {
       this.applicationService.addApplication({applicant, application, applicationPrograms}).subscribe(applicationForm => {
-        console.log(applicationForm);
+        this.showConfirmDialog();
       });
     }).catch(error => {
-      console.log(error);
     });
   }
 
@@ -61,6 +63,16 @@ export class AddApplicationComponent implements OnInit {
       } else {
         resolve();
       }
+    });
+  }
+
+  private showConfirmDialog() {
+    const dialogRef = this.dialog.open(ApplicationAddConfirmDialogComponent, {
+      width: '400px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.router.navigateByUrl('add-application');
     });
   }
 }

@@ -1,0 +1,10 @@
+<h1 mat-dialog-title></h1>
+<div mat-dialog-content>
+  <h3 i18n>
+    You have successfully added an application. Dou you like to add a new application?
+  </h3>
+</div>
+<div mat-dialog-actions>
+  <button mat-button class="btn mat-primary" (click)="onNoClick()">No Thanks</button>
+  <button mat-button class="btn mat-primary" [mat-dialog-close]="">Ok</button>
+</div>
