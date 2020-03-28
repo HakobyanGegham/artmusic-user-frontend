@@ -33,7 +33,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
 import {ApplicationAddConfirmDialogComponent} from './components/modals/application-add-confirm-dialog/application-add-confirm-dialog.component';
 import {TokenInterceptor} from './interceptors/token-interceptor';
-import { NgMatAutocompleteModule } from '../../node_modules/@vguleaev/angular-material-autocomplete';
+import { AutocompleteComponent } from './components/util/autocomplete/autocomplete.component';
 
 registerLocaleData(localHy);
 registerLocaleData(localeRu);
@@ -51,7 +51,8 @@ registerLocaleData(localeRu);
     ApplicantFormComponent,
     ApplicationProgramFormComponent,
     ApplicationFormComponent,
-    ApplicationAddConfirmDialogComponent
+    ApplicationAddConfirmDialogComponent,
+    AutocompleteComponent
   ],
   imports: [
     BrowserModule,
@@ -70,8 +71,7 @@ registerLocaleData(localeRu);
     FontAwesomeModule,
     MatAutocompleteModule,
     MatDialogModule,
-    MatButtonModule,
-    NgMatAutocompleteModule
+    MatButtonModule
   ],
   providers: [
     CookieService,

@@ -1,80 +1,36 @@
 <section class="application-container">
   <form [formGroup]="form" class="application-form">
-    <mat-form-field>
-      <mat-label class="md-body-4">Country</mat-label>
-      <ng-mat-autocomplete [source]="countries" formControlName="country"
-                           (optionSelected)="countryChange($event)"
-                           [showAddNew] = "true"
-                           [addNewText] = "'Add new country'"
-                           (createNew)="addCountry($event)">
-      <mat-option *ngFor="let country of countries" [attr.data-id]="country.id"
-                    [value]="country.name">{{country.name}}</mat-option>
-      </ng-mat-autocomplete>
-      <ng-container *ngIf="isFieldValid('country')">
-        <div *ngIf="getFormControl('country').errors.required"
-             class="error-message"
-             i18n="@@countryErrorRequired">
-          Country is required.
-        </div>
-      </ng-container>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Region</mat-label>
-      <input matInput [matAutocomplete]="region" #regionInput
-             formControlName="region" class="autocomplete-input">
-      <mat-autocomplete (optionSelected)="regionChange($event)"
-                        #region="matAutocomplete">
-        <mat-option *ngFor="let region of regions" [attr.data-id]="region.id"
-                    [value]="region.name">{{region.name}}</mat-option>
-      </mat-autocomplete>
-      <ng-container *ngIf="isFieldValid('region')">
-        <div *ngIf="getFormControl('region').errors.required"
-             class="error-message"
-             i18n="@@regionErrorRequired">
-          Region is required.
-        </div>
-      </ng-container>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>City</mat-label>
-      <input matInput [matAutocomplete]="city" #cityInput autocomplete="none"
-             formControlName="city" class="autocomplete-input">
-      <button class="add-btn" (click)="addCity($event, cityInput, regionInput.value)">
-        <mat-icon>add</mat-icon>
-      </button>
-      <mat-autocomplete (optionSelected)="cityChange($event)"
-                        #city="matAutocomplete">
-        <mat-option *ngFor="let city of cities" [attr.data-id]="city.id"
-                    value="{{city.name}}">{{city.name}}</mat-option>
-      </mat-autocomplete>
-      <ng-container *ngIf="isFieldValid('city')">
-        <div *ngIf="getFormControl('city').errors.required"
-             class="error-message"
-             i18n="@@cityErrorRequired">
-          City is required.
-        </div>
-      </ng-container>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Educational Institution</mat-label>
-      <input matInput [matAutocomplete]="institution"
-             #institutionInput autocomplete="none"
-             formControlName="institution" class="autocomplete-input">
-      <button class="add-btn" (click)="addEducationalInstitution($event, institutionInput, cityInput.value)">
-        <mat-icon>add</mat-icon>
-      </button>
-      <mat-autocomplete #institution="matAutocomplete">
-        <mat-option *ngFor="let institution of institutions" [attr.data-id]="institution.id"
-                    value="{{institution.name}}">{{institution.name}}</mat-option>
-      </mat-autocomplete>
-      <ng-container *ngIf="isFieldValid('institution')">
-        <div *ngIf="getFormControl('institution').errors.required"
-             class="error-message"
-             i18n="@@institutionErrorRequired">
-          Educational Institution is required.
-        </div>
-      </ng-container>
-    </mat-form-field>
+    <app-autocomplete [items]="countries"
+                      [addNewText]="'Add new Country'"
+                      [formGroup]="form"
+                      [controlName]="'country'"
+                      (optionSelected)=countryChange($event)
+                      (createNew)=addCountry($event)
+                      [label]="'Country'">
+    </app-autocomplete>
+    <app-autocomplete [items]="regions"
+                      [addNewText]="'Add new Region'"
+                      [formGroup]="form"
+                      [controlName]="'region'"
+                      (optionSelected)=regionChange($event)
+                      (createNew)=addRegion($event)
+                      [label]="'Region'">
+    </app-autocomplete>
+    <app-autocomplete [items]="cities"
+                      [addNewText]="'Add new City'"
+                      [formGroup]="form"
+                      [controlName]="'city'"
+                      (optionSelected)=cityChange($event)
+                      (createNew)=addCity($event)
+                      [label]="'City'">
+    </app-autocomplete>
+    <app-autocomplete [items]="institutions"
+                      [addNewText]="'Add new Institution'"
+                      [formGroup]="form"
+                      [controlName]="'institution'"
+                      (createNew)=addInstitution($event)
+                      [label]="'Institution'">
+    </app-autocomplete>
     <mat-form-field>
       <mat-label>Nomination</mat-label>
       <mat-select id="nominationSelect" formControlName="nomination"

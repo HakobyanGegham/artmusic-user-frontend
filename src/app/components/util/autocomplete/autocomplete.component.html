@@ -1,0 +1,15 @@
+<mat-form-field [formGroup]="formGroup">
+  <mat-label>{{ label }}</mat-label>
+  <input matInput [matAutocomplete]="autoComplete" autocomplete="none"
+         [formControlName]="controlName" #autocompleteInput>
+  <mat-autocomplete (optionSelected)="optionSelectedEvent($event)"
+                    #autoComplete="matAutocomplete">
+    <mat-option *ngFor="let item of filteredItems | async"
+                value="{{item.name}}">{{item.name}}</mat-option>
+    <mat-option *ngIf="query && noSuggestions" [value]="query"
+                (click)="onCreateNew()">
+      <mat-icon class="add-icon">add</mat-icon>
+      <span class="create-new" i18n> {{addNewText}} </span>
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>

@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import FormHelper from '../../helpers/form-helper';
 import {ApplicationService} from '../../services/application.service';
 import {Country} from '../../models/country';
@@ -8,7 +8,6 @@ import {Region} from '../../models/region';
 import {Institution} from '../../models/institution';
 import {Nomination} from '../../models/nomination';
 import {Specialization} from '../../models/specialization';
-import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
 import {CountryService} from '../../services/country.service';
 import {RegionService} from '../../services/region.service';
 import {CityService} from '../../services/city.service';
@@ -19,6 +18,7 @@ import {InstitutionService} from '../../services/institution.service';
   templateUrl: './application-form.component.html',
   styleUrls: ['./application-form.component.less']
 })
+
 export class ApplicationFormComponent extends FormHelper implements OnInit {
 
   public countries: Country[];
@@ -27,6 +27,10 @@ export class ApplicationFormComponent extends FormHelper implements OnInit {
   public institutions: Institution[];
   public nominations: Nomination[];
   public specializations: Specialization[];
+
+  private selectedCountryId: number;
+  private selectedRegionId: number;
+  private selectedCityId: number;
 
   constructor(private formBuilder: FormBuilder,
               private applicationService: ApplicationService,
@@ -49,7 +53,7 @@ export class ApplicationFormComponent extends FormHelper implements OnInit {
 
   private initForm() {
     this.form = this.formBuilder.group({
-      country: ['', [Validators.required]],
+      country: new FormControl('', [Validators.required]),
       region: ['', [Validators.required]],
       city: ['', [Validators.required]],
       institution: ['', [Validators.required]],
@@ -71,74 +75,58 @@ export class ApplicationFormComponent extends FormHelper implements OnInit {
     }
   }
 
-  public regionChange(event: MatAutocompleteSelectedEvent) {
-    const id = event.option._getHostElement().getAttribute('data-id');
-    this.cityService.getCities(+id).subscribe(cities => {
-      this.cities = cities;
-    });
-  }
-
-  public cityChange(event: MatAutocompleteSelectedEvent) {
-    const id = event.option._getHostElement().getAttribute('data-id');
-    this.institutionService.getEducationalInstitutions(+id).subscribe(institutions => {
-      this.institutions = institutions;
-    });
-  }
-
-  public nominationChange(value: any) {
-    this.applicationService.getSpecializations(+value).subscribe(specializations => {
-      this.specializations = specializations;
-    });
-  }
-
-  public countryChange(event: any) {
-    const id = event.option._getHostElement().getAttribute('data-id');
-    this.regionService.getRegions(+id).subscribe(regions => {
+  public countryChange(countryId: any) {
+    this.selectedCountryId = +countryId;
+    this.regionService.getRegions(+countryId).subscribe(regions => {
       this.regions = regions;
     });
   }
 
-  addRegion(event: MouseEvent, regionInput: HTMLInputElement, value: string) {
-    event.stopPropagation();
-    event.preventDefault();
-    if (regionInput.value.trim() !== '') {
-      const selectedCountry = this.countries.find(country => {
-        return country.name === value;
-      });
-
-      this.regionService.addRegions(regionInput.value, selectedCountry.id).subscribe(region => {
-        this.regions.push(region);
-      });
-    }
+  public regionChange(regionId: any) {
+    this.selectedRegionId = +regionId;
+    this.cityService.getCities(+regionId).subscribe(cities => {
+      this.cities = cities;
+    });
   }
 
-  addCity(event: MouseEvent, cityInput: HTMLInputElement, value: string) {
-    event.stopPropagation();
-    event.preventDefault();
-    if (cityInput.value.trim() !== '') {
-      const selectedRegion = this.regions.find(region => {
-        return region.name === value;
-      });
-
-      this.cityService.addCity(cityInput.value, selectedRegion.id).subscribe(city => {
-        this.cities.push(city);
-      });
-    }
+  public cityChange(cityId: any) {
+    this.selectedCityId = +cityId;
+    this.institutionService.getEducationalInstitutions(+cityId).subscribe(institutions => {
+      this.institutions = institutions;
+    });
   }
 
-  addEducationalInstitution(event: MouseEvent, institutionInput: HTMLInputElement, value: string) {
-    event.stopPropagation();
-    event.preventDefault();
-    if (institutionInput.value.trim() !== '') {
-      const selectedCity = this.cities.find(city => {
-        return city.name === value;
-      });
+  public nominationChange(nominationId: any) {
+    this.applicationService.getSpecializations(+nominationId).subscribe(specializations => {
+      this.specializations = specializations;
+    });
+  }
 
-      this.institutionService.addEducationalInstitution(institutionInput.value, selectedCity.id)
-        .subscribe(institution => {
-          this.institutions.push(institution);
-        });
-    }
+  public addCountry(newCountry: any) {
+    this.countryService.addCountry(newCountry).subscribe(country => {
+      this.countries.push(country);
+      this.selectedCountryId = country.id;
+    });
+  }
+
+  public addRegion(value: any) {
+    this.regionService.addRegions(value, this.selectedCountryId).subscribe(region => {
+      this.regions.push(region);
+      this.selectedRegionId = region.id;
+    });
+  }
+
+  public addCity(value: string) {
+    this.cityService.addCity(value, this.selectedRegionId).subscribe(city => {
+      this.cities.push(city);
+      this.selectedCityId = city.id;
+    });
+  }
+
+  public addInstitution(value: string) {
+    this.institutionService.addEducationalInstitution(value, this.selectedCityId).subscribe(institution => {
+      this.institutions.push(institution);
+    });
   }
 
   private setFormValues() {
@@ -161,16 +149,5 @@ export class ApplicationFormComponent extends FormHelper implements OnInit {
     this.form.value.institution = institution.id;
     this.form.value.nomination = +this.form.value.nomination;
     this.form.value.specialization = +this.form.value.specialization;
-  }
-
-  addCountry(event: {}) {
-    console.log(event);
-    // event.stopPropagation();
-    // event.preventDefault();
-    // if (countryInput.value.trim() !== '') {
-    //   this.countryService.addCountry(countryInput.value).subscribe(country => {
-    //     this.countries.push(country);
-    //   });
-    // }
   }
 }
