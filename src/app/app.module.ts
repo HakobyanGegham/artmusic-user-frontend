@@ -27,13 +27,15 @@ import {UsersModule} from './users/users.module';
 import {ApplicantFormComponent} from './components/applicant-form/applicant-form.component';
 import {ApplicationProgramFormComponent} from './components/application-program-form/application-program-form.component';
 import {ApplicationFormComponent} from './components/application-form/application-form.component';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
 import {ApplicationAddConfirmDialogComponent} from './components/modals/application-add-confirm-dialog/application-add-confirm-dialog.component';
 import {TokenInterceptor} from './interceptors/token-interceptor';
-import { AutocompleteComponent } from './components/util/autocomplete/autocomplete.component';
+import {AutocompleteComponent} from './components/util/autocomplete/autocomplete.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
 
 registerLocaleData(localHy);
 registerLocaleData(localeRu);
@@ -71,7 +73,9 @@ registerLocaleData(localeRu);
     FontAwesomeModule,
     MatAutocompleteModule,
     MatDialogModule,
-    MatButtonModule
+    MatButtonModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [
     CookieService,

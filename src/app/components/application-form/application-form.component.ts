@@ -106,6 +106,7 @@ export class ApplicationFormComponent extends FormHelper implements OnInit {
     this.countryService.addCountry(newCountry).subscribe(country => {
       this.countries.push(country);
       this.selectedCountryId = country.id;
+      this.countryChange(country.id);
     });
   }
 
@@ -113,6 +114,7 @@ export class ApplicationFormComponent extends FormHelper implements OnInit {
     this.regionService.addRegions(value, this.selectedCountryId).subscribe(region => {
       this.regions.push(region);
       this.selectedRegionId = region.id;
+      this.regionChange(region.id);
     });
   }
 
@@ -120,6 +122,7 @@ export class ApplicationFormComponent extends FormHelper implements OnInit {
     this.cityService.addCity(value, this.selectedRegionId).subscribe(city => {
       this.cities.push(city);
       this.selectedCityId = city.id;
+      this.cityChange(city.id);
     });
   }
 

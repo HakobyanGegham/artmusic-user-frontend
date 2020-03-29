@@ -1,0 +1,46 @@
+.application-content {
+  display: grid;
+  grid-template-columns: 30% 15% 20% 20% 11%;
+  grid-template-rows: 25% 75%;
+  grid-column-gap: 1%;
+  grid-row-gap: 10%;
+  border-radius: 5px;
+  color: #426742;
+
+  .title {
+    text-align: center;
+    font-size: 19px;
+    height: 40px;
+    line-height: 40px;
+    box-shadow: -1px 0 3px 1px #ecd1d1;
+  }
+
+  .content {
+    box-shadow: -1px 0 3px 1px #ecd1d1;
+
+    &.applicant {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      font-size: 19px;
+      text-align: center;
+      line-height: 45px;
+    }
+
+    &.item {
+      font-size: 19px;
+      text-align: center;
+      line-height: 45px;
+    }
+  }
+
+  .edit {
+    color: #8eafe0;
+  }
+  .remove {
+    color: #e10300;
+  }
+  .action {
+    min-width: 80px;
+    font-size: 17px;
+  }
+}

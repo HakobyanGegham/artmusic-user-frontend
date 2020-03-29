@@ -1,6 +1,6 @@
 .applicant-form {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 75% 25%;
   grid-auto-rows: 100px;
 
   .first-row, .third-row {
@@ -9,6 +9,7 @@
     grid-column-gap: 20px;
 
   }
+
   input {
     font-size: 18px;
     padding: 5px 0;
@@ -16,6 +17,16 @@
 
   mat-label {
     font-size: 18px;
+  }
+
+  .date-picker-input {
+    width: 89%;
+  }
+
+  .mat-datepicker-toggle {
+    color: blueviolet;
+    position: absolute;
+    bottom: 5px;
   }
 
   .file-container {
@@ -58,4 +69,12 @@
       }
     }
   }
+}
+
+::ng-deep .date-picker {
+  background:lightblue;
+}
+
+::ng-deep .date-picker .mat-calendar-body-today:not(.mat-calendar-body-selected){
+  border-color:darkblue;
 }

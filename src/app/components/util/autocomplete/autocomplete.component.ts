@@ -58,7 +58,9 @@ export class AutocompleteComponent implements OnInit, OnChanges {
       return item.name === event.option.value;
     });
 
-    this.optionSelected.emit(selectedItem.id);
+    if (selectedItem) {
+      this.optionSelected.emit(selectedItem.id);
+    }
   }
 
   private filter(val: any) {

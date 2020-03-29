@@ -34,6 +34,7 @@ export class ApplicantFormComponent extends FormHelper implements OnInit {
   public submit() {
     this.formSubmitAttempt = true;
     if (this.form.valid) {
+      this.formatBirthDate();
       return this.form.value;
     } else {
       this.validateAllFormFields(this.form);
@@ -51,5 +52,16 @@ export class ApplicantFormComponent extends FormHelper implements OnInit {
 
   public audioBtnClick(audioInput: HTMLInputElement) {
     audioInput.click();
+  }
+
+  private formatBirthDate() {
+    const birthDate = this.getFormControl('birthDate').value;
+    let day = birthDate.getDate().toString();
+    day = +day < 10 ? '0' + day : day;
+    let month = (birthDate.getMonth() + 1).toString();
+    month = +month < 10 ? '0' + month : month;
+    const year = birthDate.getFullYear();
+    const formattedBirthDate = `${year}-${month}-${day}`;
+    this.getFormControl('birthDate').setValue(formattedBirthDate);
   }
 }

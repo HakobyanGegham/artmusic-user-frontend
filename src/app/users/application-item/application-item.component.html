@@ -1,0 +1,39 @@
+<div class="application-container">
+  <div class="application-content">
+    <div class="title"><span i18n>Applicant</span></div>
+    <div class="title"><span i18n>Nomination</span></div>
+    <div class="title"><span i18n>Composition 1</span></div>
+    <div class="title"><span i18n>Composition 2</span></div>
+    <div class="title"><span i18n>Actions</span></div>
+    <div class="title"><span i18n>State</span></div>
+    <div class="content applicant">
+      <div i18n> {{ application.applicant.firstName }}</div>
+      <div i18n> {{ application.applicant.lastName }}</div>
+      <div i18n> {{ application.applicant.patriotic }}</div>
+      <div i18n> {{ application.applicant.age }}</div>
+    </div>
+    <div class="content item">
+      <div i18n> {{ application.nomination.name }}</div>
+      <div i18n> {{ application.specialization.name }}</div>
+    </div>
+    <div class="content item" *ngFor="let program of application.programs">
+      <div i18n> {{ program.compositionAuthor }}</div>
+      <div i18n> {{ program.compositionName }}</div>
+    </div>
+    <div class="content item">
+      <div class="edit" (click)="removeItem()">
+        <button mat-button class="btn action" i18n>Edit
+          <mat-icon>edit</mat-icon>
+        </button>
+      </div>
+      <div class="remove">
+        <button mat-button class="btn action remove" i18n>Remove
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div class="content">
+      {{ application.state }}
+    </div>
+  </div>
+</div>

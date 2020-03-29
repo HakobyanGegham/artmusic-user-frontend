@@ -1,9 +1,10 @@
 <section class="left-panel">
   <div class="main-list-container">
     <ul class="main-list">
-      <li class="main-list-item f_item">
+      <li class="main-list-item f_item"
+          *ngFor="let festival of festivals">
         <div class="item-text" (click)="showHideOptions($event.currentTarget)">
-          <span>Art Music 11</span>
+          <span>{{ festival.name }}</span>
           <mat-icon role="img" class="mat-icon f_rotate-icon rotating-icon mat-icon-no-color"
                     aria-hidden="true">
             <svg focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -13,77 +14,9 @@
         </div>
 
         <ul class="festival-list f_festival-list is-hidden">
-          <li class="festival-item" *ngFor="let festivalItem of festivalList">{{festivalItem}}</li>
-        </ul>
-      </li>
-      <li class="main-list-item f_item">
-        <div class="item-text" (click)="showHideOptions($event.target)">
-          <span>Art Music 10</span>
-          <mat-icon role="img" class="mat-icon f_rotate-icon rotating-icon mat-icon-no-color"
-                    aria-hidden="true">
-            <svg focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"></path>
-            </svg>
-          </mat-icon>
-        </div>
-        <ul class="festival-list f_festival-list is-hidden">
-          <li class="festival-item" *ngFor="let festivalItem of festivalList">{{festivalItem}}</li>
-        </ul>
-      </li>
-      <li class="main-list-item f_item">
-        <div class="item-text" (click)="showHideOptions($event.target)">
-          <span>Art Music 9</span>
-          <mat-icon role="img" class="mat-icon f_rotate-icon rotating-icon mat-icon-no-color"
-                    aria-hidden="true">
-            <svg focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"></path>
-            </svg>
-          </mat-icon>
-        </div>
-        <ul class="festival-list f_festival-list is-hidden">
-          <li class="festival-item" *ngFor="let festivalItem of festivalList">{{festivalItem}}</li>
-        </ul>
-      </li>
-      <li class="main-list-item f_item">
-        <div class="item-text" (click)="showHideOptions($event.target)">
-          <span>Art Music 8</span>
-          <mat-icon role="img" class="mat-icon f_rotate-icon rotating-icon mat-icon-no-color"
-                    aria-hidden="true">
-            <svg focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"></path>
-            </svg>
-          </mat-icon>
-        </div>
-        <ul class="festival-list f_festival-list is-hidden">
-          <li class="festival-item" *ngFor="let festivalItem of festivalList">{{festivalItem}}</li>
-        </ul>
-      </li>
-      <li class="main-list-item f_item">
-        <div class="item-text" (click)="showHideOptions($event.target)">
-          <span>Art Music 7</span>
-          <mat-icon role="img" class="mat-icon f_rotate-icon rotating-icon mat-icon-no-color"
-                    aria-hidden="true">
-            <svg focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"></path>
-            </svg>
-          </mat-icon>
-        </div>
-        <ul class="festival-list f_festival-list is-hidden">
-          <li class="festival-item" *ngFor="let festivalItem of festivalList">{{festivalItem}}</li>
-        </ul>
-      </li>
-      <li class="main-list-item f_item">
-        <div class="item-text" (click)="showHideOptions($event.target)">
-          <span>Art Music 6</span>
-          <mat-icon role="img" class="mat-icon f_rotate-icon rotating-icon mat-icon-no-color"
-                    aria-hidden="true">
-            <svg focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"></path>
-            </svg>
-          </mat-icon>
-        </div>
-        <ul class="festival-list f_festival-list is-hidden">
-          <li class="festival-item" *ngFor="let festivalItem of festivalList">{{festivalItem}}</li>
+          <li class="festival-item" [routerLink]="['festival/' + festival.id + '/applications']">Applications</li>
+          <li class="festival-item" [routerLink]="['festival/' + festival.id + '/applicants']">Applicants</li>
+          <li class="festival-item" [routerLink]="['festival/' + festival.id + '/results']">Results</li>
         </ul>
       </li>
     </ul>

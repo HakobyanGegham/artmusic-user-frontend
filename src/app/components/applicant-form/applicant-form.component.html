@@ -87,11 +87,14 @@
           </div>
         </ng-container>
       </mat-form-field>
-      <mat-form-field>
-        <mat-label i18n>Birth Date</mat-label>
-        <input class="form-control" matInput type="date"
+      <mat-form-field class="example-full-width">
+        <mat-label>Choose a date</mat-label>
+        <input matInput [matDatepicker]="picker" class="date-picker-input"
                [ngClass]="displayFieldCss('birthDate')"
                formControlName="birthDate">
+        <mat-datepicker-toggle [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker
+                        class="date-picker"></mat-datepicker>
         <ng-container *ngIf="isFieldValid('birthDate')">
           <div *ngIf="getFormControl('birthDate').errors.required"
                class="error-message" i18n>

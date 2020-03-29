@@ -9,14 +9,19 @@ import {ReactiveFormsModule} from '@angular/forms';
 
 import { UsersRoutingModule } from './users-routing.module';
 import { FestivalContentComponent } from './festival-content/festival-content.component';
+import { ApplicationsComponent } from './applications/applications.component';
+import { ApplicationItemComponent } from './application-item/application-item.component';
+import {MatButtonModule} from '@angular/material/button';
 
 
 @NgModule({
-  declarations: [FestivalContentComponent],
+  declarations: [FestivalContentComponent, ApplicationsComponent, ApplicationItemComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    UsersRoutingModule
+    UsersRoutingModule,
+    MatButtonModule,
+    MatIconModule
   ]
 })
 export class UsersModule { }
