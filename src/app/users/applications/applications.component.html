@@ -1,6 +1,16 @@
 <section class="applications-container">
   <h2 i18n>Applications</h2>
-  <app-application-item *ngFor="let application of applications"
-                        [application]="application"
-                        (onRemove)="removeItem($event)"></app-application-item>
+  <div class="application-header">
+    <div class="title"><span i18n>Applicant</span></div>
+    <div class="title"><span i18n>Nomination</span></div>
+    <div class="title"><span i18n>Composition 1</span></div>
+    <div class="title"><span i18n>Composition 2</span></div>
+    <div class="title"><span i18n>State</span></div>
+    <div class="title"><span i18n>Actions</span></div>
+  </div>
+  <div class="application-content">
+    <app-application-item *ngFor="let application of applications"
+                          [application]="application"
+                          (onRemove)="removeItem($event)"></app-application-item>
+  </div>
 </section>
