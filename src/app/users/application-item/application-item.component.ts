@@ -1,5 +1,8 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {Application} from '../../models/application';
+import {MatDialog} from '@angular/material/dialog';
+import {RemoveApplicationDialogComponent} from '../../components/modals/remove-application-dialog/remove-application-dialog.component';
+import {ApplicationService} from '../../services/application.service';
 
 @Component({
   selector: 'app-application-item',
@@ -9,8 +12,10 @@ import {Application} from '../../models/application';
 export class ApplicationItemComponent implements OnInit, OnChanges {
 
   @Input() application: Application;
+  @Output() onRemove = new EventEmitter();
 
-  constructor() {
+  constructor(private dialog: MatDialog,
+              private applicationService: ApplicationService) {
   }
 
   public ngOnInit(): void {
@@ -23,6 +28,12 @@ export class ApplicationItemComponent implements OnInit, OnChanges {
   }
 
   public removeItem() {
-
+    const dialogRef = this.dialog.open(RemoveApplicationDialogComponent, {
+      width: '500px',
+    });
+    dialogRef.componentInstance.onRemove.subscribe(() => {
+      this.onRemove.emit(this.application.id);
+      dialogRef.close();
+    });
   }
 }

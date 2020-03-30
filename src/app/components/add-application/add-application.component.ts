@@ -70,9 +70,5 @@ export class AddApplicationComponent implements OnInit {
     const dialogRef = this.dialog.open(ApplicationAddConfirmDialogComponent, {
       width: '400px',
     });
-
-    dialogRef.afterClosed().subscribe(result => {
-      this.router.navigateByUrl('add-application');
-    });
   }
 }

@@ -36,6 +36,7 @@ import {TokenInterceptor} from './interceptors/token-interceptor';
 import {AutocompleteComponent} from './components/util/autocomplete/autocomplete.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
+import { RemoveApplicationDialogComponent } from './components/modals/remove-application-dialog/remove-application-dialog.component';
 
 registerLocaleData(localHy);
 registerLocaleData(localeRu);
@@ -54,7 +55,8 @@ registerLocaleData(localeRu);
     ApplicationProgramFormComponent,
     ApplicationFormComponent,
     ApplicationAddConfirmDialogComponent,
-    AutocompleteComponent
+    AutocompleteComponent,
+    RemoveApplicationDialogComponent
   ],
   imports: [
     BrowserModule,

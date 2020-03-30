@@ -25,4 +25,11 @@ export class ApplicationsComponent implements OnInit {
     });
   }
 
+  public removeItem(id: any) {
+    this.applicationService.removeApplication(id).subscribe(message => {
+      this.applications = this.applications.filter(application => {
+        return application.id !== id;
+      });
+    });
+  }
 }

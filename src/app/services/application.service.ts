@@ -17,6 +17,7 @@ export class ApplicationService {
   private getSpecializationsUrl = '/api/specializations';
   private getApplicationsUrl = '/api/applications';
   private addApplicationUrl = '/api/application';
+  private removeApplicationUrl = '/api/application/';
 
   constructor(private httpClient: HttpClient,
               @Inject(LOCALE_ID) private locale: string) {
@@ -47,6 +48,13 @@ export class ApplicationService {
     return this.httpClient.get<Application[]>
     (`${this.getApplicationsUrl}?lang=${this.locale}&festivalId=${festivalId}`).pipe(
       map(res => res.map(data => new Application().deserialize(data)))
+    );
+  }
+
+  public removeApplication(id: number): Observable<string> {
+    return this.httpClient.delete
+    (`${this.removeApplicationUrl}${id}`).pipe(
+      map(res => res.toString())
     );
   }
 }

@@ -21,19 +21,22 @@
       <div i18n> {{ program.compositionName }}</div>
     </div>
     <div class="content item">
-      <div class="edit" (click)="removeItem()">
-        <button mat-button class="btn action" i18n>Edit
+      <div>
+        {{ application.state }}
+      </div>
+      <mat-icon>loop</mat-icon>
+    </div>
+    <div class="content item">
+      <div class="edit">
+        <button mat-button class="btn action" i18n>
           <mat-icon>edit</mat-icon>
         </button>
       </div>
-      <div class="remove">
-        <button mat-button class="btn action remove" i18n>Remove
+      <div class="remove" (click)="removeItem()">
+        <button mat-button class="btn action remove" i18n>
           <mat-icon>delete</mat-icon>
         </button>
       </div>
-    </div>
-    <div class="content">
-      {{ application.state }}
     </div>
   </div>
 </div>
