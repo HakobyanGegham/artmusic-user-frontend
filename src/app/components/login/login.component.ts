@@ -2,8 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import FormHelper from '../../helpers/form-helper';
 import {AuthService} from '../../services/auth.service';
-import {CookieService} from 'ngx-cookie-service';
 import {Router} from '@angular/router';
+import {TokenService} from '../../services/token.service';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +14,7 @@ export class LoginComponent extends FormHelper implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private authService: AuthService,
-              private cookieService: CookieService,
+              private tokenService: TokenService,
               private router: Router) {
     super();
   }
@@ -33,13 +33,13 @@ export class LoginComponent extends FormHelper implements OnInit {
   public submit(value: any) {
     this.formSubmitAttempt = true;
     if (this.form.valid) {
-      this.authService.login(value).subscribe(token => {
-        this.cookieService.set('token', token.token);
+      this.authService.login(value).subscribe(user => {
+        this.tokenService.saveUser(user);
+        this.tokenService.saveToken(user.token);
         this.router.navigateByUrl('/user');
       });
     } else {
       this.validateAllFormFields(this.form);
     }
   }
-
 }

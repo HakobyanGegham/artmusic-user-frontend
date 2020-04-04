@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {Token} from '../models/token';
+import {User} from '../models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -20,9 +21,9 @@ export class AuthService {
    *
    * params
    */
-  public register(params: {}): Observable<Token> {
-    return this.httpClient.post<Token>(this.registerUrl, params).pipe(
-      map(res => new Token().deserialize(res))
+  public register(params: {}): Observable<User> {
+    return this.httpClient.post<User>(this.registerUrl, params).pipe(
+      map(res => new User().deserialize(res))
     );
   }
 
@@ -31,9 +32,9 @@ export class AuthService {
    *
    *  params
    */
-  public login(params: {}): Observable<Token> {
-    return this.httpClient.post<Token>(this.loginUrl, params).pipe(
-      map(res => new Token().deserialize(res))
+  public login(params: {}): Observable<User> {
+    return this.httpClient.post<User>(this.loginUrl, params).pipe(
+      map(res => new User().deserialize(res))
     );
   }
 }

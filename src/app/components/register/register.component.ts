@@ -5,6 +5,7 @@ import {CookieService} from 'ngx-cookie-service';
 import {DOCUMENT} from '@angular/common';
 import FormHelper from '../../helpers/form-helper';
 import {Router} from '@angular/router';
+import {TokenService} from '../../services/token.service';
 
 @Component({
   selector: 'app-register',
@@ -18,7 +19,7 @@ export class RegisterComponent extends FormHelper implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private authService: AuthService,
-              private cookieService: CookieService,
+              private tokenService: TokenService,
               private router: Router) {
     super();
   }
@@ -40,9 +41,10 @@ export class RegisterComponent extends FormHelper implements OnInit {
   public submit(value: any) {
     this.formSubmitAttempt = true;
     if (this.form.valid) {
-      this.authService.register(value).subscribe(token => {
-        this.cookieService.set('token', token.token);
-        this.router.navigateByUrl('/user');
+      this.authService.register(value).subscribe(user => {
+        this.tokenService.saveUser(user);
+        this.tokenService.saveToken(user.token);
+        // this.router.navigateByUrl('/user');
       });
     } else {
       this.validateAllFormFields(this.form);
