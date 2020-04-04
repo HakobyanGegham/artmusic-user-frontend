@@ -1,19 +1,22 @@
-import {Component, OnInit, ViewChild, ViewChildren} from '@angular/core';
+import {Component, OnChanges, OnInit, ViewChild, ViewChildren} from '@angular/core';
 import {CookieService} from 'ngx-cookie-service';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {ApplicantFormComponent} from '../applicant-form/applicant-form.component';
 import {ApplicationFormComponent} from '../application-form/application-form.component';
 import {ApplicationProgramFormComponent} from '../application-program-form/application-program-form.component';
 import {ApplicationService} from '../../services/application.service';
 import {ApplicationAddConfirmDialogComponent} from '../modals/application-add-confirm-dialog/application-add-confirm-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
+import {Application} from '../../models/application';
 
 @Component({
   selector: 'app-add-application',
-  templateUrl: './add-application.component.html',
-  styleUrls: ['./add-application.component.less']
+  templateUrl: './add-update-application.component.html',
+  styleUrls: ['./add-update-application.component.less']
 })
-export class AddApplicationComponent implements OnInit {
+export class AddUpdateApplicationComponent implements OnInit {
+
+  public application: Application;
 
   @ViewChild(ApplicantFormComponent) applicantFormComponent: ApplicantFormComponent;
   @ViewChild(ApplicationFormComponent) applicationFormComponent: ApplicationFormComponent;
@@ -21,11 +24,18 @@ export class AddApplicationComponent implements OnInit {
 
   constructor(private cookieService: CookieService,
               private router: Router,
+              private route: ActivatedRoute,
               private applicationService: ApplicationService,
               private dialog: MatDialog) {
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
+    const id = this.route.snapshot.paramMap.get('applicationId');
+    if (id) {
+      this.applicationService.getApplication(+id).subscribe(application => {
+        this.application = application;
+      });
+    }
     this.redirect();
   }
 
@@ -46,7 +56,7 @@ export class AddApplicationComponent implements OnInit {
     });
 
     this.checkFormValues(applicationPrograms, applicant, application).then(() => {
-      this.applicationService.addApplication({applicant, application, applicationPrograms}).subscribe(applicationForm => {
+      this.applicationService.addUpdateApplication({applicant, application, applicationPrograms}).subscribe(applicationForm => {
         this.showConfirmDialog();
       });
     }).catch(error => {

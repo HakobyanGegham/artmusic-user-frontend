@@ -1,0 +1,10 @@
+<section class="add-application">
+  <h1 i18n="@@addApplication"> Add Update Application Form </h1>
+  <app-applicant-form [applicant]="application?.applicant"></app-applicant-form>
+  <app-application-form [application]="application"></app-application-form>
+  <app-application-program-form [program]="application?.programs[0]"></app-application-program-form>
+  <app-application-program-form [program]="application?.programs[1]"></app-application-program-form>
+  <div class="button-container">
+    <button type="submit" class="send-application-btn" (click)="submitBtnClicked()">Send Application</button>
+  </div>
+</section>

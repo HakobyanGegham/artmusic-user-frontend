@@ -22,7 +22,7 @@ import {LoginComponent} from './components/login/login.component';
 import {UserComponent} from './users/user/user.component';
 import {UserLeftPanelComponent} from './users/user-left-panel/user-left-panel.component';
 import {HeaderComponent} from './components/header/header.component';
-import {AddApplicationComponent} from './components/add-application/add-application.component';
+import {AddUpdateApplicationComponent} from './components/add-update-application/add-update-application.component';
 import {UsersModule} from './users/users.module';
 import {ApplicantFormComponent} from './components/applicant-form/applicant-form.component';
 import {ApplicationProgramFormComponent} from './components/application-program-form/application-program-form.component';
@@ -36,7 +36,7 @@ import {TokenInterceptor} from './interceptors/token-interceptor';
 import {AutocompleteComponent} from './components/util/autocomplete/autocomplete.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
-import { RemoveApplicationDialogComponent } from './components/modals/remove-application-dialog/remove-application-dialog.component';
+import {RemoveApplicationDialogComponent} from './components/modals/remove-application-dialog/remove-application-dialog.component';
 
 registerLocaleData(localHy);
 registerLocaleData(localeRu);
@@ -50,13 +50,13 @@ registerLocaleData(localeRu);
     UserComponent,
     UserLeftPanelComponent,
     HeaderComponent,
-    AddApplicationComponent,
+    AddUpdateApplicationComponent,
     ApplicantFormComponent,
     ApplicationProgramFormComponent,
     ApplicationFormComponent,
     ApplicationAddConfirmDialogComponent,
     AutocompleteComponent,
-    RemoveApplicationDialogComponent
+    RemoveApplicationDialogComponent,
   ],
   imports: [
     BrowserModule,

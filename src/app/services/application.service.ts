@@ -15,8 +15,9 @@ export class ApplicationService {
 
   private getNominationsUrl = '/api/nominations';
   private getSpecializationsUrl = '/api/specializations';
+  private getApplicationUrl = '/api/application';
   private getApplicationsUrl = '/api/applications';
-  private addApplicationUrl = '/api/application';
+  private addUpdateApplicationUrl = '/api/application';
   private removeApplicationUrl = '/api/application/';
 
   constructor(private httpClient: HttpClient,
@@ -37,10 +38,16 @@ export class ApplicationService {
     );
   }
 
-  public addApplication(formValues: object): Observable<ApplicationForm> {
+  public addUpdateApplication(formValues: object): Observable<ApplicationForm> {
     const lang = this.locale;
-    return this.httpClient.post<ApplicationForm>(`${this.addApplicationUrl}`, {...formValues, lang}).pipe(
+    return this.httpClient.post<ApplicationForm>(`${this.addUpdateApplicationUrl}`, {...formValues, lang}).pipe(
       map(res => new ApplicationForm().deserialize(res))
+    );
+  }
+
+  public getApplication(id: number): Observable<Application> {
+    return this.httpClient.get<Application>(`${this.getApplicationUrl}?lang=${this.locale}&applicationId=${id}`).pipe(
+      map(res => new Application().deserialize(res))
     );
   }
 

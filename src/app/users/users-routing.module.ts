@@ -3,6 +3,7 @@ import {Routes, RouterModule} from '@angular/router';
 import {UserComponent} from './user/user.component';
 import {FestivalContentComponent} from './festival-content/festival-content.component';
 import {ApplicationsComponent} from './applications/applications.component';
+import {ApplicantsComponent} from './applicants/applicants.component';
 
 const userRoutes: Routes = [
   {
@@ -16,6 +17,10 @@ const userRoutes: Routes = [
       {
         path: 'festival/:festivalId/applications',
         component: ApplicationsComponent,
+      },
+      {
+        path: 'festival/:festivalId/applicants',
+        component: ApplicantsComponent,
       }
     ]
   },

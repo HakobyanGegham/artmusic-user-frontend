@@ -1,5 +1,5 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import FormHelper from '../../helpers/form-helper';
 import {ApplicationService} from '../../services/application.service';
 import {Country} from '../../models/country';
@@ -12,6 +12,8 @@ import {CountryService} from '../../services/country.service';
 import {RegionService} from '../../services/region.service';
 import {CityService} from '../../services/city.service';
 import {InstitutionService} from '../../services/institution.service';
+import {Application} from '../../models/application';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-application-form',
@@ -19,7 +21,9 @@ import {InstitutionService} from '../../services/institution.service';
   styleUrls: ['./application-form.component.less']
 })
 
-export class ApplicationFormComponent extends FormHelper implements OnInit {
+export class ApplicationFormComponent extends FormHelper implements OnInit, OnChanges {
+
+  @Input() public application: Application;
 
   public countries: Country[];
   public regions: Region[];
@@ -33,6 +37,7 @@ export class ApplicationFormComponent extends FormHelper implements OnInit {
   private selectedCityId: number;
 
   constructor(private formBuilder: FormBuilder,
+              private route: ActivatedRoute,
               private applicationService: ApplicationService,
               private countryService: CountryService,
               private regionService: RegionService,
@@ -41,7 +46,7 @@ export class ApplicationFormComponent extends FormHelper implements OnInit {
     super();
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.countryService.getCountries().subscribe(countries => {
       this.countries = countries;
     });
@@ -49,6 +54,14 @@ export class ApplicationFormComponent extends FormHelper implements OnInit {
       this.nominations = nominations;
     });
     this.initForm();
+  }
+
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes.application.currentValue) {
+      this.application = changes.application.currentValue;
+      this.setFormInitialValues();
+    }
   }
 
   private initForm() {
@@ -64,11 +77,36 @@ export class ApplicationFormComponent extends FormHelper implements OnInit {
     });
   }
 
+  private setFormInitialValues() {
+    this.getFormControl('country').setValue(this.application.country.name);
+    this.getFormControl('directorFirstName').setValue(this.application.directorFirstName);
+    this.getFormControl('directorLastName').setValue(this.application.directorLastName);
+    this.regionService.getRegions(+this.application.country.id).subscribe(regions => {
+      this.regions = regions;
+      this.getFormControl('region').setValue(this.application.region.name);
+    });
+    this.cityService.getCities(this.application.region.id).subscribe(cities => {
+      this.cities = cities;
+      this.getFormControl('city').setValue(this.application.city.name);
+    });
+    this.institutionService.getInstitutions(this.application.city.id).subscribe(institutions => {
+      this.institutions = institutions;
+      this.getFormControl('institution').setValue(this.application.institution.name);
+    });
+    this.applicationService.getNominations().subscribe(nominations => {
+      this.nominations = nominations;
+      this.getFormControl('nomination').setValue(this.application.nomination.name);
+    });
+    this.applicationService.getSpecializations(this.application.nomination.id).subscribe(specializations => {
+      this.specializations = specializations;
+      this.getFormControl('specialization').setValue(this.application.specialization.name);
+    });
+  }
+
   public submit() {
     this.formSubmitAttempt = true;
     if (this.form.valid) {
-      this.setFormValues();
-      return this.form.value;
+      return this.getFromFormValues();
     } else {
       this.validateAllFormFields(this.form);
       return false;
@@ -91,7 +129,7 @@ export class ApplicationFormComponent extends FormHelper implements OnInit {
 
   public cityChange(cityId: any) {
     this.selectedCityId = +cityId;
-    this.institutionService.getEducationalInstitutions(+cityId).subscribe(institutions => {
+    this.institutionService.getInstitutions(+cityId).subscribe(institutions => {
       this.institutions = institutions;
     });
   }
@@ -132,7 +170,7 @@ export class ApplicationFormComponent extends FormHelper implements OnInit {
     });
   }
 
-  private setFormValues() {
+  private getFromFormValues() {
     const country = this.countries.find(item => {
       return item.name === this.form.value.country;
     });
@@ -145,12 +183,17 @@ export class ApplicationFormComponent extends FormHelper implements OnInit {
     const institution = this.institutions.find(item => {
       return item.name === this.form.value.institution;
     });
-
-    this.form.value.country = country.id;
-    this.form.value.region = region.id;
-    this.form.value.city = city.id;
-    this.form.value.institution = institution.id;
-    this.form.value.nomination = +this.form.value.nomination;
-    this.form.value.specialization = +this.form.value.specialization;
+    const id = this.route.snapshot.paramMap.get('applicationId');
+    return {
+      id: id ? +id : null,
+      country: country.id,
+      region: region.id,
+      city: city.id,
+      institution: institution.id,
+      nomination: +this.form.value.nomination,
+      specialization: +this.form.value.specialization,
+      directorFirstName: this.form.value.directorFirstName,
+      directorLastName: this.form.value.directorLastName,
+    };
   }
 }

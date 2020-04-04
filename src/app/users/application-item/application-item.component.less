@@ -1,10 +1,9 @@
 .application-content {
   display: grid;
-  grid-template-columns: 24% 15% 18% 18% 10% 10%;
+  grid-template-columns: 27% 15% 19% 19% 15%;
   grid-column-gap: 1%;
   border-radius: 5px;
   padding: 5px;
-  color: #445252;
   font-size: 15px;
 
   .content {
@@ -22,17 +21,29 @@
       white-space: nowrap;
       overflow: hidden;
     }
-  }
 
-  .edit {
-    color: #8eafe0;
-  }
+    &.actions {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      align-items: center;
+    }
 
-  .remove {
-    color: #e10300;
-  }
+    .btn {
+      padding: 0;
+      min-width: unset;
+      width: 30px;
+    }
 
-  .action {
-    min-width: 80px;
+    .edit {
+      color: #64B5F6;
+    }
+
+    .remove {
+      color: #E53935;
+    }
+
+    .state {
+      color: #019f01;
+    }
   }
 }

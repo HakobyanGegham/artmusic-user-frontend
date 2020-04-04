@@ -1,20 +1,30 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import FormHelper from '../../helpers/form-helper';
+import {Applicant} from '../../models/applicant';
 
 @Component({
   selector: 'app-applicant-form',
   templateUrl: './applicant-form.component.html',
   styleUrls: ['./applicant-form.component.less']
 })
-export class ApplicantFormComponent extends FormHelper implements OnInit {
+export class ApplicantFormComponent extends FormHelper implements OnInit, OnChanges {
+
+  @Input() public applicant: Applicant;
 
   constructor(private formBuilder: FormBuilder) {
     super();
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.initForm();
+  }
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes.applicant.currentValue) {
+      this.applicant = changes.applicant.currentValue;
+      this.setFormValues();
+    }
   }
 
   private initForm(): void {
@@ -31,11 +41,20 @@ export class ApplicantFormComponent extends FormHelper implements OnInit {
     });
   }
 
+  private setFormValues() {
+    this.getFormControl('firstName').setValue(this.applicant.firstName);
+    this.getFormControl('lastName').setValue(this.applicant.lastName);
+    this.getFormControl('patriotic').setValue(this.applicant.patriotic);
+    this.getFormControl('email').setValue(this.applicant.email);
+    this.getFormControl('birthDate').setValue(this.applicant.birthDate);
+    this.getFormControl('phoneNumber').setValue(this.applicant.phoneNumber);
+  }
+
   public submit() {
     this.formSubmitAttempt = true;
     if (this.form.valid) {
       this.formatBirthDate();
-      return this.form.value;
+      return this.getFromFormValues();
     } else {
       this.validateAllFormFields(this.form);
       return false;
@@ -56,12 +75,27 @@ export class ApplicantFormComponent extends FormHelper implements OnInit {
 
   private formatBirthDate() {
     const birthDate = this.getFormControl('birthDate').value;
-    let day = birthDate.getDate().toString();
-    day = +day < 10 ? '0' + day : day;
-    let month = (birthDate.getMonth() + 1).toString();
-    month = +month < 10 ? '0' + month : month;
-    const year = birthDate.getFullYear();
-    const formattedBirthDate = `${year}-${month}-${day}`;
-    this.getFormControl('birthDate').setValue(formattedBirthDate);
+    if (typeof birthDate !== 'string') {
+      let day = birthDate.getDate().toString();
+      day = +day < 10 ? '0' + day : day;
+      let month = (birthDate.getMonth() + 1).toString();
+      month = +month < 10 ? '0' + month : month;
+      const year = birthDate.getFullYear();
+      const formattedBirthDate = `${year}-${month}-${day}`;
+      this.getFormControl('birthDate').setValue(formattedBirthDate);
+    }
+  }
+
+  private getFromFormValues() {
+    const applicant = new Applicant();
+    applicant.id = this.applicant ? this.applicant.id : null;
+    applicant.firstName = this.getFormControl('firstName').value;
+    applicant.lastName = this.getFormControl('lastName').value;
+    applicant.patriotic = this.getFormControl('patriotic').value;
+    applicant.email = this.getFormControl('email').value;
+    applicant.birthDate = this.getFormControl('birthDate').value;
+    applicant.phoneNumber = this.getFormControl('phoneNumber').value;
+
+    return applicant;
   }
 }

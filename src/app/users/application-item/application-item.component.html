@@ -13,22 +13,21 @@
     <div class="no-wrap-text" i18n> {{ program.compositionAuthor }}</div>
     <div class="no-wrap-text" i18n> {{ program.compositionName }}</div>
   </div>
-  <div class="content item">
-    <div class="no-wrap-text" i18n>
-      {{ application.state }}
-    </div>
-    <mat-icon>loop</mat-icon>
-  </div>
-  <div class="content item">
-    <div class="edit">
-      <button mat-button class="btn action" i18n>
+  <div class="content item actions">
+    <a class="edit" [routerLink]="['/application/' + application.id]" target="_blank" >
+      <button mat-button class="btn action" i18n matTooltip="Edit Item">
         <mat-icon>create</mat-icon>
       </button>
-    </div>
-    <div class="remove" (click)="removeItem()">
-      <button mat-button class="btn action remove" i18n>
+    </a>
+    <a class="remove" (click)="removeItem()" >
+      <button mat-button class="btn action remove" i18n matTooltip="Remove Item">
         <mat-icon>delete</mat-icon>
       </button>
-    </div>
+    </a>
+    <a class="no-wrap-text">
+      <button mat-button class="btn action state"  matTooltip="Application state">
+        <mat-icon>loop</mat-icon>
+      </button>
+    </a>
   </div>
 </div>

@@ -17,6 +17,8 @@ export class Application implements Deserializable {
   institution: Institution;
   nomination: Nomination;
   specialization: Specialization;
+  directorFirstName: string;
+  directorLastName: string;
   programs: ApplicationProgram[];
   state: string;
 

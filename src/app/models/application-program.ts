@@ -4,8 +4,8 @@ export class ApplicationProgram implements Deserializable {
   id: number;
   compositionAuthor: string;
   compositionName: string;
-  compositionMinutes: string;
-  compositionMinutesSeconds: string;
+  durationMinutes: string;
+  durationSeconds: string;
 
   deserialize(input: any): this {
     return Object.assign(this, input);

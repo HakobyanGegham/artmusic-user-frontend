@@ -1,0 +1,24 @@
+<section class="applications-container">
+  <h2 i18n>Applicants</h2>
+  <div class="filter-container">
+    <form [formGroup]="filterForm">
+      <mat-form-field>
+        <mat-label i18n>Find By First Name</mat-label>
+        <input matInput formControlName="firstName">
+      </mat-form-field>
+    </form>
+  </div>
+  <div class="application-header">
+    <div class="title"><span i18n>First Name</span></div>
+    <div class="title"><span i18n>Last Name</span></div>
+    <div class="title"><span i18n>Patriotic</span></div>
+    <div class="title"><span i18n>Email</span></div>
+    <div class="title"><span i18n>Phone</span></div>
+    <div class="title"><span i18n>Birth Date</span></div>
+  </div>
+  <app-applicant-item *ngFor="let applicant of filteredItems | async | paginate: { itemsPerPage: 10, currentPage: p }"
+                      [applicant]="applicant"></app-applicant-item>
+  <div class="pagination-controller">
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  </div>
+</section>

@@ -7,6 +7,8 @@ export class Applicant implements Deserializable {
   patriotic: string;
   age: string;
   email: string;
+  birthDate: string;
+  phoneNumber: string;
 
   deserialize(input: any): this {
     return Object.assign(this, input);
