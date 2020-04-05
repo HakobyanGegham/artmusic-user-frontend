@@ -16,10 +16,12 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
 import {MatInputModule} from '@angular/material/input';
+import { RegionsComponent } from './regions/regions.component';
+import { RegionComponent } from './region/region.component';
 
 
 @NgModule({
-  declarations: [AdminComponent, LeftPanelComponent, CountriesComponent, CountryComponent, UpdateDialogComponent],
+  declarations: [AdminComponent, LeftPanelComponent, CountriesComponent, CountryComponent, UpdateDialogComponent, RegionsComponent, RegionComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,

@@ -16,9 +16,9 @@ export class RegionService {
               @Inject(LOCALE_ID) protected locale: string) {
   }
 
-  public getRegions(countryId: number): Observable<Region[]> {
-    return this.httpClient.get<Region[]>
-    (`${this.getRegionsUrl}?countryId=${countryId}`).pipe(
+  public getRegions(countryId?: number): Observable<Region[]> {
+    const url = countryId ? `${this.getRegionsUrl}?countryId=${countryId}` : this.getRegionsUrl;
+    return this.httpClient.get<Region[]>(url).pipe(
       map(res => res.map(data => new Region().deserialize(data)))
     );
   }

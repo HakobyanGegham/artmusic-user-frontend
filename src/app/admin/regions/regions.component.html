@@ -1,0 +1,15 @@
+<section class="regions-container">
+  <h2 i18n>Regions</h2>
+  <div class="regions-header">
+    <div class="title"><span i18n>ID</span></div>
+    <div class="title"><span i18n>Country</span></div>
+    <div class="title"><span i18n>Name</span></div>
+    <div class="title"><span i18n>Created Date</span></div>
+    <div class="title"><span i18n>Actions</span></div>
+  </div>
+  <app-region *ngFor="let region of regions | paginate: { itemsPerPage: 10, currentPage: p }"
+               [region]="region" [countries]="countries"></app-region>
+  <div class="pagination-controller">
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  </div>
+</section>

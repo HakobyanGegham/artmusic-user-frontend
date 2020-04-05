@@ -1,0 +1,26 @@
+<div class="region-content">
+  <div class="content">
+    <div class="no-wrap-text" i18n> {{ region.id }}</div>
+  </div>
+  <div class="content">
+    <div class="no-wrap-text" i18n> {{ country.names[this.locale] }}</div>
+  </div>
+  <div class="content">
+    <div class="no-wrap-text" i18n> {{ region.names[this.locale] }}</div>
+  </div>
+  <div class="content">
+    <div class="no-wrap-text" i18n> {{ region.createdAt }}</div>
+  </div>
+  <div class="content actions">
+    <a class="edit" (click)="openDialog()">
+      <button mat-stroked-button class="btn action" i18n matTooltip="Edit Item">
+        <mat-icon>create</mat-icon>
+      </button>
+    </a>
+    <a class="remove" (click)="removeItem()">
+      <button mat-stroked-button class="btn action remove" i18n matTooltip="Remove Item">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </a>
+  </div>
+</div>
