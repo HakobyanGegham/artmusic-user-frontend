@@ -1,15 +1,15 @@
-<div class="region-content">
+<div class="city-content">
   <div class="content">
-    <div class="no-wrap-text" i18n> {{ region.id }}</div>
-  </div>
-  <div class="content">
-    <div class="no-wrap-text" i18n> {{ country.names[this.locale] }}</div>
+    <div class="no-wrap-text" i18n> {{ city.id }}</div>
   </div>
   <div class="content">
     <div class="no-wrap-text" i18n> {{ region.names[this.locale] }}</div>
   </div>
   <div class="content">
-    <div class="no-wrap-text" i18n> {{ region.createdAt }}</div>
+    <div class="no-wrap-text" i18n> {{ city.names[this.locale] }}</div>
+  </div>
+  <div class="content">
+    <div class="no-wrap-text" i18n> {{ city.createdAt }}</div>
   </div>
   <div class="content actions">
     <a class="edit" (click)="openDialog()">

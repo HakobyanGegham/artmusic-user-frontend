@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Inject, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Inject, LOCALE_ID, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import FormHelper from '../../../helpers/form-helper';
 import {FormBuilder, Validators} from '@angular/forms';
@@ -11,16 +11,19 @@ import {FormBuilder, Validators} from '@angular/forms';
 export class UpdateDialogComponent extends FormHelper implements OnInit {
 
   public languages = ['hy', 'ru', 'en'];
-
+  public parentItems = this.data.dataKey.parentItem;
+  public item = this.data.dataKey.item;
+  public parentId = this.data.dataKey.parentId;
   @Output() OnSubmitClick = new EventEmitter();
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
+              @Inject(LOCALE_ID) public locale: string,
               public dialogRef: MatDialogRef<UpdateDialogComponent>,
               private formBuilder: FormBuilder) {
     super();
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.initForm();
   }
 
@@ -31,15 +34,25 @@ export class UpdateDialogComponent extends FormHelper implements OnInit {
 
   private initForm() {
     this.form = this.formBuilder.group({
+      parentItem: [],
       names: this.formBuilder.array([])
     });
 
+    this.setParentItem();
     this.addItemsToNames();
+  }
+
+  private setParentItem() {
+    const selectedItem = this.parentItems.find(parentItem => {
+      return parentItem.id === this.item[this.parentId];
+    });
+
+    this.getFormControl('parentItem').setValue(selectedItem.id);
   }
 
   private addItemsToNames() {
     const data = {name: '', key: ''};
-    const names = this.data.dataKey.names;
+    const names = this.item.names;
     this.languages.forEach(lang => {
       data.key = lang;
       data.name = '';

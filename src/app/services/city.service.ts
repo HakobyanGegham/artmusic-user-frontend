@@ -10,20 +10,27 @@ import {map} from 'rxjs/operators';
 export class CityService {
 
   private getCitiesUrl = '/api/cities';
-  private addCityUrl = '/api/city';
+  private addUpdateCityUrl = '/api/city';
 
   constructor(private httpClient: HttpClient,
               @Inject(LOCALE_ID) protected locale: string) {
   }
 
-  public getCities(regionId: number): Observable<City[]> {
-    return this.httpClient.get<City[]>(`${this.getCitiesUrl}?regionId=${regionId}`).pipe(
+  public getCities(regionId?: number): Observable<City[]> {
+    const url = regionId ? `${this.getCitiesUrl}?regionId=${regionId}` : this.getCitiesUrl;
+    return this.httpClient.get<City[]>(url).pipe(
       map(res => res.map(data => new City().deserialize(data)))
     );
   }
 
   public addCity(city: string, regionId: number): Observable<City> {
-    return this.httpClient.post<City>(`${this.addCityUrl}`, {regionId, city, lang: this.locale}).pipe(
+    return this.httpClient.post<City>(`${this.addUpdateCityUrl}`, {regionId, city, lang: this.locale}).pipe(
+      map(res => new City().deserialize(res))
+    );
+  }
+
+  public updateCity(cityId: number, data: {}): Observable<City> {
+    return this.httpClient.post<City>(`${this.addUpdateCityUrl}/${cityId}`, {...data}).pipe(
       map(res => new City().deserialize(res))
     );
   }

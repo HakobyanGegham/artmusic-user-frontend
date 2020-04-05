@@ -19,13 +19,13 @@ export class RegionsComponent implements OnInit {
               private countryService: CountryService) {
   }
 
-  ngOnInit(): void {
-    this.regionService.getRegions().subscribe(regions => {
-      this.regions = regions;
-    });
-
+  public ngOnInit(): void {
     this.countryService.getCountries().subscribe(countries => {
       this.countries = countries;
+    });
+
+    this.regionService.getRegions().subscribe(regions => {
+      this.regions = regions;
     });
   }
 }

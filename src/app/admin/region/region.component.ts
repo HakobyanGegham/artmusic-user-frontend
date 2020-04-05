@@ -1,6 +1,9 @@
 import {Component, Inject, Input, LOCALE_ID, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {Region} from '../../models/region';
 import {Country} from '../../models/country';
+import {UpdateDialogComponent} from '../modals/update-dialog/update-dialog.component';
+import {MatDialog} from '@angular/material/dialog';
+import {RegionService} from '../../services/region.service';
 
 @Component({
   selector: 'app-region',
@@ -14,7 +17,9 @@ export class RegionComponent implements OnInit, OnChanges {
 
   public country: Country;
 
-  constructor(@Inject(LOCALE_ID) public locale: string) {
+  constructor(@Inject(LOCALE_ID) public locale: string,
+              private dialog: MatDialog,
+              private regionService: RegionService) {
   }
 
   ngOnInit(): void {
@@ -34,7 +39,28 @@ export class RegionComponent implements OnInit, OnChanges {
   }
 
   public openDialog() {
+    const dialogData = {
+      item: this.region,
+      parentItem: this.countries,
+      parentId: 'countryId'
+    };
+    const dialog = this.dialog.open(UpdateDialogComponent, {
+      width: '450px',
+      height: '360px',
+      data: {
+        dataKey: dialogData
+      }
+    });
 
+    dialog.componentInstance.OnSubmitClick.subscribe((value) => {
+      const data = {
+        parentItem: value.parentItem,
+        names: value.names,
+      };
+      this.regionService.updateRegion(+this.region.id, data).subscribe(region => {
+        this.region = region;
+      });
+    });
   }
 
   public removeItem() {

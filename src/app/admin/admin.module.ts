@@ -18,10 +18,12 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatInputModule} from '@angular/material/input';
 import { RegionsComponent } from './regions/regions.component';
 import { RegionComponent } from './region/region.component';
+import { CitiesComponent } from './cities/cities.component';
+import { CityComponent } from './city/city.component';
 
 
 @NgModule({
-  declarations: [AdminComponent, LeftPanelComponent, CountriesComponent, CountryComponent, UpdateDialogComponent, RegionsComponent, RegionComponent],
+  declarations: [AdminComponent, LeftPanelComponent, CountriesComponent, CountryComponent, UpdateDialogComponent, RegionsComponent, RegionComponent, CitiesComponent, CityComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,
