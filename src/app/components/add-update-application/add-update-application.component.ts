@@ -77,7 +77,7 @@ export class AddUpdateApplicationComponent implements OnInit {
   }
 
   private showConfirmDialog() {
-    const dialogRef = this.dialog.open(ApplicationAddConfirmDialogComponent, {
+    this.dialog.open(ApplicationAddConfirmDialogComponent, {
       width: '400px',
     });
   }

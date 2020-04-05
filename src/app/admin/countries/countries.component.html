@@ -1,1 +1,14 @@
-<p>countries works!</p>
+<section class="countries-container">
+  <h2 i18n>Countries</h2>
+  <div class="country-header">
+    <div class="title"><span i18n>ID</span></div>
+    <div class="title"><span i18n>Name</span></div>
+    <div class="title"><span i18n>Created Date</span></div>
+    <div class="title"><span i18n>Actions</span></div>
+  </div>
+  <app-country *ngFor="let country of countries | paginate: { itemsPerPage: 10, currentPage: p }"
+                      [country]="country"></app-country>
+  <div class="pagination-controller">
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  </div>
+</section>

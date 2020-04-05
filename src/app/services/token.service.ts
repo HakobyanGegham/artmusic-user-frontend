@@ -20,6 +20,6 @@ export class TokenService {
   }
 
   public getToken() {
-    window.sessionStorage.getItem('token');
+    return window.sessionStorage.getItem('token');
   }
 }

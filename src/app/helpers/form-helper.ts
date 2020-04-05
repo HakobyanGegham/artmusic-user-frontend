@@ -1,4 +1,4 @@
-import {FormGroup} from '@angular/forms';
+import {FormArray, FormGroup} from '@angular/forms';
 
 export default class FormHelper {
 
@@ -7,6 +7,10 @@ export default class FormHelper {
 
   public getFormControl(name) {
     return this.form.get(name);
+  }
+
+  public getFormControlAsArray(name) {
+    return this.form.get(name) as FormArray;
   }
 
   public isFieldValid(field: string) {

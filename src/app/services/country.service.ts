@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {CookieService} from 'ngx-cookie-service';
-import {Observable} from 'rxjs';
+import {Observable, pipe} from 'rxjs';
 import {Country} from '../models/country';
 import {map} from 'rxjs/operators';
 import {LOCALE_ID, Inject} from '@angular/core';
@@ -12,7 +12,7 @@ import {LOCALE_ID, Inject} from '@angular/core';
 export class CountryService {
 
   private getCountriesUrl = '/api/countries';
-  private addCountriesUrl = '/api/country';
+  private addUpdateCountryUrl = '/api/country';
 
   constructor(private httpClient: HttpClient,
               @Inject(LOCALE_ID) protected locale: string) {
@@ -25,7 +25,13 @@ export class CountryService {
   }
 
   public addCountry(country: string): Observable<Country> {
-    return this.httpClient.post<Country>(`${this.addCountriesUrl}`, {country, lang: this.locale}).pipe(
+    return this.httpClient.post<Country>(`${this.addUpdateCountryUrl}`, {country, lang: this.locale}).pipe(
+      map(res => new Country().deserialize(res))
+    );
+  }
+
+  public updateCountry(countryId: number, names = {}): Observable<Country> {
+    return this.httpClient.post<Country>(`${this.addUpdateCountryUrl}/${countryId}`, {names}).pipe(
       map(res => new Country().deserialize(res))
     );
   }
