@@ -1,0 +1,19 @@
+<h1 mat-dialog-title></h1>
+<form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+  <div mat-dialog-content>
+    <div formArrayName="names" class="input-row"
+         *ngFor="let control of getFormControlAsArray('names').controls, index as i">
+      <div class="language-key-container">
+        <span class="language-key">{{ control.get('key').value }}</span>
+      </div>
+      <mat-form-field [formGroupName]="i">
+        <mat-label i18n>Name:</mat-label>
+        <input matInput [formControlName]="'name'">
+      </mat-form-field>
+    </div>
+  </div>
+  <div mat-dialog-actions class="actions">
+    <button mat-button class="btn mat-primary" (click)="onNoClick($event)">No Thanks</button>
+    <button mat-button class="btn mat-primary">Ok</button>
+  </div>
+</form>
