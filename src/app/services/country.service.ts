@@ -19,7 +19,7 @@ export class CountryService {
   }
 
   public getCountries(): Observable<Country[]> {
-    return this.httpClient.get<Country[]>(`${this.getCountriesUrl}?lang=${this.locale}`).pipe(
+    return this.httpClient.get<Country[]>(`${this.getCountriesUrl}`).pipe(
       map(res => res.map(data => new Country().deserialize(data)))
     );
   }

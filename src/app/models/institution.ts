@@ -2,7 +2,7 @@ import Deserializable from './shared/deserializable.model';
 
 export class Institution implements Deserializable {
   id: number;
-  name: string;
+  names: any[];
   cityId: number;
 
   deserialize(input: any): this {

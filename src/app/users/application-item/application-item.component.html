@@ -6,8 +6,8 @@
     <div class="no-wrap-text" i18n> {{ application.applicant.age }}</div>
   </div>
   <div class="content item">
-    <div class="no-wrap-text" i18n> {{ application.nomination.name }}</div>
-    <div class="no-wrap-text" i18n> {{ application.specialization.name }}</div>
+    <div class="no-wrap-text" i18n> {{ application.nomination.names[locale] }}</div>
+    <div class="no-wrap-text" i18n> {{ application.specialization.names[locale] }}</div>
   </div>
   <div class="content item" *ngFor="let program of application.programs">
     <div class="no-wrap-text" i18n> {{ program.compositionAuthor }}</div>

@@ -17,7 +17,7 @@ export class CityService {
   }
 
   public getCities(regionId: number): Observable<City[]> {
-    return this.httpClient.get<City[]>(`${this.getCitiesUrl}?lang=${this.locale}&regionId=${regionId}`).pipe(
+    return this.httpClient.get<City[]>(`${this.getCitiesUrl}?regionId=${regionId}`).pipe(
       map(res => res.map(data => new City().deserialize(data)))
     );
   }

@@ -19,7 +19,7 @@ export class InstitutionService {
 
   public getInstitutions(cityId: number): Observable<Institution[]> {
     return this.httpClient.get<Institution[]>
-    (`${this.getInstitutionsUrl}?lang=${this.locale}&cityId=${cityId}`).pipe(
+    (`${this.getInstitutionsUrl}?cityId=${cityId}`).pipe(
       map(res => res.map(data => new Institution().deserialize(data)))
     );
   }

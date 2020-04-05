@@ -26,14 +26,14 @@ export class ApplicationService {
 
   public getNominations(): Observable<Nomination[]> {
     return this.httpClient.get<Nomination[]>
-    (`${this.getNominationsUrl}?lang=${this.locale}`).pipe(
+    (`${this.getNominationsUrl}`).pipe(
       map(res => res.map(data => new Nomination().deserialize(data)))
     );
   }
 
   public getSpecializations(nominationId: number): Observable<Specialization[]> {
     return this.httpClient.get<Specialization[]>
-    (`${this.getSpecializationsUrl}?lang=${this.locale}&nominationId=${nominationId}`).pipe(
+    (`${this.getSpecializationsUrl}?nominationId=${nominationId}`).pipe(
       map(res => res.map(data => new Specialization().deserialize(data)))
     );
   }

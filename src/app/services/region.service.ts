@@ -1,6 +1,5 @@
 import {Inject, Injectable, LOCALE_ID} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {CookieService} from 'ngx-cookie-service';
 import {Observable} from 'rxjs';
 import {Region} from '../models/region';
 import {map} from 'rxjs/operators';
@@ -19,7 +18,7 @@ export class RegionService {
 
   public getRegions(countryId: number): Observable<Region[]> {
     return this.httpClient.get<Region[]>
-    (`${this.getRegionsUrl}?lang=${this.locale}&countryId=${countryId}`).pipe(
+    (`${this.getRegionsUrl}?countryId=${countryId}`).pipe(
       map(res => res.map(data => new Region().deserialize(data)))
     );
   }

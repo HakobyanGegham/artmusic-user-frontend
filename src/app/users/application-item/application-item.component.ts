@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Inject, Input, LOCALE_ID, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {Application} from '../../models/application';
 import {MatDialog} from '@angular/material/dialog';
 import {RemoveApplicationDialogComponent} from '../../components/modals/remove-application-dialog/remove-application-dialog.component';
@@ -15,7 +15,8 @@ export class ApplicationItemComponent implements OnInit, OnChanges {
   @Output() onRemove = new EventEmitter();
 
   constructor(private dialog: MatDialog,
-              private applicationService: ApplicationService) {
+              private applicationService: ApplicationService,
+              @Inject(LOCALE_ID) public locale: string) {
   }
 
   public ngOnInit(): void {

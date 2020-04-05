@@ -51,3 +51,57 @@ ul {
   margin-top: 20px;
   text-align: center;
 }
+
+.left-panel {
+  width: 230px;
+
+  .main-list {
+    font-size: 17px;
+    color: #3c3c3c;
+
+    .main-list-item {
+      .rotating-icon {
+        position: absolute;
+        top: 10px;
+        right: 30px;
+        transition: transform .15s;
+        transition-timing-function: ease-in-out;
+        transform: rotate(0deg);
+
+        &.rotate {
+          transform: rotate(90deg);
+        }
+      }
+
+      .item-text {
+        padding: 10px 20px;
+        position: relative;
+        text-transform: uppercase;
+        transition: 0.6s;
+        cursor: pointer;
+
+        &:hover {
+          background: #e3e3e3;
+          color: #157e9d;
+        }
+      }
+
+
+      .festival-list {
+        text-transform: none;
+        padding: 10px 20px;
+
+        .festival-item {
+          padding: 10px 15px;
+          cursor: pointer;
+          transition: 0.6s;
+
+          &:hover {
+            background: #e3e3e3;
+            color: #157e9d;
+          }
+        }
+      }
+    }
+  }
+}

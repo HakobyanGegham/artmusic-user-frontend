@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, Inject, Input, LOCALE_ID, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import FormHelper from '../../helpers/form-helper';
 import {ApplicationService} from '../../services/application.service';
@@ -42,7 +42,8 @@ export class ApplicationFormComponent extends FormHelper implements OnInit, OnCh
               private countryService: CountryService,
               private regionService: RegionService,
               private cityService: CityService,
-              private institutionService: InstitutionService) {
+              private institutionService: InstitutionService,
+              @Inject(LOCALE_ID) public locale: string) {
     super();
   }
 
@@ -78,28 +79,28 @@ export class ApplicationFormComponent extends FormHelper implements OnInit, OnCh
   }
 
   private setFormInitialValues() {
-    this.getFormControl('country').setValue(this.application.country.name);
+    this.getFormControl('country').setValue(this.application.country.names[this.locale]);
     this.getFormControl('directorFirstName').setValue(this.application.directorFirstName);
     this.getFormControl('directorLastName').setValue(this.application.directorLastName);
     this.regionService.getRegions(+this.application.country.id).subscribe(regions => {
       this.regions = regions;
-      this.getFormControl('region').setValue(this.application.region.name);
+      this.getFormControl('region').setValue(this.application.region.names[this.locale]);
     });
     this.cityService.getCities(this.application.region.id).subscribe(cities => {
       this.cities = cities;
-      this.getFormControl('city').setValue(this.application.city.name);
+      this.getFormControl('city').setValue(this.application.city.names[this.locale]);
     });
     this.institutionService.getInstitutions(this.application.city.id).subscribe(institutions => {
       this.institutions = institutions;
-      this.getFormControl('institution').setValue(this.application.institution.name);
+      this.getFormControl('institution').setValue(this.application.institution.names[this.locale]);
     });
     this.applicationService.getNominations().subscribe(nominations => {
       this.nominations = nominations;
-      this.getFormControl('nomination').setValue(this.application.nomination.name);
+      this.getFormControl('nomination').setValue(this.application.nomination.names[this.locale]);
     });
     this.applicationService.getSpecializations(this.application.nomination.id).subscribe(specializations => {
       this.specializations = specializations;
-      this.getFormControl('specialization').setValue(this.application.specialization.name);
+      this.getFormControl('specialization').setValue(this.application.specialization.names[this.locale]);
     });
   }
 
@@ -172,16 +173,16 @@ export class ApplicationFormComponent extends FormHelper implements OnInit, OnCh
 
   private getFromFormValues() {
     const country = this.countries.find(item => {
-      return item.name === this.form.value.country;
+      return item.names[this.locale] === this.form.value.country;
     });
     const region = this.regions.find(item => {
-      return item.name === this.form.value.region;
+      return item.names[this.locale] === this.form.value.region;
     });
     const city = this.cities.find(item => {
-      return item.name === this.form.value.city;
+      return item.names[this.locale] === this.form.value.city;
     });
     const institution = this.institutions.find(item => {
-      return item.name === this.form.value.institution;
+      return item.names[this.locale] === this.form.value.institution;
     });
     const id = this.route.snapshot.paramMap.get('applicationId');
     return {

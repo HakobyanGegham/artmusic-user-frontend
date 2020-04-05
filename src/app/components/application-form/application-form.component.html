@@ -36,7 +36,7 @@
       <mat-select id="nominationSelect" formControlName="nomination"
                   (selectionChange)="nominationChange($event.value)">
         <mat-option *ngFor="let nomination of nominations"
-                    value="{{nomination.id}}">{{nomination.name}}</mat-option>
+                    value="{{nomination.id}}">{{nomination.names[locale]}}</mat-option>
       </mat-select>
       <ng-container *ngIf="isFieldValid('nomination')">
         <div *ngIf="getFormControl('nomination').errors.required"
@@ -50,7 +50,7 @@
       <mat-label>Specialization</mat-label>
       <mat-select id="specializationSelect" formControlName="specialization">
         <mat-option *ngFor="let specialization of specializations"
-                    value="{{specialization.id}}">{{specialization.name}}</mat-option>
+                    value="{{specialization.id}}">{{specialization.names[locale]}}</mat-option>
       </mat-select>
       <ng-container *ngIf="isFieldValid('specialization')">
         <div *ngIf="getFormControl('specialization').errors.required"

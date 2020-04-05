@@ -9,7 +9,8 @@ const appRoutes: Routes = [
   {path: 'register', component: RegisterComponent},
   {path: 'login', component: LoginComponent},
   {path: 'application', component: AddUpdateApplicationComponent},
-  {path: 'application/:applicationId', component: AddUpdateApplicationComponent}
+  {path: 'application/:applicationId', component: AddUpdateApplicationComponent},
+  { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) }
 ];
 
 const routes: Routes = [];

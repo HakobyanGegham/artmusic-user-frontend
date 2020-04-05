@@ -1,4 +1,16 @@
-import {Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Inject,
+  Input,
+  LOCALE_ID,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild
+} from '@angular/core';
 import {FormGroup} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
@@ -27,7 +39,7 @@ export class AutocompleteComponent implements OnInit, OnChanges {
   public noSuggestions = false;
   public query = '';
 
-  constructor() {
+  constructor(@Inject(LOCALE_ID) public locale: string) {
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -44,7 +56,7 @@ export class AutocompleteComponent implements OnInit, OnChanges {
     }
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
 
   }
 
@@ -55,7 +67,7 @@ export class AutocompleteComponent implements OnInit, OnChanges {
   public optionSelectedEvent(event: MatAutocompleteSelectedEvent) {
     this.query = this.autocompleteInput.nativeElement.value;
     const selectedItem = this.items.find(item => {
-      return item.name === event.option.value;
+      return item.names[this.locale] === event.option.value;
     });
 
     if (selectedItem) {
@@ -65,7 +77,7 @@ export class AutocompleteComponent implements OnInit, OnChanges {
 
   private filter(val: any) {
     return this.items.filter(item => {
-      return item.name.toLowerCase().indexOf(val.toLowerCase()) === 0;
+      return item.names[this.locale].toLowerCase().indexOf(val.toLowerCase()) === 0;
     });
   }
 }
