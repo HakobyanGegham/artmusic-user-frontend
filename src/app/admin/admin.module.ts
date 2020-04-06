@@ -22,10 +22,14 @@ import { CitiesComponent } from './cities/cities.component';
 import { CityComponent } from './city/city.component';
 import { InstitutionsComponent } from './institutions/institutions.component';
 import { InstitutionComponent } from './institution/institution.component';
+import { NominationComponent } from './nomination/nomination.component';
+import { NominationsComponent } from './nominations/nominations.component';
+import { SpecializationsComponent } from './specializations/specializations.component';
+import { SpecializationComponent } from './specialization/specialization.component';
 
 
 @NgModule({
-  declarations: [AdminComponent, LeftPanelComponent, CountriesComponent, CountryComponent, UpdateDialogComponent, RegionsComponent, RegionComponent, CitiesComponent, CityComponent, InstitutionsComponent, InstitutionComponent],
+  declarations: [AdminComponent, LeftPanelComponent, CountriesComponent, CountryComponent, UpdateDialogComponent, RegionsComponent, RegionComponent, CitiesComponent, CityComponent, InstitutionsComponent, InstitutionComponent, NominationComponent, NominationsComponent, SpecializationsComponent, SpecializationComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,

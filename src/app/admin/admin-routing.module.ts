@@ -5,6 +5,8 @@ import {CountriesComponent} from './countries/countries.component';
 import {RegionsComponent} from './regions/regions.component';
 import {CitiesComponent} from './cities/cities.component';
 import {InstitutionsComponent} from './institutions/institutions.component';
+import {NominationsComponent} from './nominations/nominations.component';
+import {SpecializationsComponent} from './specializations/specializations.component';
 
 const routes: Routes = [
   {
@@ -26,6 +28,14 @@ const routes: Routes = [
       {
         path: 'institutions',
         component: InstitutionsComponent
+      },
+      {
+        path: 'nominations',
+        component: NominationsComponent
+      },
+      {
+        path: 'specializations',
+        component: SpecializationsComponent
       }
     ]
   }

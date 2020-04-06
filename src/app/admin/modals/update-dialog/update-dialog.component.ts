@@ -11,9 +11,9 @@ import {FormBuilder, Validators} from '@angular/forms';
 export class UpdateDialogComponent extends FormHelper implements OnInit {
 
   public languages = ['hy', 'ru', 'en'];
-  public parentItems = this.data.dataKey.parentItem;
+  public parentItems ? = this.data.dataKey.parentItem;
   public item = this.data.dataKey.item;
-  public parentId = this.data.dataKey.parentId;
+  public parentId ? = this.data.dataKey.parentId;
   @Output() OnSubmitClick = new EventEmitter();
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
@@ -43,11 +43,13 @@ export class UpdateDialogComponent extends FormHelper implements OnInit {
   }
 
   private setParentItem() {
-    const selectedItem = this.parentItems.find(parentItem => {
-      return parentItem.id === this.item[this.parentId];
-    });
+    if (this.parentItems) {
+      const selectedItem = this.parentItems.find(parentItem => {
+        return parentItem.id === this.item[this.parentId];
+      });
 
-    this.getFormControl('parentItem').setValue(selectedItem.id);
+      this.getFormControl('parentItem').setValue(selectedItem.id);
+    }
   }
 
   private addItemsToNames() {

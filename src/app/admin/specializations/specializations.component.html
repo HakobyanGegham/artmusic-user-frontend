@@ -1,0 +1,16 @@
+<section class="specializations-container">
+  <h2 i18n>Specializations</h2>
+  <div class="specializations-header">
+    <div class="title"><span i18n>ID</span></div>
+    <div class="title"><span i18n>Nomination</span></div>
+    <div class="title"><span i18n>Name</span></div>
+    <div class="title"><span i18n>Created Date</span></div>
+    <div class="title"><span i18n>Actions</span></div>
+  </div>
+  <app-specialization *ngFor="let specialization of specializations | paginate: { itemsPerPage: 10, currentPage: p }"
+                      [specialization]="specialization" [nominations]="nominations">
+  </app-specialization>
+  <div class="pagination-controller">
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  </div>
+</section>

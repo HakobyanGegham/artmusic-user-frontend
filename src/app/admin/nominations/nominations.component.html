@@ -1,0 +1,14 @@
+<section class="nominations-container">
+  <h2 i18n>Nominations</h2>
+  <div class="nomination-header">
+    <div class="title"><span i18n>ID</span></div>
+    <div class="title"><span i18n>Name</span></div>
+    <div class="title"><span i18n>Created Date</span></div>
+    <div class="title"><span i18n>Actions</span></div>
+  </div>
+  <app-nomination *ngFor="let nomination of nominations | paginate: { itemsPerPage: 10, currentPage: p }"
+               [nomination]="nomination"></app-nomination>
+  <div class="pagination-controller">
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  </div>
+</section>
