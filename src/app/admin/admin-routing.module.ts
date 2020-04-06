@@ -4,12 +4,13 @@ import {AdminComponent} from './admin.component';
 import {CountriesComponent} from './countries/countries.component';
 import {RegionsComponent} from './regions/regions.component';
 import {CitiesComponent} from './cities/cities.component';
+import {InstitutionsComponent} from './institutions/institutions.component';
 
 const routes: Routes = [
   {
     path: '',
     component: AdminComponent,
-    children : [
+    children: [
       {
         path: 'countries',
         component: CountriesComponent
@@ -21,6 +22,10 @@ const routes: Routes = [
       {
         path: 'cities',
         component: CitiesComponent
+      },
+      {
+        path: 'institutions',
+        component: InstitutionsComponent
       }
     ]
   }

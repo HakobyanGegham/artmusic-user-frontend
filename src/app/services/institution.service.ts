@@ -11,22 +11,28 @@ import {map} from 'rxjs/operators';
 export class InstitutionService {
 
   private getInstitutionsUrl = '/api/institutions';
-  private addiInstitutionsUrl = '/api/institution';
+  private addUpdateInstitutionUrl = '/api/institution';
 
   constructor(private httpClient: HttpClient,
               @Inject(LOCALE_ID) protected locale: string) {
   }
 
-  public getInstitutions(cityId: number): Observable<Institution[]> {
-    return this.httpClient.get<Institution[]>
-    (`${this.getInstitutionsUrl}?cityId=${cityId}`).pipe(
+  public getInstitutions(cityId?: number): Observable<Institution[]> {
+    const url = cityId ? `${this.getInstitutionsUrl}?cityId=${cityId}` : this.getInstitutionsUrl;
+    return this.httpClient.get<Institution[]>(url).pipe(
       map(res => res.map(data => new Institution().deserialize(data)))
     );
   }
 
   public addEducationalInstitution(institution: string, cityId: number): Observable<Institution> {
     return this.httpClient.post<Institution>
-    (`${this.addiInstitutionsUrl}`, {cityId, institution, lang: this.locale}).pipe(
+    (`${this.addUpdateInstitutionUrl}`, {cityId, institution, lang: this.locale}).pipe(
+      map(res => new Institution().deserialize(res))
+    );
+  }
+
+  public updateInstitution(institutionId: number, data: {}): Observable<Institution> {
+    return this.httpClient.post<Institution>(`${this.addUpdateInstitutionUrl}/${institutionId}`, {...data}).pipe(
       map(res => new Institution().deserialize(res))
     );
   }
