@@ -32,14 +32,11 @@ export class CountryComponent implements OnInit, OnChanges {
   }
 
   public openDialog() {
-    const data = {
-      item: this.country
-    };
     const dialog = this.dialog.open(UpdateDialogComponent, {
       width: '450px',
       height: '300px',
       data: {
-        dataKey: this.country
+        dataKey: {item: this.country}
       }
     });
 

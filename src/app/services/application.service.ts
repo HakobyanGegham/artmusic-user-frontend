@@ -33,8 +33,8 @@ export class ApplicationService {
     );
   }
 
-  public updateNomination(nominationId: number, data: {}): Observable<Nomination> {
-    return this.httpClient.post<Nomination>(`${this.addUpdateNominationUrl}/${nominationId}`, {...data}).pipe(
+  public updateNomination(nominationId: number, names: {}): Observable<Nomination> {
+    return this.httpClient.post<Nomination>(`${this.addUpdateNominationUrl}/${nominationId}`, {names}).pipe(
       map(res => new Nomination().deserialize(res))
     );
   }

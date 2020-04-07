@@ -39,7 +39,7 @@ export class InstitutionComponent implements OnInit, OnChanges {
 
   public openDialog() {
     const dialogData = {
-      item: this.city,
+      item: this.institution,
       parentItem: this.cities,
       parentId: 'cityId',
     };
