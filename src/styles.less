@@ -127,3 +127,30 @@ ul {
     }
   }
 }
+
+.content {
+  &.actions {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+  }
+
+  .btn {
+    padding: 0;
+    min-width: unset;
+    width: 100%;
+    border-radius: 0;
+
+    &:hover {
+      background: #e9e5ea;
+    }
+  }
+
+  .edit {
+    color: #64B5F6;
+  }
+
+  .remove {
+    color: #E53935;
+  }
+}
