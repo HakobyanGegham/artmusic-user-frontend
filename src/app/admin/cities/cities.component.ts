@@ -27,4 +27,9 @@ export class CitiesComponent implements OnInit {
     });
   }
 
+  public removeCity(removedCityId: any) {
+    this.cities = this.cities.filter(city => {
+      return city.id !== removedCityId;
+    });
+  }
 }

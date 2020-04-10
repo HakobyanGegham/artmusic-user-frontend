@@ -28,4 +28,10 @@ export class RegionsComponent implements OnInit {
       this.regions = regions;
     });
   }
+
+  public removeRegion(removedRegionId: any) {
+    this.regions = this.regions.filter(region => {
+      return region.id !== removedRegionId;
+    });
+  }
 }

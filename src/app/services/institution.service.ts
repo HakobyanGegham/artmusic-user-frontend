@@ -11,7 +11,7 @@ import {map} from 'rxjs/operators';
 export class InstitutionService {
 
   private getInstitutionsUrl = '/api/institutions';
-  private addUpdateInstitutionUrl = '/api/institution';
+  private institutionUrl = '/api/institution';
 
   constructor(private httpClient: HttpClient,
               @Inject(LOCALE_ID) protected locale: string) {
@@ -26,14 +26,20 @@ export class InstitutionService {
 
   public addEducationalInstitution(institution: string, cityId: number): Observable<Institution> {
     return this.httpClient.post<Institution>
-    (`${this.addUpdateInstitutionUrl}`, {cityId, institution, lang: this.locale}).pipe(
+    (`${this.institutionUrl}`, {cityId, institution, lang: this.locale}).pipe(
       map(res => new Institution().deserialize(res))
     );
   }
 
   public updateInstitution(institutionId: number, data: {}): Observable<Institution> {
-    return this.httpClient.post<Institution>(`${this.addUpdateInstitutionUrl}/${institutionId}`, {...data}).pipe(
+    return this.httpClient.post<Institution>(`${this.institutionUrl}/${institutionId}`, {...data}).pipe(
       map(res => new Institution().deserialize(res))
+    );
+  }
+
+  public removeInstitution(institutionId: number): Observable<boolean> {
+    return this.httpClient.delete<boolean>(`${this.institutionUrl}/${institutionId}`).pipe(
+      map(res => res)
     );
   }
 }

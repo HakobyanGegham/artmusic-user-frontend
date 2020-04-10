@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Nomination} from '../../models/nomination';
 import {ApplicationService} from '../../services/application.service';
 
@@ -11,7 +11,8 @@ export class NominationsComponent implements OnInit {
   public p: number;
   public nominations: Nomination[];
 
-  constructor(private applicationService: ApplicationService) { }
+  constructor(private applicationService: ApplicationService) {
+  }
 
   ngOnInit(): void {
     this.applicationService.getNominations().subscribe(nominations => {
@@ -19,4 +20,9 @@ export class NominationsComponent implements OnInit {
     });
   }
 
+  removeNomination(removedNominationId: any) {
+    this.nominations = this.nominations.filter(nomination => {
+      return nomination !== removedNominationId;
+    });
+  }
 }

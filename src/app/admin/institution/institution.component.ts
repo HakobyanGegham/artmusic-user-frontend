@@ -1,23 +1,29 @@
-import {Component, Inject, Input, LOCALE_ID, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Inject, Input, LOCALE_ID, OnChanges, OnDestroy, OnInit, Output, SimpleChanges} from '@angular/core';
 import {Institution} from '../../models/institution';
 import {City} from '../../models/city';
 import {UpdateDialogComponent} from '../modals/update-dialog/update-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
 import {InstitutionService} from '../../services/institution.service';
+import {Subscription} from 'rxjs';
+import {RemoveDialogComponent} from '../modals/remove-dialog/remove-dialog.component';
 
 @Component({
   selector: 'app-institution',
   templateUrl: './institution.component.html',
   styleUrls: ['./institution.component.less']
 })
-export class InstitutionComponent implements OnInit, OnChanges {
+export class InstitutionComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() public institution: Institution;
   @Input() public cities: City[];
+  @Output() public removed = new EventEmitter();
+
   public city: City;
+  private subscription = new Subscription();
 
   constructor(@Inject(LOCALE_ID) public locale: string,
-              private dialog: MatDialog,
+              private updateDialog: MatDialog,
+              private removeDialog: MatDialog,
               private institutionService: InstitutionService) {
   }
 
@@ -43,7 +49,7 @@ export class InstitutionComponent implements OnInit, OnChanges {
       parentItem: this.cities,
       parentId: 'cityId',
     };
-    const dialog = this.dialog.open(UpdateDialogComponent, {
+    const dialog = this.updateDialog.open(UpdateDialogComponent, {
       width: '450px',
       height: '360px',
       data: {
@@ -51,7 +57,7 @@ export class InstitutionComponent implements OnInit, OnChanges {
       }
     });
 
-    dialog.componentInstance.OnSubmitClick.subscribe((value) => {
+    const updateSubscription = dialog.componentInstance.OnSubmitClick.subscribe((value) => {
       const data = {
         parentItem: value.parentItem,
         names: value.names,
@@ -60,9 +66,28 @@ export class InstitutionComponent implements OnInit, OnChanges {
         this.institution = institution;
       });
     });
+
+    this.subscription.add(updateSubscription);
   }
 
   public removeItem() {
+    const removeDialog = this.removeDialog.open(RemoveDialogComponent, {
+      width: '350px',
+      height: '200px',
+    });
 
+    const removeSubscription = removeDialog.componentInstance.remove.subscribe(() => {
+      this.institutionService.removeInstitution(+this.institution.id).subscribe(() => {
+        this.removed.emit(+this.institution.id);
+      });
+    });
+
+    this.subscription.add(removeSubscription);
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 }

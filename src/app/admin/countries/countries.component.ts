@@ -21,4 +21,9 @@ export class CountriesComponent implements OnInit {
     });
   }
 
+  public removeCountry(removedCountyId: any) {
+    this.countries = this.countries.filter(country => {
+      return country.id !== removedCountyId;
+    });
+  }
 }

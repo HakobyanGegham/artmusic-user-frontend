@@ -5,14 +5,14 @@ import {
   Inject,
   Input,
   LOCALE_ID,
-  OnChanges,
+  OnChanges, OnDestroy,
   OnInit,
   Output,
   SimpleChanges,
   ViewChild
 } from '@angular/core';
 import {FormGroup} from '@angular/forms';
-import {Observable} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {MatAutocomplete, MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
 
@@ -21,7 +21,7 @@ import {MatAutocomplete, MatAutocompleteSelectedEvent} from '@angular/material/a
   templateUrl: './autocomplete.component.html',
   styleUrls: ['./autocomplete.component.less']
 })
-export class AutocompleteComponent implements OnInit, OnChanges {
+export class AutocompleteComponent implements OnChanges, OnDestroy {
 
   @Input() items: any[];
   @Input() formGroup: FormGroup;
@@ -31,6 +31,7 @@ export class AutocompleteComponent implements OnInit, OnChanges {
 
   @Output() createNew = new EventEmitter();
   @Output() optionSelected = new EventEmitter();
+  @Output() noSelectedItem = new EventEmitter();
 
   @ViewChild('autocompleteInput') autocompleteInput: ElementRef;
   @ViewChild('autocomplete') autocomplete: MatAutocomplete;
@@ -38,26 +39,35 @@ export class AutocompleteComponent implements OnInit, OnChanges {
   public filteredItems: Observable<any[]>;
   public noSuggestions = false;
   public query = '';
+  private subscription: Subscription;
 
   constructor(@Inject(LOCALE_ID) public locale: string) {
   }
 
-  ngOnChanges(changes: SimpleChanges) {
+  public ngOnChanges(changes: SimpleChanges) {
     if (changes.items.currentValue) {
       this.filteredItems = this.formGroup.get(this.controlName).valueChanges.pipe(
         startWith(''),
         map(val => this.filter(val))
       );
 
-      this.filteredItems.subscribe(item => {
+      this.subscription = this.filteredItems.subscribe(item => {
+        if (item.length) {
+          const isSelected = this.checkIfIsSelected(item);
+
+          if (!isSelected) {
+            this.autocompleteInput.nativeElement.value = '';
+            this.noSelectedItem.emit();
+          }
+        } else {
+          this.autocompleteInput.nativeElement.value = '';
+          this.noSelectedItem.emit();
+        }
+
         this.query = this.autocompleteInput.nativeElement.value;
         this.noSuggestions = !item.length;
       });
     }
-  }
-
-  public ngOnInit(): void {
-
   }
 
   public onCreateNew() {
@@ -79,5 +89,25 @@ export class AutocompleteComponent implements OnInit, OnChanges {
     return this.items.filter(item => {
       return item.names[this.locale].toLowerCase().indexOf(val.toLowerCase()) === 0;
     });
+  }
+
+  public ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+  private checkIfIsSelected(item: any[]) {
+    let isSelected = false;
+    item.forEach(value => {
+      for (const name in value.names) {
+        if (!value.names.hasOwnProperty(name)) {
+          continue;
+        }
+        if (value.names[name].includes(this.autocompleteInput.nativeElement.value)) {
+          isSelected = true;
+        }
+      }
+    });
+
+    return isSelected;
   }
 }

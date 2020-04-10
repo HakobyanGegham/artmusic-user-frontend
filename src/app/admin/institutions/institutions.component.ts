@@ -18,7 +18,7 @@ export class InstitutionsComponent implements OnInit {
               private cityService: CityService) {
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.cityService.getCities().subscribe(cities => {
       this.cities = cities;
     });
@@ -27,4 +27,9 @@ export class InstitutionsComponent implements OnInit {
     });
   }
 
+  public removeInstitution(removedInstitutionId: any) {
+    this.cities = this.cities.filter(city => {
+      return city.id !== removedInstitutionId;
+    });
+  }
 }

@@ -16,7 +16,7 @@ export class SpecializationsComponent implements OnInit {
   constructor(private applicationService: ApplicationService) {
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.applicationService.getNominations().subscribe(nominations => {
       this.nominations = nominations;
     });
@@ -26,4 +26,9 @@ export class SpecializationsComponent implements OnInit {
     });
   }
 
+  public removeSpecialization(removedSpecializationId: any) {
+    this.specializations = this.specializations.filter(specialization => {
+      return specialization.id !== removedSpecializationId;
+    });
+  }
 }

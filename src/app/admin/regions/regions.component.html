@@ -8,7 +8,7 @@
     <div class="title"><span i18n>Actions</span></div>
   </div>
   <app-region *ngFor="let region of regions | paginate: { itemsPerPage: 10, currentPage: p }"
-              [region]="region" [countries]="countries">
+              [region]="region" [countries]="countries" (removed)="removeRegion($event)">
   </app-region>
   <div class="pagination-controller">
     <pagination-controls (pageChange)="p = $event"></pagination-controls>

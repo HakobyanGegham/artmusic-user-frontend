@@ -10,7 +10,7 @@ import {map} from 'rxjs/operators';
 export class RegionService {
 
   private getRegionsUrl = '/api/regions';
-  private addUpdateRegionUrl = '/api/region';
+  private regionUrl = '/api/region';
 
   constructor(private httpClient: HttpClient,
               @Inject(LOCALE_ID) protected locale: string) {
@@ -24,14 +24,20 @@ export class RegionService {
   }
 
   public addRegions(region: string, countryId: number): Observable<Region> {
-    return this.httpClient.post<Region>(`${this.addUpdateRegionUrl}`, {countryId, region, lang: this.locale}).pipe(
+    return this.httpClient.post<Region>(`${this.regionUrl}`, {countryId, region, lang: this.locale}).pipe(
       map(res => new Region().deserialize(res))
     );
   }
 
   public updateRegion(regionId: number, data: {}): Observable<Region> {
-    return this.httpClient.post<Region>(`${this.addUpdateRegionUrl}/${regionId}`, {...data}).pipe(
+    return this.httpClient.post<Region>(`${this.regionUrl}/${regionId}`, {...data}).pipe(
       map(res => new Region().deserialize(res))
+    );
+  }
+
+  public removeRegion(regionId: number): Observable<boolean> {
+    return this.httpClient.delete<boolean>(`${this.regionUrl}/${regionId}`).pipe(
+      map(res => res)
     );
   }
 }

@@ -14,9 +14,9 @@ import {Application} from '../models/application';
 export class ApplicationService {
 
   private getNominationsUrl = '/api/nominations';
-  private addUpdateNominationUrl = '/api/nomination';
+  private nominationUrl = '/api/nomination';
   private getSpecializationsUrl = '/api/specializations';
-  private addUpdatedSpecializationUrl = '/api/specialization';
+  private specializationUrl = '/api/specialization';
   private getApplicationUrl = '/api/application';
   private getApplicationsUrl = '/api/applications';
   private addUpdateApplicationUrl = '/api/application';
@@ -34,7 +34,7 @@ export class ApplicationService {
   }
 
   public updateNomination(nominationId: number, names: {}): Observable<Nomination> {
-    return this.httpClient.post<Nomination>(`${this.addUpdateNominationUrl}/${nominationId}`, {names}).pipe(
+    return this.httpClient.post<Nomination>(`${this.nominationUrl}/${nominationId}`, {names}).pipe(
       map(res => new Nomination().deserialize(res))
     );
   }
@@ -42,7 +42,7 @@ export class ApplicationService {
 
   public updateSpecialization(specializationId: number, data: {}): Observable<Specialization> {
     return this.httpClient.post<Specialization>
-    (`${this.addUpdatedSpecializationUrl}/${specializationId}`, {...data}).pipe(
+    (`${this.specializationUrl}/${specializationId}`, {...data}).pipe(
       map(res => new Specialization().deserialize(res))
     );
   }
@@ -82,4 +82,15 @@ export class ApplicationService {
     );
   }
 
+  public removeSpecialization(specializationId: number): Observable<boolean> {
+    return this.httpClient.delete<boolean>(`${this.specializationUrl}/${specializationId}`).pipe(
+      map(res => res)
+    );
+  }
+
+  public removeNomination(nominationId: number) {
+    return this.httpClient.delete<boolean>(`${this.nominationUrl}/${nominationId}`).pipe(
+      map(res => res)
+    );
+  }
 }

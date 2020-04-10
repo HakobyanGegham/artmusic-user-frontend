@@ -12,7 +12,7 @@ import {LOCALE_ID, Inject} from '@angular/core';
 export class CountryService {
 
   private getCountriesUrl = '/api/countries';
-  private addUpdateCountryUrl = '/api/country';
+  private countryUrl = '/api/country';
 
   constructor(private httpClient: HttpClient,
               @Inject(LOCALE_ID) protected locale: string) {
@@ -25,14 +25,20 @@ export class CountryService {
   }
 
   public addCountry(country: string): Observable<Country> {
-    return this.httpClient.post<Country>(`${this.addUpdateCountryUrl}`, {country, lang: this.locale}).pipe(
+    return this.httpClient.post<Country>(`${this.countryUrl}`, {country, lang: this.locale}).pipe(
       map(res => new Country().deserialize(res))
     );
   }
 
   public updateCountry(countryId: number, names = {}): Observable<Country> {
-    return this.httpClient.post<Country>(`${this.addUpdateCountryUrl}/${countryId}`, {names}).pipe(
+    return this.httpClient.post<Country>(`${this.countryUrl}/${countryId}`, {names}).pipe(
       map(res => new Country().deserialize(res))
+    );
+  }
+
+  public removeCountry(countryId: number): Observable<boolean> {
+    return this.httpClient.delete<boolean>(`${this.countryUrl}/${countryId}`).pipe(
+      map(res => res)
     );
   }
 }

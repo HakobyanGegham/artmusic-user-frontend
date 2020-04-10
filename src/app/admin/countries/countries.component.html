@@ -7,7 +7,7 @@
     <div class="title"><span i18n>Actions</span></div>
   </div>
   <app-country *ngFor="let country of countries | paginate: { itemsPerPage: 10, currentPage: p }"
-                      [country]="country"></app-country>
+                      [country]="country" (removed)="removeCountry($event)"></app-country>
   <div class="pagination-controller">
     <pagination-controls (pageChange)="p = $event"></pagination-controls>
   </div>

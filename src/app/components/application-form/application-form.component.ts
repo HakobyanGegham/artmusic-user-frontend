@@ -197,4 +197,18 @@ export class ApplicationFormComponent extends FormHelper implements OnInit, OnCh
       directorLastName: this.form.value.directorLastName,
     };
   }
+
+  public emptyRegions() {
+    this.regions = [];
+  }
+
+  public emptyCities() {
+    this.cities = [];
+  }
+
+  public emptyInstitutions() {
+    this.institutions = [];
+  }
+
+
 }
