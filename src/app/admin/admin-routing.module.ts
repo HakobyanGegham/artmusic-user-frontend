@@ -7,11 +7,13 @@ import {CitiesComponent} from './cities/cities.component';
 import {InstitutionsComponent} from './institutions/institutions.component';
 import {NominationsComponent} from './nominations/nominations.component';
 import {SpecializationsComponent} from './specializations/specializations.component';
+import {AuthGuardService} from '../services/auth-guard.service';
 
 const routes: Routes = [
   {
     path: '',
     component: AdminComponent,
+    canActivate: [AuthGuardService],
     children: [
       {
         path: 'countries',
