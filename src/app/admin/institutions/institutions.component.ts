@@ -54,7 +54,7 @@ export class InstitutionsComponent implements OnInit, OnDestroy {
         parentItem: value.parentItem,
         names: value.names,
       };
-      this.institutionService.addInstitution(value, 1).subscribe(institution => {
+      this.institutionService.addInstitution(data).subscribe(institution => {
         this.institutions.push(institution);
       });
     });

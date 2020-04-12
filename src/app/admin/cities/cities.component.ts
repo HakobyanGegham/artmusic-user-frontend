@@ -55,7 +55,7 @@ export class CitiesComponent implements OnInit, OnDestroy {
         parentItem: value.parentItem,
         names: value.names,
       };
-      this.cityService.addCity(value, 1).subscribe(city => {
+      this.cityService.addCity(data).subscribe(city => {
         this.cities.push(city);
       });
     });

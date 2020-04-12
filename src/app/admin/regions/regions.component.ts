@@ -58,7 +58,7 @@ export class RegionsComponent implements OnInit, OnDestroy {
         parentItem: value.parentItem,
         names: value.names,
       };
-      this.regionService.addRegions(value, 1).subscribe(region => {
+      this.regionService.addRegion(data).subscribe(region => {
         this.regions.push(region);
       });
     });

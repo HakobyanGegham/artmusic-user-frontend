@@ -24,9 +24,20 @@ export class InstitutionService {
     );
   }
 
-  public addInstitution(institution: string, cityId: number): Observable<Institution> {
+  public addItem(newInstitution: string, cityId: number) {
+    const data = {
+      names: {
+        name: newInstitution,
+        key: this.locale
+      },
+      parentItem: cityId
+    };
+    return this.addInstitution(data);
+  }
+
+  public addInstitution(data: {}): Observable<Institution> {
     return this.httpClient.post<Institution>
-    (`${this.institutionUrl}`, {cityId, institution, lang: this.locale}).pipe(
+    (`${this.institutionUrl}`, {data}).pipe(
       map(res => new Institution().deserialize(res))
     );
   }

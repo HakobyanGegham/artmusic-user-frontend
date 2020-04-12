@@ -8,7 +8,6 @@ import {map} from 'rxjs/operators';
   providedIn: 'root'
 })
 export class CityService {
-
   private getCitiesUrl = '/api/cities';
   private cityUrl = '/api/city';
 
@@ -23,8 +22,19 @@ export class CityService {
     );
   }
 
-  public addCity(city: string, regionId: number): Observable<City> {
-    return this.httpClient.post<City>(`${this.cityUrl}`, {regionId, city, lang: this.locale}).pipe(
+  public addItem(newCity: string, regionId: number) {
+    const data = {
+      names: {
+        name: newCity,
+        key: this.locale
+      },
+      parentItem: regionId
+    };
+    return this.addCity(data);
+  }
+
+  public addCity(data: {}): Observable<City> {
+    return this.httpClient.post<City>(`${this.cityUrl}`, {data}).pipe(
       map(res => new City().deserialize(res))
     );
   }

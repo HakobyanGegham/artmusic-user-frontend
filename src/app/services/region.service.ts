@@ -23,8 +23,20 @@ export class RegionService {
     );
   }
 
-  public addRegions(region: string, countryId: number): Observable<Region> {
-    return this.httpClient.post<Region>(`${this.regionUrl}`, {countryId, region, lang: this.locale}).pipe(
+  public addItem(region: string, selectedCountryId: number) {
+    const data = {
+      names: {
+        name: region,
+        key: this.locale,
+      },
+      parentItem: selectedCountryId
+    };
+
+    return this.addRegion(data);
+  }
+
+  public addRegion(data: {}): Observable<Region> {
+    return this.httpClient.post<Region>(`${this.regionUrl}`, {data}).pipe(
       map(res => new Region().deserialize(res))
     );
   }

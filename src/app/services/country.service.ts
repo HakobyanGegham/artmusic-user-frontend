@@ -5,6 +5,7 @@ import {Observable, pipe} from 'rxjs';
 import {Country} from '../models/country';
 import {map} from 'rxjs/operators';
 import {LOCALE_ID, Inject} from '@angular/core';
+import {$t} from 'codelyzer/angular/styles/chars';
 
 @Injectable({
   providedIn: 'root'
@@ -24,8 +25,12 @@ export class CountryService {
     );
   }
 
-  public addCountry(country: string): Observable<Country> {
-    return this.httpClient.post<Country>(`${this.countryUrl}`, {country, lang: this.locale}).pipe(
+  public addItem(newCountry: string) {
+    return this.addCountry({name: newCountry, key: this.locale});
+  }
+
+  public addCountry(names: {}): Observable<Country> {
+    return this.httpClient.post<Country>(`${this.countryUrl}`, {names}).pipe(
       map(res => new Country().deserialize(res))
     );
   }

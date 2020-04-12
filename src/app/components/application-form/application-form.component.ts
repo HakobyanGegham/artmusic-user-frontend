@@ -145,7 +145,7 @@ export class ApplicationFormComponent extends FormHelper implements OnInit, OnCh
   }
 
   public addCountry(newCountry: any) {
-    this.countryService.addCountry(newCountry).subscribe(country => {
+    this.countryService.addItem(newCountry).subscribe(country => {
       this.countries.push(country);
       this.selectedCountryId = country.id;
       this.countryChange(country.id);
@@ -153,7 +153,7 @@ export class ApplicationFormComponent extends FormHelper implements OnInit, OnCh
   }
 
   public addRegion(value: any) {
-    this.regionService.addRegions(value, this.selectedCountryId).subscribe(region => {
+    this.regionService.addItem(value, this.selectedCountryId).subscribe(region => {
       this.regions.push(region);
       this.selectedRegionId = region.id;
       this.regionChange(region.id);
@@ -161,7 +161,7 @@ export class ApplicationFormComponent extends FormHelper implements OnInit, OnCh
   }
 
   public addCity(value: string) {
-    this.cityService.addCity(value, this.selectedRegionId).subscribe(city => {
+    this.cityService.addItem(value, this.selectedRegionId).subscribe(city => {
       this.cities.push(city);
       this.selectedCityId = city.id;
       this.cityChange(city.id);
@@ -169,7 +169,7 @@ export class ApplicationFormComponent extends FormHelper implements OnInit, OnCh
   }
 
   public addInstitution(value: string) {
-    this.institutionService.addInstitution(value, this.selectedCityId).subscribe(institution => {
+    this.institutionService.addItem(value, this.selectedCityId).subscribe(institution => {
       this.institutions.push(institution);
     });
   }
