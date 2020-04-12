@@ -4,6 +4,7 @@ import {ApplicationService} from '../../services/application.service';
 import {Subscription} from 'rxjs';
 import {MatDialog} from '@angular/material/dialog';
 import {AddDialogComponent} from '../modals/add-dialog/add-dialog.component';
+import {NominationService} from '../../services/nomination.service';
 
 @Component({
   selector: 'app-nominations',
@@ -15,12 +16,12 @@ export class NominationsComponent implements OnInit, OnDestroy {
   public nominations: Nomination[];
   private subscription = new Subscription();
 
-  constructor(private applicationService: ApplicationService,
+  constructor(private nominationService: NominationService,
               private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
-    this.applicationService.getNominations().subscribe(nominations => {
+    this.nominationService.getNominations().subscribe(nominations => {
       this.nominations = nominations;
     });
   }
@@ -45,7 +46,7 @@ export class NominationsComponent implements OnInit, OnDestroy {
         parentItem: value.parentItem,
         names: value.names,
       };
-      this.applicationService.updateNomination(value, 1).subscribe(nomination => {
+      this.nominationService.updateNomination(value, 1).subscribe(nomination => {
         this.nominations.push(nomination);
       });
     });

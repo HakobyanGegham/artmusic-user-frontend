@@ -1,10 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Specialization} from '../../models/specialization';
 import {Nomination} from '../../models/nomination';
-import {ApplicationService} from '../../services/application.service';
 import {Subscription} from 'rxjs';
 import {MatDialog} from '@angular/material/dialog';
 import {AddDialogComponent} from '../modals/add-dialog/add-dialog.component';
+import {SpecializationService} from '../../services/specialization.service';
+import {NominationService} from '../../services/nomination.service';
 
 @Component({
   selector: 'app-specializations',
@@ -17,16 +18,17 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
   public nominations: Nomination[];
   private subscription = new Subscription();
 
-  constructor(private applicationService: ApplicationService,
+  constructor(private specializationService: SpecializationService,
+              private nominationService: NominationService,
               private dialog: MatDialog) {
   }
 
   public ngOnInit(): void {
-    this.applicationService.getNominations().subscribe(nominations => {
+    this.nominationService.getNominations().subscribe(nominations => {
       this.nominations = nominations;
     });
 
-    this.applicationService.getSpecializations().subscribe(specializations => {
+    this.specializationService.getSpecializations().subscribe(specializations => {
       this.specializations = specializations;
     });
   }
@@ -53,7 +55,7 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
         parentItem: value.parentItem,
         names: value.names,
       };
-      this.applicationService.updateSpecialization(value, 1).subscribe(specialization => {
+      this.specializationService.updateSpecialization(value, 1).subscribe(specialization => {
         this.specializations.push(specialization);
       });
     });

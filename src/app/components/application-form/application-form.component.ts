@@ -14,6 +14,8 @@ import {CityService} from '../../services/city.service';
 import {InstitutionService} from '../../services/institution.service';
 import {Application} from '../../models/application';
 import {ActivatedRoute} from '@angular/router';
+import {NominationService} from '../../services/nomination.service';
+import {SpecializationService} from '../../services/specialization.service';
 
 @Component({
   selector: 'app-application-form',
@@ -43,6 +45,8 @@ export class ApplicationFormComponent extends FormHelper implements OnInit, OnCh
               private regionService: RegionService,
               private cityService: CityService,
               private institutionService: InstitutionService,
+              private nominationService: NominationService,
+              private specializationService: SpecializationService,
               @Inject(LOCALE_ID) public locale: string) {
     super();
   }
@@ -51,12 +55,11 @@ export class ApplicationFormComponent extends FormHelper implements OnInit, OnCh
     this.countryService.getCountries().subscribe(countries => {
       this.countries = countries;
     });
-    this.applicationService.getNominations().subscribe(nominations => {
+    this.nominationService.getNominations().subscribe(nominations => {
       this.nominations = nominations;
     });
     this.initForm();
   }
-
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes.application.currentValue) {
@@ -94,11 +97,11 @@ export class ApplicationFormComponent extends FormHelper implements OnInit, OnCh
       this.institutions = institutions;
       this.getFormControl('institution').setValue(this.application.institution.names[this.locale]);
     });
-    this.applicationService.getNominations().subscribe(nominations => {
+    this.nominationService.getNominations().subscribe(nominations => {
       this.nominations = nominations;
       this.getFormControl('nomination').setValue(this.application.nomination.names[this.locale]);
     });
-    this.applicationService.getSpecializations(this.application.nomination.id).subscribe(specializations => {
+    this.specializationService.getSpecializations(this.application.nomination.id).subscribe(specializations => {
       this.specializations = specializations;
       this.getFormControl('specialization').setValue(this.application.specialization.names[this.locale]);
     });
@@ -136,7 +139,7 @@ export class ApplicationFormComponent extends FormHelper implements OnInit, OnCh
   }
 
   public nominationChange(nominationId: any) {
-    this.applicationService.getSpecializations(+nominationId).subscribe(specializations => {
+    this.specializationService.getSpecializations(+nominationId).subscribe(specializations => {
       this.specializations = specializations;
     });
   }
@@ -209,6 +212,4 @@ export class ApplicationFormComponent extends FormHelper implements OnInit, OnCh
   public emptyInstitutions() {
     this.institutions = [];
   }
-
-
 }

@@ -5,6 +5,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {ApplicationService} from '../../services/application.service';
 import {Subscription} from 'rxjs';
 import {RemoveDialogComponent} from '../modals/remove-dialog/remove-dialog.component';
+import {NominationService} from '../../services/nomination.service';
 
 @Component({
   selector: 'app-nomination',
@@ -21,7 +22,7 @@ export class NominationComponent implements OnInit, OnChanges, OnDestroy {
   constructor(@Inject(LOCALE_ID) public locale: string,
               private updateDialog: MatDialog,
               private removeDialog: MatDialog,
-              private applicationService: ApplicationService) {
+              private nominationService: NominationService) {
   }
 
   public ngOnInit(): void {
@@ -46,7 +47,7 @@ export class NominationComponent implements OnInit, OnChanges, OnDestroy {
     });
 
     const updateSubscription = updateDialog.componentInstance.OnSubmitClick.subscribe(value => {
-      this.applicationService.updateNomination(+this.nomination.id, value.names).subscribe(nomination => {
+      this.nominationService.updateNomination(+this.nomination.id, value.names).subscribe(nomination => {
         this.nomination = nomination;
       });
     });
@@ -61,7 +62,7 @@ export class NominationComponent implements OnInit, OnChanges, OnDestroy {
     });
 
     const removeSubscription = removeDialog.componentInstance.remove.subscribe(() => {
-      this.applicationService.removeNomination(+this.nomination.id).subscribe(() => {
+      this.nominationService.removeNomination(+this.nomination.id).subscribe(() => {
         this.removed.emit(+this.nomination.id);
       });
     });

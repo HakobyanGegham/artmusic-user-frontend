@@ -6,6 +6,8 @@ import {ApplicationService} from '../../services/application.service';
 import {MatDialog} from '@angular/material/dialog';
 import {Subscription} from 'rxjs';
 import {RemoveDialogComponent} from '../modals/remove-dialog/remove-dialog.component';
+import {SpecializationService} from '../../services/specialization.service';
+import {NominationService} from '../../services/nomination.service';
 
 @Component({
   selector: 'app-specialization',
@@ -24,7 +26,7 @@ export class SpecializationComponent implements OnInit, OnChanges, OnDestroy {
   constructor(@Inject(LOCALE_ID) public locale: string,
               private updateDialog: MatDialog,
               private removeDialog: MatDialog,
-              private applicationService: ApplicationService) {
+              private specializationService: SpecializationService) {
   }
 
   public ngOnInit(): void {
@@ -62,7 +64,7 @@ export class SpecializationComponent implements OnInit, OnChanges, OnDestroy {
         parentItem: value.parentItem,
         names: value.names,
       };
-      this.applicationService.updateSpecialization(+this.specialization.id, data).subscribe(specialization => {
+      this.specializationService.updateSpecialization(+this.specialization.id, data).subscribe(specialization => {
         this.specialization = specialization;
       });
     });
@@ -77,7 +79,7 @@ export class SpecializationComponent implements OnInit, OnChanges, OnDestroy {
     });
 
     const removeSubscription = removeDialog.componentInstance.remove.subscribe(() => {
-      this.applicationService.removeSpecialization(+this.specialization.id).subscribe(() => {
+      this.specializationService.removeSpecialization(+this.specialization.id).subscribe(() => {
         this.removed.emit(+this.specialization.id);
       });
     });
