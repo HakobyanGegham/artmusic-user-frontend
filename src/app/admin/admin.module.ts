@@ -27,10 +27,11 @@ import { NominationsComponent } from './nominations/nominations.component';
 import { SpecializationsComponent } from './specializations/specializations.component';
 import { SpecializationComponent } from './specialization/specialization.component';
 import { RemoveDialogComponent } from './modals/remove-dialog/remove-dialog.component';
+import { AddDialogComponent } from './modals/add-dialog/add-dialog.component';
 
 
 @NgModule({
-  declarations: [AdminComponent, LeftPanelComponent, CountriesComponent, CountryComponent, UpdateDialogComponent, RegionsComponent, RegionComponent, CitiesComponent, CityComponent, InstitutionsComponent, InstitutionComponent, NominationComponent, NominationsComponent, SpecializationsComponent, SpecializationComponent, RemoveDialogComponent],
+  declarations: [AdminComponent, LeftPanelComponent, CountriesComponent, CountryComponent, UpdateDialogComponent, RegionsComponent, RegionComponent, CitiesComponent, CityComponent, InstitutionsComponent, InstitutionComponent, NominationComponent, NominationsComponent, SpecializationsComponent, SpecializationComponent, RemoveDialogComponent, AddDialogComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,

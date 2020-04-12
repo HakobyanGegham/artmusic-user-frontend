@@ -59,9 +59,6 @@ export class AutocompleteComponent implements OnChanges, OnDestroy {
             this.autocompleteInput.nativeElement.value = '';
             this.noSelectedItem.emit();
           }
-        } else {
-          this.autocompleteInput.nativeElement.value = '';
-          this.noSelectedItem.emit();
         }
 
         this.query = this.autocompleteInput.nativeElement.value;

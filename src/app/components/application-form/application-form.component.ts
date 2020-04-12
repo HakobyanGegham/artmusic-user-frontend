@@ -166,7 +166,7 @@ export class ApplicationFormComponent extends FormHelper implements OnInit, OnCh
   }
 
   public addInstitution(value: string) {
-    this.institutionService.addEducationalInstitution(value, this.selectedCityId).subscribe(institution => {
+    this.institutionService.addInstitution(value, this.selectedCityId).subscribe(institution => {
       this.institutions.push(institution);
     });
   }

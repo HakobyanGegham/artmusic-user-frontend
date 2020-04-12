@@ -24,7 +24,7 @@ export class InstitutionService {
     );
   }
 
-  public addEducationalInstitution(institution: string, cityId: number): Observable<Institution> {
+  public addInstitution(institution: string, cityId: number): Observable<Institution> {
     return this.httpClient.post<Institution>
     (`${this.institutionUrl}`, {cityId, institution, lang: this.locale}).pipe(
       map(res => new Institution().deserialize(res))
