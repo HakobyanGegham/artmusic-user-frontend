@@ -46,6 +46,7 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
       data: {
         dataKey: {
           parentItem: this.nominations,
+          placeholder: 'Nomination'
         }
       }
     });

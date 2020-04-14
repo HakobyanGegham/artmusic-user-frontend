@@ -45,7 +45,7 @@ export class CitiesComponent implements OnInit, OnDestroy {
       data: {
         dataKey: {
           parentItem: this.regions,
-          parentId: 'countryId'
+          placeholder: 'Region'
         }
       }
     });
@@ -54,6 +54,7 @@ export class CitiesComponent implements OnInit, OnDestroy {
       const data = {
         parentItem: value.parentItem,
         names: value.names,
+        placeholder: 'Region'
       };
       this.cityService.addCity(data).subscribe(city => {
         this.cities.push(city);

@@ -12,7 +12,7 @@ export class AddDialogComponent extends FormHelper implements OnInit {
 
   public languages = ['hy', 'ru', 'en'];
   public parentItems ? = this.data.dataKey.parentItem;
-
+  public placeholder ? = this.data.dataKey.placeholder;
   @Output() OnSubmitClick = new EventEmitter();
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
@@ -48,7 +48,7 @@ export class AddDialogComponent extends FormHelper implements OnInit {
     this.languages.forEach(language => {
       const formGroup = this.formBuilder.group({
         name: ['', [Validators.required]],
-        key: [language],
+        lang: [language],
       });
       this.getFormControlAsArray('names').push(formGroup);
     });

@@ -53,10 +53,10 @@ export class UpdateDialogComponent extends FormHelper implements OnInit {
   }
 
   private addItemsToNames() {
-    const data = {name: '', key: ''};
+    const data = {name: '', lang: ''};
     const names = this.item.names;
     this.languages.forEach(lang => {
-      data.key = lang;
+      data.lang = lang;
       data.name = '';
 
       if (names[lang]) {
@@ -65,7 +65,7 @@ export class UpdateDialogComponent extends FormHelper implements OnInit {
 
       const formGroup = this.formBuilder.group({
         name: [data.name, [Validators.required]],
-        key: [data.key],
+        lang: [data.lang],
       });
 
       this.getFormControlAsArray('names').push(formGroup);

@@ -24,10 +24,10 @@ export class CityService {
 
   public addItem(newCity: string, regionId: number) {
     const data = {
-      names: {
+      names: [{
         name: newCity,
-        key: this.locale
-      },
+        lang: this.locale
+      }],
       parentItem: regionId
     };
     return this.addCity(data);

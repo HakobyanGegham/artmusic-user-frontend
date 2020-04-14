@@ -26,10 +26,10 @@ export class InstitutionService {
 
   public addItem(newInstitution: string, cityId: number) {
     const data = {
-      names: {
+      names: [{
         name: newInstitution,
-        key: this.locale
-      },
+        lang: this.locale
+      }],
       parentItem: cityId
     };
     return this.addInstitution(data);

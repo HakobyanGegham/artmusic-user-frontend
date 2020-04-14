@@ -45,6 +45,7 @@ export class InstitutionsComponent implements OnInit, OnDestroy {
       data: {
         dataKey: {
           parentItem: this.cities,
+          placeholder: 'City'
         }
       }
     });

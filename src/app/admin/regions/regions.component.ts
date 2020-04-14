@@ -48,7 +48,7 @@ export class RegionsComponent implements OnInit, OnDestroy {
       data: {
         dataKey: {
           parentItem: this.countries,
-          parentId: 'countryId'
+          placeholder: 'Country'
         }
       }
     });

@@ -26,7 +26,7 @@ export class CountryService {
   }
 
   public addItem(newCountry: string) {
-    return this.addCountry({name: newCountry, key: this.locale});
+    return this.addCountry([{name: newCountry, lang: this.locale}]);
   }
 
   public addCountry(names: {}): Observable<Country> {

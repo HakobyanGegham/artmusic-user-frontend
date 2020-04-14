@@ -25,10 +25,10 @@ export class RegionService {
 
   public addItem(region: string, selectedCountryId: number) {
     const data = {
-      names: {
+      names: [{
         name: region,
-        key: this.locale,
-      },
+        lang: this.locale,
+      }],
       parentItem: selectedCountryId
     };
 

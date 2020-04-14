@@ -15,7 +15,7 @@
     <div formArrayName="names" class="input-row"
          *ngFor="let control of getFormControlAsArray('names').controls, index as i">
       <div class="language-key-container">
-        <span class="language-key">{{ control.get('key').value }}</span>
+        <span class="language-key">{{ control.get('lang').value }}</span>
       </div>
       <mat-form-field [formGroupName]="i">
         <mat-label i18n>Name:</mat-label>
