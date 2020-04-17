@@ -2,8 +2,9 @@
   <div class="title-container">
     <h2 i18n>Nominations</h2>
   </div>
-
-  <button mat-button class="add-button" (click)="addNomination()">Add Nomination</button>
+  <div class="add-btn-container">
+    <button mat-button class="add-button" (click)="addNomination()"><span>Add</span> <mat-icon>add</mat-icon></button>
+  </div>
   <div class="nomination-header">
     <div class="title"><span i18n>ID</span></div>
     <div class="title"><span i18n>Name</span></div>

@@ -1,16 +1,30 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import FormHelper from '../../helpers/form-helper';
 import {Applicant} from '../../models/applicant';
+import {Observable, Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-applicant-form',
   templateUrl: './applicant-form.component.html',
   styleUrls: ['./applicant-form.component.less']
 })
-export class ApplicantFormComponent extends FormHelper implements OnInit, OnChanges {
+export class ApplicantFormComponent extends FormHelper implements OnInit, OnChanges, OnDestroy {
 
   @Input() public applicant: Applicant;
+  private subscription = new Subscription();
+
+  private static getInputContainerElements(inputElement: HTMLInputElement) {
+    const inputContainer = inputElement.closest('.f_file-container');
+
+    return {
+      inputElement,
+      inputContainer,
+      button: inputElement.nextElementSibling as HTMLElement,
+      background: inputContainer.querySelector('.f_percentage-background') as HTMLElement,
+      text: inputContainer.querySelector('.f_percentage-text') as HTMLElement
+    };
+  }
 
   constructor(private formBuilder: FormBuilder) {
     super();
@@ -97,5 +111,47 @@ export class ApplicantFormComponent extends FormHelper implements OnInit, OnChan
     applicant.phoneNumber = this.getFormControl('phoneNumber').value;
 
     return applicant;
+  }
+
+  public fileInputChange(inputElement: HTMLInputElement) {
+    const inputContainerElements = ApplicantFormComponent.getInputContainerElements(inputElement);
+    this.subscription.add(this.setPercentageCounter(inputContainerElements).subscribe(() => {
+      setTimeout(() => {
+        inputContainerElements.background.style.width = '0';
+        inputContainerElements.text.style.fontSize = '0';
+        inputContainerElements.button.innerHTML = 'Completed';
+        inputContainerElements.button.style.fontSize = '18px';
+      }, 800);
+    }));
+  }
+
+  setPercentageCounter(inputContainerElements: any) {
+    inputContainerElements.button.style.fontSize = '0';
+    return new Observable<any>((observer) => {
+      let i = 0;
+
+      function setPercentage() {
+        inputContainerElements.background.style.width = (i * 1.5) + 'px';
+        inputContainerElements.text.innerHTML = i + '%';
+        inputContainerElements.text.style.fontSize = '17px';
+        i++;
+        if (i > 100) {
+          observer.next();
+          observer.complete();
+        } else {
+          setTimeout(() => {
+            setPercentage();
+          }, 15);
+        }
+      }
+
+      setPercentage();
+    });
+  }
+
+  public ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 }

@@ -32,41 +32,74 @@
   .file-container {
     text-align: center;
     vertical-align: bottom;
+    position: relative;
 
     .upload-btn {
       margin-top: 10px;
       font-size: 18px;
       border-radius: 5px;
-      min-width: 180px;
+      min-width: 150px;
       display: inline-block;
       cursor: pointer;
-      padding: 11px;
       color: #fff;
-      transition: 0.6s;
+      transition: background-color 0.6s;
+      height: 40px;
+      line-height: 40px;
 
       &.passport {
-        background-color: rgba(25, 158, 59, 0.84);
+        background-color: #5E35B1;
 
         &:hover {
-          background-color: rgba(0, 117, 26, 0.84);
+          background-color: #512DA8;
         }
       }
 
       &.image {
-        background-color: #7c8ece;
+        background-color: #0277BD;
 
         &:hover {
-          background-color: #4f5b83;
+          background-color: #01579B;
         }
       }
 
       &.audio {
-        background-color: #f9c94a;
+        background-color: #2E7D32;
 
         &:hover {
-          background-color: #ac8a34;
+          background-color: #1B5E20;
         }
       }
+    }
+
+    .percentage-background {
+      position: absolute;
+      border-radius: 5px;
+      cursor: pointer;
+      display: inline-block;
+      left: 75px;
+      top: 10px;
+      min-height: 40px;
+
+      &.passport {
+        background-color: #512DA8;
+      }
+
+      &.image {
+        background-color: #01579B;
+      }
+
+      &.audio {
+        background-color: #1B5E20;
+      }
+    }
+
+    .percentage-text {
+      position: absolute;
+      left: 130px;
+      font-size: 18px;
+      top: 20px;
+      color: white;
+      z-index: 100;
     }
   }
 }

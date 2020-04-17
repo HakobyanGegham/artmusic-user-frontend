@@ -51,23 +51,32 @@
       </mat-form-field>
     </div>
     <div class="row second-row">
-      <div class="file-container">
+      <div class="file-container f_file-container">
         <input class="form-control is-hidden" type="file" #passportCopyInput
                [ngClass]="displayFieldCss('passportCopy')"
+               (change)="fileInputChange(passportCopyInput)"
                formControlName="passportCopy">
         <div class="upload-btn passport" (click)="passportBtnClick(passportCopyInput)">Passport Copy</div>
+        <span class="f_percentage-text percentage-text"></span>
+        <div class="f_percentage-background percentage-background passport"></div>
       </div>
-      <div class="file-container">
+      <div class="file-container f_file-container">
         <input class="form-control is-hidden" type="file" #imageInput
                [ngClass]="displayFieldCss('image')"
+               (change)="fileInputChange(imageInput)"
                formControlName="image">
         <div class="upload-btn image" (click)="imageBtnClick(imageInput)">Image</div>
+        <span class="f_percentage-text percentage-text"></span>
+        <div class="f_percentage-background percentage-background image"></div>
       </div>
-      <div class="file-container">
+      <div class="file-container f_file-container">
         <input class="form-control is-hidden" type="file" #audioInput
                [ngClass]="displayFieldCss('upload')"
+               (change)="fileInputChange(audioInput)"
                formControlName="upload">
         <div class="upload-btn audio" (click)="audioBtnClick(audioInput)">Upload</div>
+        <span class="f_percentage-text percentage-text"></span>
+        <div class="f_percentage-background percentage-background audio"></div>
       </div>
     </div>
     <div class="row third-row">

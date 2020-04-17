@@ -2,7 +2,9 @@
   <div class="title-container">
     <h2 i18n>Cities</h2>
   </div>
-  <button mat-button class="add-button" (click)="addCity()">Add Region</button>
+  <div class="add-btn-container">
+    <button mat-button class="add-button" (click)="addCity()"><span>Add</span> <mat-icon>add</mat-icon></button>
+  </div>
   <div class="cities-header">
     <div class="title"><span i18n>ID</span></div>
     <div class="title"><span i18n>Region</span></div>
