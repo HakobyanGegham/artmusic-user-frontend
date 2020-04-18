@@ -6,7 +6,7 @@ export class ApplicationProgram implements Deserializable {
   compositionName: string;
   durationMinutes: string;
   durationSeconds: string;
-  upload: string;
+  upload: File;
 
   deserialize(input: any): this {
     return Object.assign(this, input);

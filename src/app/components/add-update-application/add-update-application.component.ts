@@ -9,6 +9,7 @@ import {ApplicationAddConfirmDialogComponent} from '../modals/application-add-co
 import {MatDialog} from '@angular/material/dialog';
 import {Application} from '../../models/application';
 import {ApplicationProgram} from '../../models/application-program';
+import {Applicant} from '../../models/applicant';
 
 @Component({
   selector: 'app-add-application',
@@ -39,20 +40,34 @@ export class AddUpdateApplicationComponent implements OnInit {
     }
   }
 
+  public audioUploaded(event: any) {
+    this.applicationProgramFormComponents.forEach((program, key) => {
+      if (key === event.key) {
+        program.audioUploaded(event.uploadInput);
+      }
+    });
+  }
+
   public submitBtnClicked() {
-    const applicant = this.applicantFormComponent.submit();
+    const applicant = this.applicantFormComponent.submit() as Applicant;
     const application = this.applicationFormComponent.submit();
     const applicationPrograms = [];
     this.applicationProgramFormComponents.forEach((applicationProgram, key) => {
-      const program = applicationProgram.submit() as ApplicationProgram;
-      if (program) {
-        program.upload = this.applicantFormComponent.getUpload(key + 1);
-      }
-      applicationPrograms.push(program);
+      applicationPrograms.push(applicationProgram.submit());
     });
 
     this.checkFormValues(applicationPrograms, applicant, application).then(() => {
-      this.applicationService.addUpdateApplication({applicant, application, applicationPrograms}).subscribe(applicationForm => {
+      const formData = new FormData();
+      formData.append('passportCopy',  applicant.passportCopy);
+      formData.append('profileImage',  applicant.profileImage);
+      formData.append('applicant',  JSON.stringify(applicant));
+      formData.append('application',  JSON.stringify(application));
+      formData.append('applicationPrograms',  JSON.stringify(applicationPrograms));
+      applicationPrograms.forEach((program, key) => {
+        formData.append(`upload${key + 1}`, program.upload);
+      });
+
+      this.applicationService.addUpdateApplication(formData).subscribe(applicationForm => {
         this.showConfirmDialog();
       });
     }).catch(error => {

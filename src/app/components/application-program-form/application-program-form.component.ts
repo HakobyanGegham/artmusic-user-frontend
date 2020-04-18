@@ -2,6 +2,7 @@ import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core'
 import FormHelper from '../../helpers/form-helper';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ApplicationProgram} from '../../models/application-program';
+import {UploadDecodeBase64Service} from '../../services/upload-decode-base64.service';
 
 @Component({
   selector: 'app-application-program-form',
@@ -11,8 +12,10 @@ import {ApplicationProgram} from '../../models/application-program';
 export class ApplicationProgramFormComponent extends FormHelper implements OnInit, OnChanges {
 
   @Input() public program: ApplicationProgram;
+  public newProgram = new ApplicationProgram();
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder,
+              private uploadDecodeBase64Service: UploadDecodeBase64Service) {
     super();
   }
 
@@ -31,8 +34,8 @@ export class ApplicationProgramFormComponent extends FormHelper implements OnIni
     this.form = this.formBuilder.group({
       compositionName: ['', [Validators.required, Validators.minLength(4)]],
       compositionAuthor: ['', [Validators.required, Validators.minLength(4)]],
-      durationMinutes: [1, [Validators.required]],
-      durationSeconds: [0, [Validators.required]]
+      durationMinutes: [1],
+      durationSeconds: [0]
     });
   }
 
@@ -50,17 +53,20 @@ export class ApplicationProgramFormComponent extends FormHelper implements OnIni
     this.getFormControl('compositionName').setValue(this.program.compositionName);
     this.getFormControl('compositionAuthor').setValue(this.program.compositionAuthor);
     this.getFormControl('durationMinutes').setValue(this.program.durationMinutes);
-    this.getFormControl('durationMinutes').setValue(this.program.durationMinutes);
+    this.getFormControl('durationSeconds').setValue(this.program.durationSeconds);
   }
 
   private getFromFormValues() {
-    const applicationProgram = new ApplicationProgram();
-    applicationProgram.id = this.program ? this.program.id : null;
-    applicationProgram.compositionAuthor = this.getFormControl('compositionAuthor').value;
-    applicationProgram.compositionName = this.getFormControl('compositionName').value;
-    applicationProgram.durationMinutes = this.getFormControl('durationMinutes').value;
-    applicationProgram.durationSeconds = this.getFormControl('durationSeconds').value;
+    this.newProgram.id = this.program ? this.program.id : null;
+    this.newProgram.compositionAuthor = this.getFormControl('compositionAuthor').value;
+    this.newProgram.compositionName = this.getFormControl('compositionName').value;
+    this.newProgram.durationMinutes = this.getFormControl('durationMinutes').value;
+    this.newProgram.durationSeconds = this.getFormControl('durationSeconds').value;
+    return this.newProgram;
+  }
 
-    return applicationProgram;
+  public audioUploaded(element: any) {
+    const inputElement = element as HTMLInputElement;
+    this.newProgram.upload = inputElement.files[0];
   }
 }

@@ -10,9 +10,9 @@ export class UploadDecodeBase64Service {
   constructor() {
   }
 
-  public getDecodedString(fileToRead: File) {
+  public getDecodedString(fileToRead: File): Observable<string> {
     const fileReader = new FileReader();
     fileReader.readAsDataURL(fileToRead);
-    return fromEvent(fileReader, 'load').pipe(pluck('currentTarget', 'result'));
+    return fromEvent(fileReader, 'load').pipe(pluck('target', 'result'));
   }
 }

@@ -1,6 +1,6 @@
 <section class="add-application">
   <h1 i18n="@@addApplication"> Add Update Application Form </h1>
-  <app-applicant-form [applicant]="application?.applicant"></app-applicant-form>
+  <app-applicant-form [applicant]="application?.applicant" (audioUploaded)="audioUploaded($event)"></app-applicant-form>
   <app-application-form [application]="application"></app-application-form>
   <app-application-program-form [program]="application?.programs[0]"></app-application-program-form>
   <app-application-program-form [program]="application?.programs[1]"></app-application-program-form>

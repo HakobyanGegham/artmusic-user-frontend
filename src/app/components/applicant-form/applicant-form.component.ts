@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import FormHelper from '../../helpers/form-helper';
 import {Applicant} from '../../models/applicant';
@@ -13,11 +13,13 @@ import {UploadDecodeBase64Service} from '../../services/upload-decode-base64.ser
 export class ApplicantFormComponent extends FormHelper implements OnInit, OnChanges, OnDestroy {
 
   @Input() public applicant: Applicant;
+  public newApplicant = new Applicant();
   private subscription = new Subscription();
   @ViewChild('passportCopyInput') private passportCopyInput: ElementRef;
   @ViewChild('profileImageInput') private profileImageInput: ElementRef;
   @ViewChild('uploadInput1') private uploadInput1: ElementRef;
   @ViewChild('uploadInput2') private uploadInput2: ElementRef;
+  @Output() private audioUploaded = new EventEmitter();
 
   constructor(private formBuilder: FormBuilder,
               private uploadDecodeBase64Service: UploadDecodeBase64Service) {
@@ -96,34 +98,26 @@ export class ApplicantFormComponent extends FormHelper implements OnInit, OnChan
   }
 
   private getFromFormValues() {
-    const applicant = new Applicant();
-    applicant.id = this.applicant ? this.applicant.id : null;
-    applicant.firstName = this.getFormControl('firstName').value;
-    applicant.lastName = this.getFormControl('lastName').value;
-    applicant.patriotic = this.getFormControl('patriotic').value;
-    applicant.email = this.getFormControl('email').value;
-    applicant.birthDate = this.getFormControl('birthDate').value;
-    applicant.phoneNumber = this.getFormControl('phoneNumber').value;
-    applicant.passportCopy = this.getInputValue(this.passportCopyInput);
-    applicant.profileImage = this.getInputValue(this.profileImageInput);
-
-    return applicant;
+    this.newApplicant.id = this.applicant ? this.applicant.id : null;
+    this.newApplicant.firstName = this.getFormControl('firstName').value;
+    this.newApplicant.lastName = this.getFormControl('lastName').value;
+    this.newApplicant.patriotic = this.getFormControl('patriotic').value;
+    this.newApplicant.email = this.getFormControl('email').value;
+    this.newApplicant.birthDate = this.getFormControl('birthDate').value;
+    this.newApplicant.phoneNumber = this.getFormControl('phoneNumber').value;
+    this.newApplicant.passportCopy = this.passportCopyInput.nativeElement.files ? this.passportCopyInput.nativeElement.files[0] : '';
+    this.newApplicant.profileImage = this.profileImageInput.nativeElement.files ? this.passportCopyInput.nativeElement.files[0] : '';
+    return this.newApplicant;
   }
 
-  public getUpload(key: number) {
-    return this.getInputValue(this[`uploadInput${key}`]);
+  public imageUpload(inputElement: HTMLInputElement, field: string) {
+    this.uploadDecodeBase64Service.getDecodedString(inputElement.files[0]).subscribe(decodedString => {
+      this.newApplicant[field] = decodedString;
+    });
   }
 
-  private getInputValue(elementRef: ElementRef) {
-    const inputElement = elementRef.nativeElement;
-    if (inputElement.files && inputElement.files[0]) {
-      const subscription = this.uploadDecodeBase64Service.getDecodedString(inputElement.files[0]).subscribe(decodedString => {
-        return decodedString;
-      });
-
-      this.subscription.add(subscription);
-    }
-    return '';
+  public audioUpload(uploadInput: HTMLInputElement, key: number) {
+    this.audioUploaded.emit({uploadInput, key});
   }
 
   public ngOnDestroy(): void {

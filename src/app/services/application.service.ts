@@ -1,10 +1,12 @@
 import {Injectable} from '@angular/core';
 import {LOCALE_ID, Inject} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {ApplicationForm} from '../models/application-form';
 import {Application} from '../models/application';
+import {TokenService} from './token.service';
+import {Form} from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +16,8 @@ export class ApplicationService {
   private applicationUrl = '/api/application';
 
   constructor(private httpClient: HttpClient,
-              @Inject(LOCALE_ID) private locale: string) {
+              @Inject(LOCALE_ID) private locale: string,
+              private tokenService: TokenService) {
   }
 
   public getApplications(festivalId: number): Observable<Application[]> {
@@ -30,9 +33,15 @@ export class ApplicationService {
     );
   }
 
-  public addUpdateApplication(formValues: object): Observable<ApplicationForm> {
-    const lang = this.locale;
-    return this.httpClient.post<ApplicationForm>(`${this.applicationUrl}`, {...formValues, lang}).pipe(
+  public addUpdateApplication(formData: FormData): Observable<ApplicationForm> {
+    formData.append('lang', this.locale);
+    const httpOptions = {
+      headers: new HttpHeaders({
+        enctype:  'multipart/form-data;',
+        Authorization: `Bearer ${this.tokenService.getToken()}`
+      })
+    };
+    return this.httpClient.post<ApplicationForm>(`${this.applicationUrl}`, formData, httpOptions).pipe(
       map(res => new ApplicationForm().deserialize(res))
     );
   }

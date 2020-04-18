@@ -78,6 +78,7 @@
       <div class="file-container f_file-container">
         <input class="form-control is-hidden" type="file" #uploadInput1
                [ngClass]="displayFieldCss('upload1')"
+               (change)="audioUpload(uploadInput1, 0)"
                appUploadPercentage
                formControlName="upload1">
         <div class="upload-btn audio" (click)="audioBtnClick(uploadInput1)">
@@ -91,6 +92,7 @@
         <input class="form-control is-hidden" type="file" #uploadInput2
                [ngClass]="displayFieldCss('upload2')"
                appUploadPercentage
+               (change)="audioUpload(uploadInput2, 1)"
                formControlName="upload2">
         <div class="upload-btn audio" (click)="audioBtnClick(uploadInput2)">
           <span class="f_button-text">Upload 2</span>

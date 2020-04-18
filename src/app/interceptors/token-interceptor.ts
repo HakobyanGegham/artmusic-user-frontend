@@ -14,14 +14,14 @@ export class TokenInterceptor implements HttpInterceptor {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
-    request = request.clone({
-      setHeaders: {
-        Authorization: `Bearer ${this.tokenService.getToken()}`
-      }
-    });
-
-    console.log(this.tokenService.getToken());
+    if (!request.headers.keys().length) {
+      request = request.clone({
+        setHeaders: {
+          Authorization: `Bearer ${this.tokenService.getToken()}`,
+          'Content-Type': 'charset=utf-8;'
+        }
+      });
+    }
     return next.handle(request);
   }
 }
