@@ -46,6 +46,7 @@ export class AutocompleteComponent implements OnChanges, OnDestroy {
 
   public ngOnChanges(changes: SimpleChanges) {
     if (changes.items.currentValue) {
+      this.items = changes.items.currentValue;
       this.filteredItems = this.formGroup.get(this.controlName).valueChanges.pipe(
         startWith(''),
         map(val => this.filter(val))

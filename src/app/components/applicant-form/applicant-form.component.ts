@@ -1,8 +1,9 @@
-import {Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
 import FormHelper from '../../helpers/form-helper';
 import {Applicant} from '../../models/applicant';
-import {Observable, Subscription} from 'rxjs';
+import {Subscription} from 'rxjs';
+import {UploadDecodeBase64Service} from '../../services/upload-decode-base64.service';
 
 @Component({
   selector: 'app-applicant-form',
@@ -13,20 +14,13 @@ export class ApplicantFormComponent extends FormHelper implements OnInit, OnChan
 
   @Input() public applicant: Applicant;
   private subscription = new Subscription();
+  @ViewChild('passportCopyInput') private passportCopyInput: ElementRef;
+  @ViewChild('profileImageInput') private profileImageInput: ElementRef;
+  @ViewChild('uploadInput1') private uploadInput1: ElementRef;
+  @ViewChild('uploadInput2') private uploadInput2: ElementRef;
 
-  private static getInputContainerElements(inputElement: HTMLInputElement) {
-    const inputContainer = inputElement.closest('.f_file-container');
-
-    return {
-      inputElement,
-      inputContainer,
-      button: inputElement.nextElementSibling as HTMLElement,
-      background: inputContainer.querySelector('.f_percentage-background') as HTMLElement,
-      text: inputContainer.querySelector('.f_percentage-text') as HTMLElement
-    };
-  }
-
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder,
+              private uploadDecodeBase64Service: UploadDecodeBase64Service) {
     super();
   }
 
@@ -50,8 +44,9 @@ export class ApplicantFormComponent extends FormHelper implements OnInit, OnChan
       birthDate: ['', [Validators.required]],
       phoneNumber: ['', [Validators.required]],
       passportCopy: [''],
-      image: [''],
-      upload: ['']
+      profileImage: [''],
+      upload1: [''],
+      upload2: ['']
     });
   }
 
@@ -109,44 +104,26 @@ export class ApplicantFormComponent extends FormHelper implements OnInit, OnChan
     applicant.email = this.getFormControl('email').value;
     applicant.birthDate = this.getFormControl('birthDate').value;
     applicant.phoneNumber = this.getFormControl('phoneNumber').value;
+    applicant.passportCopy = this.getInputValue(this.passportCopyInput);
+    applicant.profileImage = this.getInputValue(this.profileImageInput);
 
     return applicant;
   }
 
-  public fileInputChange(inputElement: HTMLInputElement) {
-    const inputContainerElements = ApplicantFormComponent.getInputContainerElements(inputElement);
-    this.subscription.add(this.setPercentageCounter(inputContainerElements).subscribe(() => {
-      setTimeout(() => {
-        inputContainerElements.background.style.width = '0';
-        inputContainerElements.text.style.fontSize = '0';
-        inputContainerElements.button.innerHTML = 'Completed';
-        inputContainerElements.button.style.fontSize = '18px';
-      }, 800);
-    }));
+  public getUpload(key: number) {
+    return this.getInputValue(this[`uploadInput${key}`]);
   }
 
-  setPercentageCounter(inputContainerElements: any) {
-    inputContainerElements.button.style.fontSize = '0';
-    return new Observable<any>((observer) => {
-      let i = 0;
+  private getInputValue(elementRef: ElementRef) {
+    const inputElement = elementRef.nativeElement;
+    if (inputElement.files && inputElement.files[0]) {
+      const subscription = this.uploadDecodeBase64Service.getDecodedString(inputElement.files[0]).subscribe(decodedString => {
+        return decodedString;
+      });
 
-      function setPercentage() {
-        inputContainerElements.background.style.width = (i * 1.5) + 'px';
-        inputContainerElements.text.innerHTML = i + '%';
-        inputContainerElements.text.style.fontSize = '17px';
-        i++;
-        if (i > 100) {
-          observer.next();
-          observer.complete();
-        } else {
-          setTimeout(() => {
-            setPercentage();
-          }, 15);
-        }
-      }
-
-      setPercentage();
-    });
+      this.subscription.add(subscription);
+    }
+    return '';
   }
 
   public ngOnDestroy(): void {

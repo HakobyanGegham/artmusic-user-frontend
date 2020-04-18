@@ -37,6 +37,7 @@ import {AutocompleteComponent} from './components/util/autocomplete/autocomplete
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 import {RemoveApplicationDialogComponent} from './components/modals/remove-application-dialog/remove-application-dialog.component';
+import { UploadPercentageDirective } from './directives/upload-percentage.directive';
 
 registerLocaleData(localHy);
 registerLocaleData(localeRu);
@@ -57,6 +58,7 @@ registerLocaleData(localeRu);
     ApplicationAddConfirmDialogComponent,
     AutocompleteComponent,
     RemoveApplicationDialogComponent,
+    UploadPercentageDirective,
   ],
   imports: [
     BrowserModule,

@@ -3,11 +3,15 @@
   grid-template-columns: 75% 25%;
   grid-auto-rows: 100px;
 
+  .second-row {
+    display: grid;
+    grid-column: 2;
+    grid-row: 1 e("/") 3;
+  }
   .first-row, .third-row {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-column-gap: 20px;
-
   }
 
   input {
@@ -33,10 +37,10 @@
     text-align: center;
     vertical-align: bottom;
     position: relative;
+    align-self: center;
 
     .upload-btn {
-      margin-top: 10px;
-      font-size: 18px;
+      font-size: 16px;
       border-radius: 5px;
       min-width: 150px;
       display: inline-block;
@@ -46,11 +50,16 @@
       height: 40px;
       line-height: 40px;
 
+      mat-icon {
+        vertical-align: text-bottom;
+        margin-left: 5px;
+      }
+
       &.passport {
-        background-color: #5E35B1;
+        background-color: #0277BD;
 
         &:hover {
-          background-color: #512DA8;
+          background-color: #01579B;
         }
       }
 
@@ -77,11 +86,11 @@
       cursor: pointer;
       display: inline-block;
       left: 75px;
-      top: 10px;
+      top: 0;
       min-height: 40px;
 
       &.passport {
-        background-color: #512DA8;
+        background-color: #01579B;
       }
 
       &.image {
@@ -96,8 +105,8 @@
     .percentage-text {
       position: absolute;
       left: 130px;
-      font-size: 18px;
-      top: 20px;
+      font-size: 16px;
+      top: 10px;
       color: white;
       z-index: 100;
     }

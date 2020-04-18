@@ -1,4 +1,4 @@
-import {Component, OnChanges, OnInit, ViewChild, ViewChildren} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewChildren} from '@angular/core';
 import {CookieService} from 'ngx-cookie-service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ApplicantFormComponent} from '../applicant-form/applicant-form.component';
@@ -8,6 +8,7 @@ import {ApplicationService} from '../../services/application.service';
 import {ApplicationAddConfirmDialogComponent} from '../modals/application-add-confirm-dialog/application-add-confirm-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
 import {Application} from '../../models/application';
+import {ApplicationProgram} from '../../models/application-program';
 
 @Component({
   selector: 'app-add-application',
@@ -36,23 +37,18 @@ export class AddUpdateApplicationComponent implements OnInit {
         this.application = application;
       });
     }
-    this.redirect();
-  }
-
-  private redirect() {
-    const token = this.cookieService.get('token');
-
-    if (!token) {
-      this.router.navigateByUrl('login');
-    }
   }
 
   public submitBtnClicked() {
     const applicant = this.applicantFormComponent.submit();
     const application = this.applicationFormComponent.submit();
     const applicationPrograms = [];
-    this.applicationProgramFormComponents.forEach(applicationProgram => {
-      applicationPrograms.push(applicationProgram.submit());
+    this.applicationProgramFormComponents.forEach((applicationProgram, key) => {
+      const program = applicationProgram.submit() as ApplicationProgram;
+      if (program) {
+        program.upload = this.applicantFormComponent.getUpload(key + 1);
+      }
+      applicationPrograms.push(program);
     });
 
     this.checkFormValues(applicationPrograms, applicant, application).then(() => {

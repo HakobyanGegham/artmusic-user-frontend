@@ -9,6 +9,8 @@ export class Applicant implements Deserializable {
   email: string;
   birthDate: string;
   phoneNumber: string;
+  passportCopy: string;
+  profileImage: string;
 
   deserialize(input: any): this {
     return Object.assign(this, input);
