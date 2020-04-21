@@ -3,7 +3,6 @@ import {FormBuilder, Validators} from '@angular/forms';
 import FormHelper from '../../helpers/form-helper';
 import {Applicant} from '../../models/applicant';
 import {Subscription} from 'rxjs';
-import {UploadDecodeBase64Service} from '../../services/upload-decode-base64.service';
 
 @Component({
   selector: 'app-applicant-form',
@@ -21,8 +20,7 @@ export class ApplicantFormComponent extends FormHelper implements OnInit, OnChan
   @ViewChild('uploadInput2') private uploadInput2: ElementRef;
   @Output() private audioUploaded = new EventEmitter();
 
-  constructor(private formBuilder: FormBuilder,
-              private uploadDecodeBase64Service: UploadDecodeBase64Service) {
+  constructor(private formBuilder: FormBuilder) {
     super();
   }
 
@@ -106,14 +104,8 @@ export class ApplicantFormComponent extends FormHelper implements OnInit, OnChan
     this.newApplicant.birthDate = this.getFormControl('birthDate').value;
     this.newApplicant.phoneNumber = this.getFormControl('phoneNumber').value;
     this.newApplicant.passportCopy = this.passportCopyInput.nativeElement.files ? this.passportCopyInput.nativeElement.files[0] : '';
-    this.newApplicant.profileImage = this.profileImageInput.nativeElement.files ? this.passportCopyInput.nativeElement.files[0] : '';
+    this.newApplicant.profileImage = this.profileImageInput.nativeElement.files ? this.profileImageInput.nativeElement.files[0] : '';
     return this.newApplicant;
-  }
-
-  public imageUpload(inputElement: HTMLInputElement, field: string) {
-    this.uploadDecodeBase64Service.getDecodedString(inputElement.files[0]).subscribe(decodedString => {
-      this.newApplicant[field] = decodedString;
-    });
   }
 
   public audioUpload(uploadInput: HTMLInputElement, key: number) {
