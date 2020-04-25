@@ -9,9 +9,8 @@ import {NominationsComponent} from '../admin/nominations/nominations.component';
 import {SpecializationsComponent} from '../admin/specializations/specializations.component';
 import {AuthGuardService} from '../services/auth-guard.service';
 import {FestivalsComponent} from '../admin/festivals/festivals.component';
-import {FestivalContentComponent} from '../users/festival-content/festival-content.component';
-import {ApplicationsComponent} from '../users/applications/applications.component';
-import {ApplicantsComponent} from '../users/applicants/applicants.component';
+import {ApplicationsComponent} from '../festivals/applications/applications.component';
+import {ApplicantsComponent} from '../festivals/applicants/applicants.component';
 
 const adminRoutes: Routes = [
   {

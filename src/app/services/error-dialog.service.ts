@@ -6,12 +6,12 @@ import {ErrorDialogComponent} from '../components/modals/error-dialog/error-dial
 @Injectable({
   providedIn: 'root'
 })
-export class ErrorService {
+export class ErrorDialogService {
 
   constructor(private dialog: MatDialog) {
   }
 
-  showError(errorMessage: string) {
+  showMessage(errorMessage: string) {
     const dialogRef = this.dialog.open(ErrorDialogComponent, {
       width: '300px',
       data: {

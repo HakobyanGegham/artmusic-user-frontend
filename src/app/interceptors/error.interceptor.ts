@@ -7,12 +7,12 @@ import {
 } from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {catchError, retry} from 'rxjs/operators';
-import {ErrorService} from '../services/error.service';
+import {ErrorDialogService} from '../services/error-dialog.service';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
 
-  constructor(private errorService: ErrorService) {
+  constructor(private errorService: ErrorDialogService) {
   }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<any> {
@@ -20,7 +20,7 @@ export class ErrorInterceptor implements HttpInterceptor {
       catchError((error: HttpErrorResponse) => {
         const errorMessage = error.error.message;
 
-        this.errorService.showError(errorMessage);
+        this.errorService.showMessage(errorMessage);
         return throwError(errorMessage);
       })
     );

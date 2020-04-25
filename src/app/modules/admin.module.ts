@@ -6,10 +6,7 @@ import {AdminLeftPanelComponent} from '../admin/admin-left-panel/admin-left-pane
 import {CountriesComponent} from '../admin/countries/countries.component';
 import {CountryComponent} from '../admin/country/country.component';
 import {NgxPaginationModule} from 'ngx-pagination';
-import {MatButtonModule} from '@angular/material/button';
-import {MatTooltipModule} from '@angular/material/tooltip';
 import {UpdateDialogComponent} from '../admin/modals/update-dialog/update-dialog.component';
-import {MatDialogModule} from '@angular/material/dialog';
 import {RegionsComponent} from '../admin/regions/regions.component';
 import {RegionComponent} from '../admin/region/region.component';
 import {CitiesComponent} from '../admin/cities/cities.component';
@@ -48,7 +45,6 @@ import {SharedModule} from './shared/shared.module';
   ],
   imports: [
     AdminRoutingModule,
-    NgxPaginationModule,
     SharedModule,
   ]
 })

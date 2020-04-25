@@ -13,19 +13,32 @@
     <div class="no-wrap-text" i18n> {{ program.compositionAuthor }}</div>
     <div class="no-wrap-text" i18n> {{ program.compositionName }}</div>
   </div>
+  <div class="content item">
+    <div class="two-line-text" i18n> {{ application.institution.names[locale] }}</div>
+  </div>
   <div class="content item actions">
     <a class="edit" [routerLink]="['/application/' + application.id]" target="_blank" >
       <button mat-button class="btn action" i18n matTooltip="Edit Item">
         <mat-icon>create</mat-icon>
       </button>
     </a>
-    <a class="remove" (click)="removeItem()" >
+    <a *ngIf="!!isAdmin" class="remove" (click)="rejectItem()" >
+      <button mat-button class="btn action remove" i18n matTooltip="Reject Item">
+        <mat-icon>highlight_off</mat-icon>
+      </button>
+    </a>
+    <a *ngIf="!isAdmin" class="remove" (click)="removeItem()" >
       <button mat-button class="btn action remove" i18n matTooltip="Remove Item">
         <mat-icon>delete</mat-icon>
       </button>
     </a>
-    <a class="no-wrap-text">
-      <button mat-button class="btn action state"  matTooltip="Application state">
+    <a *ngIf="!!isAdmin" class="no-wrap-text" (click)="acceptItem()">
+      <button mat-button class="btn action state"  matTooltip="Accept item">
+        <mat-icon>check_circle</mat-icon>
+      </button>
+    </a>
+    <a *ngIf="!isAdmin" class="no-wrap-text">
+      <button  mat-button class="btn action state"  matTooltip="Application state">
         <mat-icon>loop</mat-icon>
       </button>
     </a>

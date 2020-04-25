@@ -15,17 +15,44 @@ import {UploadPercentageDirective} from '../../directives/upload-percentage.dire
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {RouterModule} from '@angular/router';
 import {ErrorDialogComponent} from '../../components/modals/error-dialog/error-dialog.component';
+import {ApplicationsComponent} from '../../festivals/applications/applications.component';
+import {ApplicationItemComponent} from '../../festivals/application-item/application-item.component';
+import {ApplicantsComponent} from '../../festivals/applicants/applicants.component';
+import {ApplicantItemComponent} from '../../festivals/applicant-item/applicant-item.component';
+import {NgxPaginationModule} from 'ngx-pagination';
+import {SuccessDialogComponent} from '../../components/modals/success-dialog/success-dialog.component';
+import {FilterFormComponent} from '../../components/filter-form/filter-form.component';
 
 @NgModule({
   declarations: [
     LeftPanelComponent,
     UploadPercentageDirective,
     ErrorDialogComponent,
+    SuccessDialogComponent,
+    ApplicationsComponent,
+    ApplicationItemComponent,
+    ApplicantsComponent,
+    ApplicantItemComponent,
+    FilterFormComponent,
   ],
   imports: [
     CommonModule,
     RouterModule,
     MatIconModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    MatInputModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    MatTooltipModule,
+    MatDialogModule,
+    MatSelectModule,
+    FontAwesomeModule,
+    MatAutocompleteModule,
+    NgxPaginationModule,
   ],
   exports: [
     CommonModule,
@@ -42,9 +69,16 @@ import {ErrorDialogComponent} from '../../components/modals/error-dialog/error-d
     MatSelectModule,
     FontAwesomeModule,
     MatAutocompleteModule,
+    NgxPaginationModule,
     LeftPanelComponent,
     UploadPercentageDirective,
-    ErrorDialogComponent
+    ErrorDialogComponent,
+    ApplicationsComponent,
+    ApplicationItemComponent,
+    ApplicantsComponent,
+    ApplicantItemComponent,
+    SuccessDialogComponent,
+    FilterFormComponent
   ],
 })
 export class SharedModule {

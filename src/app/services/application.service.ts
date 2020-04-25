@@ -6,14 +6,13 @@ import {map} from 'rxjs/operators';
 import {ApplicationForm} from '../models/application-form';
 import {Application} from '../models/application';
 import {TokenService} from './token.service';
-import {Form} from '@angular/forms';
-import {User} from '../models/user';
+import {FormFilter} from '../models/form-filter';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApplicationService {
-  private getApplicationsUrl = '/api/applications';
+  private applicationsUrl = '/api/applications';
   private applicationUrl = '/api/application';
 
   constructor(private httpClient: HttpClient,
@@ -23,7 +22,7 @@ export class ApplicationService {
 
   public getApplications(festivalId: number): Observable<Application[]> {
     return this.httpClient.get<Application[]>
-    (`${this.getApplicationsUrl}?lang=${this.locale}&festivalId=${festivalId}`).pipe(
+    (`${this.applicationsUrl}?lang=${this.locale}&festivalId=${festivalId}`).pipe(
       map(res => res.map(data => new Application().deserialize(data)))
     );
   }
@@ -38,7 +37,7 @@ export class ApplicationService {
     formData.append('lang', this.locale);
     const httpOptions = {
       headers: new HttpHeaders({
-        enctype:  'multipart/form-data;',
+        enctype: 'multipart/form-data;',
         Authorization: `Bearer ${this.tokenService.getToken()}`
       })
     };
@@ -49,6 +48,24 @@ export class ApplicationService {
 
   public removeApplication(id: number): Observable<string> {
     return this.httpClient.delete(`${this.applicationUrl}/${id}`).pipe(
+      map(res => res.toString())
+    );
+  }
+
+  public rejectApplication(id: number): Observable<string> {
+    return this.httpClient.post<Observable<string>>(`${this.applicationUrl}/reject`, {id}).pipe(
+      map(res => res.toString())
+    );
+  }
+
+  public acceptApplication(id: number): Observable<string> {
+    return this.httpClient.post<Observable<string>>(`${this.applicationUrl}/accept`, {id}).pipe(
+      map(res => res.toString())
+    );
+  }
+
+  public downloadApplication(formFilter: FormFilter): Observable<string> {
+    return this.httpClient.post<Observable<string>>(`${this.applicationsUrl}/download`, formFilter).pipe(
       map(res => res.toString())
     );
   }

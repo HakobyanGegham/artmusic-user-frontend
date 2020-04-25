@@ -1,24 +1,20 @@
 <section class="applications-container">
   <h2 i18n>Applications</h2>
-  <div class="filter-container">
-    <form [formGroup]="filterForm">
-      <mat-form-field>
-        <mat-label i18n>Find By Nomination</mat-label>
-        <input matInput formControlName="nomination">
-      </mat-form-field>
-    </form>
-  </div>
+  <app-filter-form *ngIf="!!isAdmin"
+                   (inputChange)="filter($event)"></app-filter-form>
   <div class="application-header">
     <div class="title"><span i18n>Applicant</span></div>
     <div class="title"><span i18n>Nomination</span></div>
     <div class="title"><span i18n>Composition 1</span></div>
     <div class="title"><span i18n>Composition 2</span></div>
+    <div class="title"><span i18n>Institution</span></div>
     <div class="title"><span i18n>Actions</span></div>
   </div>
   <div class="application-content">
-    <app-application-item *ngFor="let application of filteredItems | async | paginate: {itemsPerPage: 10, currentPage: p}"
-                          [application]="application"
-                          (onRemove)="removeItem($event)"></app-application-item>
+    <app-application-item
+      *ngFor="let application of filteredItems | async | paginate: {itemsPerPage: 10, currentPage: p}"
+      [application]="application"
+      (remove)="removeItem($event)"></app-application-item>
   </div>
 
   <div class="pagination-controller">

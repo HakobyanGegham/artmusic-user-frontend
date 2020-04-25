@@ -1,0 +1,33 @@
+<div class="filter-container">
+  <form [formGroup]="filterForm" class="filter-form">
+    <mat-form-field>
+      <mat-label i18n>Age from</mat-label>
+      <mat-select formControlName="ageFrom" #ageFromInput>
+        <mat-option *ngFor="let age of ages" [value]="age">{{age}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label i18n>Age to</mat-label>
+      <mat-select formControlName="ageTo" #ageToInput>
+        <mat-option *ngFor="let age of ages" [value]="age">{{age}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label i18n>Nomination</mat-label>
+      <input matInput formControlName="nomination" #nominationInput>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label i18n>Specialization</mat-label>
+      <input matInput formControlName="specialization" #specializationInput>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label i18n>Institution</mat-label>
+      <input matInput formControlName="institution" #institutionInput>
+    </mat-form-field>
+
+    <button mat-button class="download" (click)="download()">
+      <span>Download</span>
+      <mat-icon>cloud_download</mat-icon>
+    </button>
+  </form>
+</div>

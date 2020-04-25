@@ -3,6 +3,9 @@ import {Application} from '../../models/application';
 import {MatDialog} from '@angular/material/dialog';
 import {RemoveApplicationDialogComponent} from '../../components/modals/remove-application-dialog/remove-application-dialog.component';
 import {ApplicationService} from '../../services/application.service';
+import {ActivatedRoute} from '@angular/router';
+import {SuccessDialogService} from '../../services/success-dialog.service';
+
 
 @Component({
   selector: 'app-application-item',
@@ -12,14 +15,19 @@ import {ApplicationService} from '../../services/application.service';
 export class ApplicationItemComponent implements OnInit, OnChanges {
 
   @Input() application: Application;
-  @Output() onRemove = new EventEmitter();
+  @Output() remove = new EventEmitter();
+  public isAdmin: boolean;
 
   constructor(private dialog: MatDialog,
+              @Inject(LOCALE_ID) public locale: string,
               private applicationService: ApplicationService,
-              @Inject(LOCALE_ID) public locale: string) {
+              private successDialogService: SuccessDialogService,
+              private route: ActivatedRoute) {
   }
 
   public ngOnInit(): void {
+    const isAdminQueryParam = this.route.snapshot.queryParamMap.get('isAdmin');
+    this.isAdmin = isAdminQueryParam === 'true';
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
@@ -33,8 +41,20 @@ export class ApplicationItemComponent implements OnInit, OnChanges {
       width: '500px',
     });
     dialogRef.componentInstance.remove.subscribe(() => {
-      this.onRemove.emit(this.application.id);
+      this.remove.emit(this.application.id);
       dialogRef.close();
+    });
+  }
+
+  public rejectItem() {
+    this.applicationService.rejectApplication(this.application.id).subscribe(message => {
+      this.successDialogService.showMessage(message);
+    });
+  }
+
+  public acceptItem() {
+    this.applicationService.acceptApplication(this.application.id).subscribe(message => {
+      this.successDialogService.showMessage(message);
     });
   }
 }
