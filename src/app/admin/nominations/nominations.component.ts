@@ -1,6 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Nomination} from '../../models/nomination';
-import {ApplicationService} from '../../services/application.service';
 import {Subscription} from 'rxjs';
 import {MatDialog} from '@angular/material/dialog';
 import {AddDialogComponent} from '../modals/add-dialog/add-dialog.component';

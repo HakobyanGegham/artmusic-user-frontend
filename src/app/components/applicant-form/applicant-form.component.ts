@@ -57,6 +57,8 @@ export class ApplicantFormComponent extends FormHelper implements OnInit, OnChan
     this.getFormControl('email').setValue(this.applicant.email);
     this.getFormControl('birthDate').setValue(this.applicant.birthDate);
     this.getFormControl('phoneNumber').setValue(this.applicant.phoneNumber);
+
+    this.form.markAllAsTouched();
   }
 
   public submit() {

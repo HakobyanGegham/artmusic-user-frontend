@@ -8,7 +8,6 @@ import {ApplicationService} from '../../services/application.service';
 import {ApplicationAddConfirmDialogComponent} from '../modals/application-add-confirm-dialog/application-add-confirm-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
 import {Application} from '../../models/application';
-import {ApplicationProgram} from '../../models/application-program';
 import {Applicant} from '../../models/applicant';
 
 @Component({

@@ -105,6 +105,8 @@ export class ApplicationFormComponent extends FormHelper implements OnInit, OnCh
       this.specializations = specializations;
       this.getFormControl('specialization').setValue(this.application.specialization.names[this.locale]);
     });
+
+    this.form.markAllAsTouched();
   }
 
   public submit() {

@@ -14,8 +14,7 @@ export class ApplicationProgramFormComponent extends FormHelper implements OnIni
   @Input() public program: ApplicationProgram;
   public newProgram = new ApplicationProgram();
 
-  constructor(private formBuilder: FormBuilder,
-              private uploadDecodeBase64Service: UploadDecodeBase64Service) {
+  constructor(private formBuilder: FormBuilder) {
     super();
   }
 
@@ -54,6 +53,8 @@ export class ApplicationProgramFormComponent extends FormHelper implements OnIni
     this.getFormControl('compositionAuthor').setValue(this.program.compositionAuthor);
     this.getFormControl('durationMinutes').setValue(this.program.durationMinutes);
     this.getFormControl('durationSeconds').setValue(this.program.durationSeconds);
+
+    this.form.markAllAsTouched();
   }
 
   private getFromFormValues() {

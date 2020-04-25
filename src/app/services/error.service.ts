@@ -8,12 +8,15 @@ import {ErrorDialogComponent} from '../components/modals/error-dialog/error-dial
 })
 export class ErrorService {
 
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog) {
+  }
 
   showError(errorMessage: string) {
     const dialogRef = this.dialog.open(ErrorDialogComponent, {
       width: '300px',
-      data: errorMessage
+      data: {
+        dataKey: errorMessage
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
