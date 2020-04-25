@@ -1,4 +1,4 @@
-import {Component, Inject, LOCALE_ID, OnInit} from '@angular/core';
+import {Component, Inject, Input, LOCALE_ID, OnInit} from '@angular/core';
 import {Festival} from '../../models/festival';
 import {FestivalService} from '../../services/festival.service';
 import {ApplicationService} from '../../services/application.service';
@@ -9,7 +9,7 @@ import {ApplicationService} from '../../services/application.service';
   styleUrls: ['./left-panel.component.less']
 })
 export class LeftPanelComponent implements OnInit {
-
+  @Input() public isAdmin: boolean;
   public festivals: Festival[];
 
   constructor(private festivalService: FestivalService,

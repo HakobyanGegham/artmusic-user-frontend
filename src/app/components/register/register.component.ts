@@ -44,7 +44,7 @@ export class RegisterComponent extends FormHelper implements OnInit {
       this.authService.register(value).subscribe(user => {
         this.tokenService.saveUser(user);
         this.tokenService.saveToken(user.token);
-        // this.router.navigateByUrl('/user');
+        this.router.navigateByUrl(`/${user.role}`);
       });
     } else {
       this.validateAllFormFields(this.form);

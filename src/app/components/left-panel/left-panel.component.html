@@ -14,9 +14,15 @@
         </div>
 
         <ul class="festival-list f_festival-list is-hidden">
-          <li class="festival-item" [routerLink]="['festival/' + festival.id + '/applications']">Applications</li>
-          <li class="festival-item" [routerLink]="['festival/' + festival.id + '/applicants']">Applicants</li>
-          <li class="festival-item" [routerLink]="['festival/' + festival.id + '/results']">Results</li>
+          <li class="festival-item" [routerLink]="[festival.id + '/applications']" [queryParams]="{isAdmin: isAdmin}" skipLocationChange="true">
+            Applications
+          </li>
+          <li class="festival-item" [routerLink]="[festival.id + '/applicants']" [queryParams]="{isAdmin: isAdmin}" skipLocationChange="true">
+            Applicants
+          </li>
+          <li class="festival-item" [routerLink]="[festival.id + '/results']" [queryParams]="{isAdmin: isAdmin}" skipLocationChange="true">
+            Results
+          </li>
         </ul>
       </li>
     </ul>

@@ -9,19 +9,20 @@ import {AuthGuardService} from '../services/auth-guard.service';
 const userRoutes: Routes = [
   {
     path: '',
+    redirectTo: 'festivals',
+    pathMatch: 'full'
+  },
+  {
+    path: 'festivals',
     component: UserComponent,
     canActivate: [AuthGuardService],
     children: [
       {
-        path: 'festival',
-        component: FestivalContentComponent,
-      },
-      {
-        path: 'festival/:festivalId/applications',
+        path: ':festivalId/applications',
         component: ApplicationsComponent,
       },
       {
-        path: 'festival/:festivalId/applicants',
+        path: ':festivalId/applicants',
         component: ApplicantsComponent,
       }
     ]

@@ -7,6 +7,7 @@ import {ApplicationForm} from '../models/application-form';
 import {Application} from '../models/application';
 import {TokenService} from './token.service';
 import {Form} from '@angular/forms';
+import {User} from '../models/user';
 
 @Injectable({
   providedIn: 'root'

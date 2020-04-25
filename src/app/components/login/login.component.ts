@@ -43,7 +43,7 @@ export class LoginComponent extends FormHelper implements OnInit {
       this.authService.login(value).subscribe(user => {
         this.tokenService.saveUser(user);
         this.tokenService.saveToken(user.token);
-        this.router.navigateByUrl('/user');
+        this.router.navigateByUrl(`/${user.role}`);
       });
     } else {
       this.validateAllFormFields(this.form);

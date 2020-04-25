@@ -73,7 +73,13 @@ export class UpdateDialogComponent extends FormHelper implements OnInit {
   }
 
   public onSubmit(value: any) {
-    this.OnSubmitClick.emit(value);
-    this.dialogRef.close();
+    this.formSubmitAttempt = true;
+    if (this.form.valid) {
+      this.OnSubmitClick.emit(value);
+      this.dialogRef.close();
+    } else {
+      this.validateAllFormFields(this.form);
+      return false;
+    }
   }
 }
