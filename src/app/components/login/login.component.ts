@@ -4,6 +4,7 @@ import FormHelper from '../../helpers/form-helper';
 import {AuthService} from '../../services/auth.service';
 import {Router} from '@angular/router';
 import {TokenService} from '../../services/token.service';
+import {User} from '../../models/user';
 
 @Component({
   selector: 'app-login',
@@ -20,6 +21,12 @@ export class LoginComponent extends FormHelper implements OnInit {
   }
 
   public ngOnInit(): void {
+    const userData = this.tokenService.getUser();
+
+    if (userData) {
+      const user = JSON.parse(userData) as User;
+      this.router.navigateByUrl(`/${user.role}`);
+    }
     this.initForm();
   }
 

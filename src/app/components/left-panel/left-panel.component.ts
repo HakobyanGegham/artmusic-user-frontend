@@ -1,18 +1,19 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, LOCALE_ID, OnInit} from '@angular/core';
 import {Festival} from '../../models/festival';
 import {FestivalService} from '../../services/festival.service';
 import {ApplicationService} from '../../services/application.service';
 
 @Component({
-  selector: 'app-user-left-panel',
-  templateUrl: './user-left-panel.component.html',
-  styleUrls: ['./user-left-panel.component.less']
+  selector: 'app-left-panel',
+  templateUrl: './left-panel.component.html',
+  styleUrls: ['./left-panel.component.less']
 })
-export class UserLeftPanelComponent implements OnInit {
+export class LeftPanelComponent implements OnInit {
 
   public festivals: Festival[];
 
   constructor(private festivalService: FestivalService,
+              @Inject(LOCALE_ID) public locale: string,
               private applicationService: ApplicationService) {
   }
 

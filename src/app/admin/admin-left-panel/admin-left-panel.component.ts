@@ -1,11 +1,11 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 
 @Component({
-  selector: 'app-left-panel',
-  templateUrl: './left-panel.component.html',
-  styleUrls: ['./left-panel.component.less']
+  selector: 'app-admin-left-panel',
+  templateUrl: './admin-left-panel.component.html',
+  styleUrls: ['./admin-left-panel.component.less']
 })
-export class LeftPanelComponent implements OnInit {
+export class AdminLeftPanelComponent implements OnInit {
   @ViewChild('applicationItem') applicationItem: ElementRef;
 
   constructor() { }

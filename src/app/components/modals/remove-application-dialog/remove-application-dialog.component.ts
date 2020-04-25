@@ -9,11 +9,9 @@ import {Router} from '@angular/router';
 })
 export class RemoveApplicationDialogComponent implements OnInit {
 
-  // tslint:disable-next-line:no-output-on-prefix
-  @Output() onRemove = new EventEmitter();
+  @Output() remove = new EventEmitter();
 
-  constructor(public dialogRef: MatDialogRef<RemoveApplicationDialogComponent>,
-              private router: Router) {
+  constructor(public dialogRef: MatDialogRef<RemoveApplicationDialogComponent>) {
   }
 
   ngOnInit(): void {
@@ -24,6 +22,6 @@ export class RemoveApplicationDialogComponent implements OnInit {
   }
 
   public removeEvent() {
-    this.onRemove.emit();
+    this.remove.emit();
   }
 }

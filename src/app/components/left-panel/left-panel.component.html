@@ -4,7 +4,7 @@
       <li class="main-list-item f_item"
           *ngFor="let festival of festivals">
         <div class="item-text" (click)="showHideOptions($event.currentTarget)">
-          <span>{{ festival.name }}</span>
+          <span>{{ festival.names[this.locale] }}</span>
           <mat-icon role="img" class="mat-icon f_rotate-icon rotating-icon mat-icon-no-color"
                     aria-hidden="true">
             <svg focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

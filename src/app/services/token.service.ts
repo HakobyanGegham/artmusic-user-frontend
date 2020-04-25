@@ -22,4 +22,16 @@ export class TokenService {
   public getToken() {
     return window.sessionStorage.getItem('token');
   }
+
+  public getUser() {
+    return window.sessionStorage.getItem('user');
+  }
+
+  public removeToken() {
+    window.sessionStorage.removeItem('token');
+  }
+
+  public removeUser() {
+    window.sessionStorage.removeItem('user');
+  }
 }

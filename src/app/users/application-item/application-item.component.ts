@@ -32,7 +32,7 @@ export class ApplicationItemComponent implements OnInit, OnChanges {
     const dialogRef = this.dialog.open(RemoveApplicationDialogComponent, {
       width: '500px',
     });
-    dialogRef.componentInstance.onRemove.subscribe(() => {
+    dialogRef.componentInstance.remove.subscribe(() => {
       this.onRemove.emit(this.application.id);
       dialogRef.close();
     });
