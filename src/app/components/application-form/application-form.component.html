@@ -36,7 +36,7 @@
     </app-autocomplete>
     <mat-form-field>
       <mat-label>Nomination</mat-label>
-      <mat-select id="nominationSelect" formControlName="nomination"
+      <mat-select id="nominationSelect" formControlName="nomination" [compareWith]="compare"
                   (selectionChange)="nominationChange($event.value)">
         <mat-option *ngFor="let nomination of nominations"
                     value="{{nomination.id}}">{{nomination.names[locale]}}</mat-option>
@@ -51,7 +51,7 @@
     </mat-form-field>
     <mat-form-field>
       <mat-label>Specialization</mat-label>
-      <mat-select id="specializationSelect" formControlName="specialization">
+      <mat-select id="specializationSelect" formControlName="specialization" [compareWith]="compare">
         <mat-option *ngFor="let specialization of specializations"
                     value="{{specialization.id}}">{{specialization.names[locale]}}</mat-option>
       </mat-select>
