@@ -13,7 +13,8 @@ export class SuccessDialogService {
 
   showMessage(message) {
     const dialogRef = this.dialog.open(SuccessDialogComponent, {
-      width: '300px',
+      width: '350px',
+      height: '250px',
       data: {
         dataKey: message
       }
