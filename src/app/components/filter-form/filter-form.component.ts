@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {FormFilter} from '../../models/form-filter';
 import {MatSelect} from '@angular/material/select';
 import {ApplicationService} from '../../services/application.service';
+import {saveAs} from 'file-saver';
 
 @Component({
   selector: 'app-filter-form',
@@ -73,10 +74,8 @@ export class FilterFormComponent implements OnInit {
 
   public download() {
     this.applicationService.downloadApplication(this.formFilter).subscribe(data => {
-      debugger
-      const blob = new Blob([data], {type: 'text/csv'});
-      const url = window.URL.createObjectURL(blob);
-      window.open(url);
+      const file = new File([data], 'application.xlsx', {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+      saveAs(file);
     });
   }
 }
