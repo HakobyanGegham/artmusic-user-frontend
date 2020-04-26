@@ -66,12 +66,17 @@ export class FilterFormComponent implements OnInit {
   private setFormFilter() {
     this.formFilter.ageFrom = this.ageFromInput.value ? +this.ageFromInput.value : 0;
     this.formFilter.ageTo = this.ageToInput.value ? +this.ageToInput.value : 100;
-    this.formFilter.nomination = this.nominationInput.nativeElement.value;
-    this.formFilter.specialization = this.specializationInput.nativeElement.value;
-    this.formFilter.institution = this.institutionInput.nativeElement.value;
+    this.formFilter.nomination = this.nominationInput.nativeElement.value ?? '';
+    this.formFilter.specialization = this.specializationInput.nativeElement.value ?? '';
+    this.formFilter.institution = this.institutionInput.nativeElement.value ?? '';
   }
 
   public download() {
-    this.applicationService.downloadApplication(this.formFilter);
+    this.applicationService.downloadApplication(this.formFilter).subscribe(data => {
+      debugger
+      const blob = new Blob([data], {type: 'text/csv'});
+      const url = window.URL.createObjectURL(blob);
+      window.open(url);
+    });
   }
 }

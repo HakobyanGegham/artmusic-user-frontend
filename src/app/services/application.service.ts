@@ -64,9 +64,7 @@ export class ApplicationService {
     );
   }
 
-  public downloadApplication(formFilter: FormFilter): Observable<string> {
-    return this.httpClient.post<Observable<string>>(`${this.applicationsUrl}/download`, formFilter).pipe(
-      map(res => res.toString())
-    );
+  public downloadApplication(formFilter: FormFilter) {
+    return this.httpClient.post(`${this.applicationsUrl}/download`, formFilter, {responseType: 'blob' as 'json'});
   }
 }
