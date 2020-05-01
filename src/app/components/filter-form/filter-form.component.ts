@@ -74,7 +74,8 @@ export class FilterFormComponent implements OnInit {
 
   public download() {
     this.applicationService.downloadApplication(this.formFilter).subscribe(data => {
-      const file = new File([data], 'application.xlsx', {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+      const file = new File([data], 'application.xlsx',
+        { type: 'application/vnd.ms-excel' });
       saveAs(file);
     });
   }

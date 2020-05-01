@@ -34,7 +34,7 @@ export class ApplicationsComponent implements OnInit {
     });
   }
 
-  private filter(data: FormFilter) {
+  public filter(data: FormFilter) {
     this.filteredItems = of(this.applications.filter(application => {
       return +application.applicant.age > data.ageFrom &&
         +application.applicant.age < data.ageTo &&
